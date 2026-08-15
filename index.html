@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioGenius | Home</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <style>
+        /* ============================================================
+           ROOT VARIABLES
+           ============================================================ */
+        :root {
+            --primary: #087f70;
+            --primary-dark: #065a4f;
+            --primary-light: #0ea58f;
+            --green: #4caf68;
+            --green-light: #8fdc9b;
+            --text: #123b3b;
+            --muted: #4a6a6a;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.40);
+            --glass-border: rgba(255, 255, 255, 0.65);
+            --shadow: 0 20px 60px rgba(20, 90, 85, 0.12);
+            --radius: 28px;
+            --nav-height: 78px;
+        }
+
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #0d1f1e;
+            position: relative;
+        }
+
+        /* ============================================================
+           FULL-PAGE BACKGROUND IMAGE
+           ============================================================ */
+        .bg-wall {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #0a1a18;
+        }
+
+        .bg-wall img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.40) saturate(0.85) contrast(1.05);
+            transform: scale(1.02);
+            transition: filter 0.8s ease;
+        }
+
+        .bg-wall::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(10, 30, 28, 0.55) 0%, rgba(6, 18, 17, 0.70) 100%);
+            pointer-E: none;
+        }
+
+        .bg-wall::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-E: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+            background-size: 300px 300px;
+            opacity: 0.3;
+            mix-blend-mode: overlay;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        button,
+        input,
+        textarea,
+        select {
+            font-family: inherit;
+        }
+        button {
+            border: none;
+            cursor: pointer;
+        }
+
+        /* ============================================================
+           PREMIUM NAVBAR
+           ============================================================ */
+        .navbar {
+            width: min(1480px, calc(100% - 50px));
+            margin: 18px auto 0;
+            min-height: var(--nav-height);
+            padding: 12px 28px 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 22px;
+            backdrop-filter: blur(28px) saturate(1.4);
+            -webkit-backdrop-filter: blur(28px) saturate(1.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            position: sticky;
+            top: 16px;
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .navbar.scrolled {
+            min-height: 64px;
+            padding: 8px 24px 8px 28px;
+            background: rgba(10, 30, 28, 0.75);
+            backdrop-filter: blur(32px) saturate(1.6);
+            -webkit-backdrop-filter: blur(32px) saturate(1.6);
+            border-color: rgba(255, 255, 255, 0.10);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.02);
+        }
+        .logo-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            color: #7eddb0;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary), var(--green));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 14px;
+        }
+        .logo:hover .logo-icon::after {
+            opacity: 0.15;
+        }
+        .logo-icon i {
+            font-size: 22px;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover .logo-icon i {
+            transform: rotate(8deg) scale(1.05);
+        }
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .logo-text strong {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            color: #ecfbf5;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.30);
+            transition: color 0.3s ease;
+        }
+        .logo:hover .logo-text strong {
+            color: #7eddb0;
+        }
+        .logo-text small {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 2.8px;
+            color: #7eddb0;
+            text-transform: uppercase;
+            margin-top: 1px;
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            position: relative;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(235, 255, 245, 0.80);
+            padding: 8px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
+        }
+        .nav-links a:hover {
+            color: #b5f0d4;
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
+        .nav-links a.active {
+            color: #b5f0d4;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 28px;
+            height: 3px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #7eddb0, #4caf68);
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        .nav-links a.active:hover::after {
+            width: 40px;
+        }
+        .nav-links a:not(.active)::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2.5px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #7eddb0, #4caf68);
+            transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0.6;
+        }
+        .nav-links a:not(.active):hover::after {
+            width: 24px;
+        }
+
+        .join-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            color: #fff;
+            background: linear-gradient(135deg, #1a9b85, #08766c);
+            box-shadow: 0 8px 28px rgba(8, 127, 112, 0.35);
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+        .join-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #26b396, #0e8a7a);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .join-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 14px 40px rgba(8, 127, 112, 0.45);
+        }
+        .join-btn:hover::before {
+            opacity: 1;
+        }
+        .join-btn i,
+        .join-btn span {
+            position: relative;
+            z-index: 1;
+        }
+        .join-btn i {
+            font-size: 15px;
+            transition: transform 0.3s ease;
+        }
+        .join-btn:hover i {
+            transform: rotate(-6deg) scale(1.1);
+        }
+        .join-btn:active {
+            transform: scale(0.96);
+        }
+
+        .menu-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            width: 44px;
+            height: 44px;
+            font-size: 20px;
+            color: #b5f0d4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            backdrop-filter: blur(8px);
+        }
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.05);
+        }
+        .menu-btn:active {
+            transform: scale(0.92);
+        }
+
+        .mobile-dropdown {
+            display: none;
+            position: fixed;
+            top: 82px;
+            left: 16px;
+            right: 16px;
+            z-index: 99;
+            padding: 18px 16px;
+            flex-direction: column;
+            gap: 4px;
+            background: rgba(10, 30, 28, 0.92);
+            backdrop-filter: blur(32px) saturate(1.6);
+            -webkit-backdrop-filter: blur(32px) saturate(1.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.50);
+            animation: fadeDown 0.25s ease;
+        }
+        .mobile-dropdown.show {
+            display: flex;
+        }
+        .mobile-dropdown a {
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: rgba(235, 255, 245, 0.80);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.25s ease;
+        }
+        .mobile-dropdown a:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #b5f0d4;
+        }
+        .mobile-dropdown .join-mobile {
+            margin-top: 8px;
+            padding: 14px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1a9b85, #08766c);
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+        .mobile-dropdown .join-mobile:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(8, 127, 112, 0.30);
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ============================================================
+           GENERAL SECTIONS
+           ============================================================ */
+        .section {
+            width: min(1280px, calc(100% - 48px));
+            margin: auto;
+            padding: 80px 0;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        .small-title {
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #7eddb0;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .section-heading h2,
+        .contact-left h2,
+        .community-card h2 {
+            font-family: "Plus Jakarta Sans";
+            font-size: clamp(35px, 5vw, 55px);
+            line-height: 1.15;
+            letter-spacing: -2px;
+            color: #ecfbf5;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+        }
+        .section-heading h2 span,
+        .contact-left h2 span,
+        .community-card h2 span {
+            color: #7eddb0;
+        }
+        .section-heading>p {
+            max-width: 470px;
+            color: rgba(200, 230, 220, 0.80);
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        .center-heading {
+            display: block;
+            text-align: center;
+        }
+        .center-heading>p:last-child {
+            max-width: 620px;
+            margin: 20px auto 0;
+            color: rgba(200, 230, 220, 0.80);
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            min-height: 750px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+            padding: 20px 0 80px 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 18px;
+            border-radius: 50px;
+            font-size: 10px;
+            letter-spacing: 1.4px;
+            color: #b5f0d4;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(10px);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
+        }
+        .pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ecb72;
+            box-shadow: 0 0 0 5px rgba(78, 203, 114, 0.15);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(78, 203, 114, 0.25);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(78, 203, 114, 0.05);
+            }
+        }
+
+        .welcome {
+            margin-top: 35px;
+            letter-spacing: 4px;
+            font-size: 15px;
+            color: #7eddb0;
+            font-weight: 500;
+        }
+        .hero h1 {
+            font-family: "Plus Jakarta Sans";
+            font-size: clamp(65px, 8vw, 105px);
+            line-height: 0.95;
+            letter-spacing: -5px;
+            margin-top: 10px;
+            color: #ecfbf5;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.30);
+        }
+        .hero h1 span {
+            color: #7eddb0;
+            text-shadow: 0 0 40px rgba(126, 221, 176, 0.15);
+        }
+        .hero h2 {
+            font-family: "Plus Jakarta Sans";
+            font-size: clamp(25px, 3vw, 40px);
+            margin-top: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b5f0d4;
+            font-weight: 500;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.20);
+        }
+        .hero-description {
+            max-width: 600px;
+            margin-top: 25px;
+            font-size: 17px;
+            line-height: 1.8;
+            color: rgba(200, 230, 220, 0.85);
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+        .primary-btn,
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 52px;
+            padding: 0 26px;
+            border-radius: 14px;
+            font-weight: 600;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 14px;
+        }
+        .primary-btn {
+            color: white;
+            background: linear-gradient(135deg, #1a9b85, #08766c);
+            box-shadow: 0 12px 34px rgba(8, 127, 112, 0.35);
+        }
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 44px rgba(8, 127, 112, 0.45);
+        }
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ecfbf5;
+            backdrop-filter: blur(10px);
+        }
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+        }
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+        }
+        .hero-stats div {
+            display: flex;
+            flex-direction: column;
+        }
+        .hero-stats strong {
+            font-size: 28px;
+            color: #b5f0d4;
+            font-weight: 800;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.20);
+        }
+        .hero-stats span {
+            font-size: 12px;
+            color: rgba(180, 215, 200, 0.75);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Hero visual */
+        .hero-visual {
+            min-height: 620px;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(5px);
+        }
+        .orb-one {
+            width: 430px;
+            height: 430px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.10), rgba(126, 221, 176, 0.12), transparent 70%);
+        }
+        .orb-two {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(126, 221, 176, 0.15), transparent 70%);
+            right: 0;
+        }
+
+        .dna-main {
+            position: absolute;
+            width: 260px;
+            height: 510px;
+            transform: rotate(17deg) translateX(30px);
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.25));
+        }
+        .dna-line {
+            position: absolute;
+            width: 35px;
+            height: 100%;
+            border-radius: 50%;
+            border: 7px solid rgba(126, 221, 176, 0.40);
+        }
+        .dna-line.left {
+            left: 35px;
+            transform: rotate(18deg);
+        }
+        .dna-line.right {
+            right: 35px;
+            transform: rotate(-18deg);
+        }
+        .dna-rung {
+            position: absolute;
+            left: 50%;
+            width: 180px;
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, rgba(126, 221, 176, 0.50), rgba(76, 175, 104, 0.50));
+            transform: translateX(-50%) rotate(0deg);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+        }
+        .r1 {
+            top: 50px;
+        }
+        .r2 {
+            top: 120px;
+        }
+        .r3 {
+            top: 190px;
+        }
+        .r4 {
+            top: 260px;
+        }
+        .r5 {
+            top: 330px;
+        }
+        .r6 {
+            top: 400px;
+        }
+        .r7 {
+            top: 470px;
+        }
+
+        .plant {
+            position: absolute;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+        .stem {
+            width: 9px;
+            height: 180px;
+            background: linear-gradient(90deg, #39884e, #72c16b);
+            margin: auto;
+            border-radius: 20px;
+        }
+        .leaf {
+            position: absolute;
+            width: 75px;
+            height: 38px;
+            background: linear-gradient(135deg, #8fdc7c, #34945a);
+            border-radius: 100% 0 100% 0;
+        }
+        .leaf-1 {
+            left: -70px;
+            top: 70px;
+            transform: rotate(-30deg);
+        }
+        .leaf-2 {
+            right: -70px;
+            top: 115px;
+            transform: rotate(30deg) scaleX(-1);
+        }
+        .leaf-3 {
+            left: -50px;
+            top: 140px;
+            transform: rotate(-55deg) scale(0.7);
+        }
+        .soil {
+            width: 210px;
+            height: 22px;
+            background: linear-gradient(90deg, #725b3f, #a77e53, #604c39);
+            border-radius: 50%;
+            margin-top: -2px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.30);
+        }
+
+        .science-card {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.20);
+            animation: float 5s ease-in-out infinite;
+            color: #ecfbf5;
+        }
+        .card-top {
+            top: 80px;
+            left: 30px;
+        }
+        .card-bottom {
+            bottom: 100px;
+            right: 20px;
+            animation-delay: 1.5s;
+        }
+        .science-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            color: #7eddb0;
+            background: rgba(255, 255, 255, 0.06);
+            font-size: 18px;
+        }
+        .science-card strong {
+            font-size: 13px;
+            display: block;
+            color: #ecfbf5;
+        }
+        .science-card span {
+            font-size: 10px;
+            color: rgba(180, 215, 200, 0.70);
+            margin-top: 4px;
+            display: block;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* ============================================================
+           FEATURE CARDS (About)
+           ============================================================ */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+        .feature-card {
+            padding: 32px;
+            min-height: 330px;
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            transition: all 0.40s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: #ecfbf5;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(126, 221, 176, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+        }
+        .feature-icon {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 17px;
+            color: #7eddb0;
+            background: rgba(126, 221, 176, 0.10);
+            font-size: 22px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(126, 221, 176, 0.08);
+        }
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #ecfbf5;
+        }
+        .feature-card p {
+            color: rgba(200, 230, 220, 0.75);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .feature-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px;
+            color: #7eddb0;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .feature-card a:hover {
+            gap: 16px;
+            color: #b5f0d4;
+        }
+
+        /* ============================================================
+           E
+           ============================================================ */
+        .E-grid {
+            display: grid;
+            gap: 15px;
+        }
+        .event-card {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 25px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 22px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: #ecfbf5;
+        }
+        .event-card:hover {
+            transform: translateX(8px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(126, 221, 176, 0.10);
+        }
+        .event-date {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 90px;
+            height: 90px;
+            border-radius: 20px;
+            color: #ecfbf5;
+            background: linear-gradient(145deg, rgba(8, 127, 112, 0.50), rgba(6, 90, 79, 0.40));
+            border: 1px solid rgba(126, 221, 176, 0.10);
+        }
+        .event-date strong {
+            font-size: 30px;
+            font-weight: 800;
+        }
+        .event-date span {
+            font-size: 10px;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+        .event-type {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #7eddb0;
+            text-transform: uppercase;
+        }
+        .event-content h3 {
+            font-size: 20px;
+            margin: 7px 0;
+            color: #ecfbf5;
+        }
+        .event-content p {
+            color: rgba(200, 230, 220, 0.75);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .event-meta {
+            display: flex;
+            gap: 25px;
+            margin-top: 15px;
+            color: rgba(180, 215, 200, 0.70);
+            font-size: 12px;
+        }
+        .event-meta span {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .view-all {
+            color: #7eddb0;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .view-all:hover {
+            color: #b5f0d4;
+            gap: 12px;
+        }
+
+        /* ============================================================
+           PROJECTS
+           ============================================================ */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 18px;
+        }
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            padding: 35px;
+            min-height: 390px;
+            border-radius: 28px;
+            color: #ecfbf5;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: all 0.40s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .project-card:nth-child(1) {
+            background: linear-gradient(145deg, rgba(8, 127, 112, 0.30), rgba(6, 90, 79, 0.20));
+            border-color: rgba(126, 221, 176, 0.10);
+        }
+        .project-card:nth-child(2) {
+            background: linear-gradient(145deg, rgba(76, 175, 104, 0.25), rgba(8, 127, 112, 0.15));
+            border-color: rgba(76, 175, 104, 0.08);
+        }
+        .project-card:nth-child(3) {
+            background: linear-gradient(145deg, rgba(10, 130, 140, 0.25), rgba(6, 90, 79, 0.15));
+            border-color: rgba(100, 200, 200, 0.08);
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(126, 221, 176, 0.15);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.30);
+        }
+        .project-number {
+            position: absolute;
+            right: 25px;
+            top: 20px;
+            font-size: 55px;
+            font-weight: 800;
+            opacity: 0.08;
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+        .project-icon {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            border-radius: 17px;
+            background: rgba(255, 255, 255, 0.06);
+            font-size: 24px;
+            margin-bottom: 50px;
+            color: #7eddb0;
+        }
+        .project-card>span {
+            font-size: 9px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+        .project-card h3 {
+            font-size: 26px;
+            margin: 10px 0;
+            color: #ecfbf5;
+        }
+        .project-card p {
+            max-width: 400px;
+            color: rgba(200, 230, 220, 0.70);
+            line-height: 1.7;
+            font-size: 13px;
+        }
+        .project-card a {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #7eddb0;
+            transition: all 0.3s ease;
+        }
+        .project-card a:hover {
+            gap: 16px;
+            color: #b5f0d4;
+        }
+
+        /* ============================================================
+           COMMUNITY (Members)
+           ============================================================ */
+        .community-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            padding: 70px;
+            border-radius: 35px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.20);
+            color: #ecfbf5;
+        }
+        .community-card>div:first-child>p:not(.small-title) {
+            max-width: 550px;
+            color: rgba(200, 230, 220, 0.80);
+            line-height: 1.8;
+            margin: 22px 0 30px;
+            font-size: 15px;
+        }
+        .community-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .community-stats div {
+            padding: 28px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+        }
+        .community-stats div:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(126, 221, 176, 0.10);
+        }
+        .community-stats strong {
+            display: block;
+            font-size: 35px;
+            color: #7eddb0;
+            font-weight: 800;
+        }
+        .community-stats span {
+            display: block;
+            margin-top: 7px;
+            color: rgba(200, 230, 220, 0.70);
+            font-size: 12px;
+        }
+
+        /* ============================================================
+           CONTACT
+           ============================================================ */
+        .contact-section {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 80px;
+        }
+        .contact-left>p:not(.small-title) {
+            max-width: 520px;
+            margin: 25px 0;
+            line-height: 1.8;
+            color: rgba(200, 230, 220, 0.80);
+            font-size: 15px;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .contact-info a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            font-size: 14px;
+            color: #b5f0d4;
+            transition: all 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: #7eddb0;
+            transform: translateX(4px);
+        }
+        .contact-info i {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #7eddb0;
+        }
+        .contact-form {
+            padding: 35px;
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 18px;
+        }
+        .input-group label {
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: rgba(235, 255, 245, 0.80);
+            font-weight: 600;
+        }
+        .input-group input,
+        .input-group textarea,
+        #joinForm input,
+        #joinForm select {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            outline: none;
+            border-radius: 13px;
+            padding: 14px 16px;
+            color: #ecfbf5;
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.25s ease;
+            font-size: 14px;
+        }
+        .input-group input::placeholder,
+        .input-group textarea::placeholder,
+        #joinForm input::placeholder,
+        #joinForm select {
+            color: rgba(200, 230, 220, 0.40);
+        }
+        .input-group input:focus,
+        .input-group textarea:focus,
+        #joinForm input:focus,
+        #joinForm select:focus {
+            border-color: rgba(126, 221, 176, 0.30);
+            box-shadow: 0 0 0 4px rgba(126, 221, 176, 0.05);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .input-group textarea {
+            resize: vertical;
+        }
+        #joinForm select option {
+            background: #0d1f1e;
+            color: #ecfbf5;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            padding: 60px max(25px, calc((100vw - 1280px) / 2)) 30px;
+            background: rgba(0, 0, 0, 0.20);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            margin-top: 20px;
+        }
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            padding-bottom: 45px;
+        }
+        .footer-brand p {
+            margin-top: 15px;
+            color: rgba(200, 230, 220, 0.60);
+            font-size: 13px;
+        }
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .footer-links h4 {
+            margin-bottom: 5px;
+            color: #ecfbf5;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .footer-links a {
+            color: rgba(200, 230, 220, 0.60);
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #7eddb0;
+            transform: translateX(4px);
+        }
+        .footer-bottom {
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            justify-content: space-between;
+            color: rgba(200, 230, 220, 0.40);
+            font-size: 11px;
+        }
+
+        /* ============================================================
+           MODAL
+           ============================================================ */
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            display: none;
+            place-items: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.50);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .modal.show {
+            display: grid;
+        }
+        .modal-content {
+            width: min(450px, 100%);
+            padding: 40px;
+            position: relative;
+            border-radius: 30px;
+            background: rgba(13, 31, 30, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.50);
+            animation: modalIn 0.3s ease;
+            color: #ecfbf5;
+        }
+        @keyframes modalIn {
+            from {
+                transform: scale(0.92) translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(235, 255, 245, 0.60);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            display: grid;
+            place-items: center;
+            font-size: 18px;
+        }
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ecfbf5;
+        }
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(8, 127, 112, 0.40), rgba(6, 90, 79, 0.30));
+            color: #7eddb0;
+            font-size: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(126, 221, 176, 0.08);
+        }
+        .modal-content h2 {
+            font-size: 30px;
+            color: #ecfbf5;
+        }
+        .modal-content>p {
+            color: rgba(200, 230, 220, 0.70);
+            margin: 8px 0 25px;
+        }
+        #joinForm {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        #joinForm input,
+        #joinForm select {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            outline: none;
+            border-radius: 13px;
+            padding: 14px 16px;
+            color: #ecfbf5;
+            background: rgba(255, 255, 255, 0.04);
+            transition: all 0.25s ease;
+            font-size: 14px;
+        }
+        #joinForm input:focus,
+        #joinForm select:focus {
+            border-color: rgba(126, 221, 176, 0.25);
+            box-shadow: 0 0 0 4px rgba(126, 221, 176, 0.04);
+            background: rgba(255, 255, 255, 0.06);
+        }
+        #joinForm .primary-btn {
+            margin-top: 8px;
+        }
+        #joinForm select option {
+            background: #0d1f1e;
+        }
+
+        /* ============================================================
+           TOAST
+           ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            border-radius: 16px;
+            background: rgba(13, 31, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #ecfbf5;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.40);
+            transform: translateY(120px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            font-size: 13px;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast i {
+            color: #7eddb0;
+            font-size: 20px;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 2px;
+            }
+            .nav-links a {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            .join-btn {
+                padding: 10px 18px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                padding-top: 45px;
+                padding-bottom: 20px;
+            }
+            .hero-content {
+                text-align: center;
+                max-width: 850px;
+                margin-inline: auto;
+            }
+            .hero-description {
+                margin-inline: auto;
+                max-width: 680px;
+            }
+            .hero-buttons,
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-visual {
+                min-height: 520px;
+                width: 100%;
+                max-width: 650px;
+                margin-inline: auto;
+            }
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .project-card:nth-child(1) {
+                grid-column: 1 / -1;
+            }
+            .community-card,
+            .contact-section {
+                grid-template-columns: 1fr;
+            }
+            .community-card {
+                gap: 35px;
+            }
+            .contact-section {
+                gap: 45px;
+            }
+        }
+
+        @media (max-width: 820px) {
+            .navbar {
+                padding: 10px 18px 10px 22px;
+                width: calc(100% - 24px);
+                min-height: 66px;
+                top: 12px;
+                border-radius: 18px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .join-btn {
+                padding: 10px 16px;
+            }
+            .join-btn span {
+                display: inline;
+                font-size: 12px;
+            }
+            .join-btn i {
+                font-size: 14px;
+            }
+            .menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .mobile-dropdown.show {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 780px) {
+            .section {
+                width: calc(100% - 28px);
+                padding: 60px 0;
+            }
+            .hero {
+                padding-top: 28px;
+                padding-bottom: 0;
+            }
+            .hero-badge {
+                max-width: 100%;
+                font-size: 8px;
+                letter-spacing: 1px;
+                text-align: left;
+            }
+            .welcome {
+                margin-top: 24px;
+                font-size: 12px;
+                letter-spacing: 3px;
+            }
+            .hero h1 {
+                font-size: clamp(48px, 14vw, 70px);
+                letter-spacing: -4px;
+            }
+            .hero h2 {
+                font-size: clamp(21px, 6vw, 30px);
+                line-height: 1.2;
+            }
+            .hero-description {
+                font-size: 15px;
+                line-height: 1.7;
+                margin-top: 18px;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+                width: min(100%, 360px);
+                margin-inline: auto;
+            }
+            .primary-btn,
+            .secondary-btn {
+                width: 100%;
+                min-height: 50px;
+            }
+            .hero-stats {
+                gap: clamp(20px, 8vw, 42px);
+                margin-top: 35px;
+                flex-wrap: wrap;
+            }
+            .hero-stats strong {
+                font-size: 22px;
+            }
+            .hero-visual {
+                min-height: 430px;
+                transform: none;
+                margin: 0;
+                overflow: hidden;
+            }
+            .orb-one {
+                width: min(430px, 90vw);
+                height: min(430px, 90vw);
+            }
+            .orb-two {
+                width: min(300px, 65vw);
+                height: min(300px, 65vw);
+            }
+            .dna-main {
+                transform: rotate(17deg) translateX(0) scale(0.78);
+            }
+            .science-card {
+                transform: scale(0.88);
+            }
+            .card-top {
+                top: 55px;
+                left: 0;
+            }
+            .card-bottom {
+                bottom: 55px;
+                right: 0;
+            }
+            .section-heading {
+                margin-bottom: 30px;
+            }
+            .section-heading h2,
+            .contact-left h2,
+            .community-card h2 {
+                font-size: clamp(32px, 9vw, 48px);
+                letter-spacing: -1.5px;
+            }
+            .feature-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .project-card:nth-child(1) {
+                grid-column: auto;
+            }
+            .feature-card {
+                min-height: 0;
+                padding: 26px;
+            }
+            .E-grid {
+                gap: 12px;
+            }
+            .event-card {
+                grid-template-columns: 78px 1fr;
+                gap: 16px;
+                padding: 18px;
+            }
+            .event-date {
+                width: 70px;
+                height: 70px;
+                border-radius: 16px;
+            }
+            .event-date strong {
+                font-size: 25px;
+            }
+            .event-content h3 {
+                font-size: 18px;
+            }
+            .event-meta {
+                gap: 14px;
+                flex-wrap: wrap;
+            }
+            .project-card {
+                min-height: 350px;
+                padding: 28px;
+            }
+            .project-icon {
+                margin-bottom: 38px;
+            }
+            .community-card {
+                padding: 30px 24px;
+                border-radius: 26px;
+            }
+            .community-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .community-stats div {
+                padding: 22px 18px;
+            }
+            .community-stats strong {
+                font-size: 29px;
+            }
+            .contact-form {
+                padding: 28px 22px;
+            }
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            .footer-main {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 35px 25px;
+            }
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+            .footer-bottom {
+                gap: 10px 20px;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .navbar {
+                padding: 8px 14px 8px 16px;
+                min-height: 58px;
+                top: 10px;
+                border-radius: 16px;
+            }
+            .logo-icon {
+                width: 38px;
+                height: 38px;
+                border-radius: 11px;
+            }
+            .logo-icon i {
+                font-size: 17px;
+            }
+            .logo-text strong {
+                font-size: 16px;
+                letter-spacing: 1.2px;
+            }
+            .logo-text small {
+                font-size: 6.5px;
+                letter-spacing: 2px;
+            }
+            .join-btn {
+                padding: 8px 14px;
+                font-size: 12px;
+                border-radius: 40px;
+            }
+            .join-btn span {
+                display: none;
+            }
+            .join-btn i {
+                font-size: 15px;
+            }
+            .menu-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 17px;
+                border-radius: 11px;
+            }
+            .mobile-dropdown {
+                top: 70px;
+                left: 12px;
+                right: 12px;
+                padding: 14px 12px;
+            }
+            .section {
+                width: calc(100% - 22px);
+                padding: 48px 0;
+            }
+            .hero-badge {
+                padding: 8px 11px;
+                font-size: 7px;
+                letter-spacing: 0.7px;
+            }
+            .hero h1 {
+                font-size: clamp(44px, 15vw, 58px);
+                letter-spacing: -3px;
+            }
+            .hero h2 {
+                font-size: 20px;
+            }
+            .hero-description {
+                font-size: 14px;
+            }
+            .hero-stats {
+                width: 100%;
+                justify-content: space-around;
+                gap: 12px;
+            }
+            .hero-stats strong {
+                font-size: 20px;
+            }
+            .hero-stats span {
+                font-size: 10px;
+            }
+            .hero-visual {
+                min-height: 360px;
+                margin-top: -10px;
+            }
+            .dna-main {
+                transform: rotate(17deg) scale(0.62);
+            }
+            .science-card {
+                padding: 10px 13px;
+                gap: 8px;
+                border-radius: 14px;
+                transform: scale(0.72);
+            }
+            .science-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 15px;
+            }
+            .card-top {
+                top: 35px;
+                left: -20px;
+            }
+            .card-bottom {
+                bottom: 35px;
+                right: -20px;
+            }
+            .section-heading h2,
+            .contact-left h2,
+            .community-card h2 {
+                font-size: 32px;
+            }
+            .small-title {
+                font-size: 9px;
+                letter-spacing: 2.2px;
+            }
+            .event-card {
+                grid-template-columns: 1fr;
+            }
+            .event-date {
+                width: 64px;
+                height: 64px;
+            }
+            .event-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .project-card {
+                min-height: 330px;
+                padding: 24px;
+                border-radius: 22px;
+            }
+            .project-card h3 {
+                font-size: 23px;
+            }
+            .community-stats {
+                grid-template-columns: 1fr;
+            }
+            .community-card {
+                padding: 28px 20px;
+            }
+            .contact-form {
+                padding: 22px 16px;
+                border-radius: 22px;
+            }
+            .footer-main {
+                grid-template-columns: 1fr;
+            }
+            .footer-brand {
+                grid-column: auto;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .modal {
+                padding: 12px;
+            }
+            .modal-content {
+                padding: 30px 20px;
+                border-radius: 24px;
+            }
+            .toast {
+                left: 12px;
+                right: 12px;
+                bottom: 15px;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo-text small {
+                display: none;
+            }
+            .logo {
+                gap: 8px;
+            }
+            .join-btn {
+                padding: 8px 12px;
+            }
+            .hero h1 {
+                font-size: 42px;
+            }
+            .hero h2 {
+                font-size: 18px;
+            }
+            .hero-stats {
+                gap: 8px;
+            }
+            .hero-stats strong {
+                font-size: 18px;
+            }
+            .hero-visual {
+                min-height: 320px;
+            }
+            .dna-main {
+                transform: rotate(17deg) scale(0.54);
+            }
+            .science-card {
+                transform: scale(0.62);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+    FULL-PAGE BACKGROUND IMAGE
+    ============================================================ -->
+    <div class="bg-wall">
+        <img src="/bg.jpg.png" alt="Biotechnology background" />
+    </div>
+
+    <!-- ============================================================
+    PREMIUM NAVBAR
+    ============================================================ -->
+    <header class="navbar" id="navbar">
+        <a href="index.html" class="logo">
+            <div class="logo-icon"><i class="fa-solid fa-dna"></i></div>
+            <div class="logo-text">
+                <strong>BIOGENIUS</strong>
+                <small>BIOTECH CLUB</small>
+            </div>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="index.html" class="active">Home</a>
+            <a href="About.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="Projects.html">Projects</a>
+            <a href="Members.html">Members</a>
+            <a href="Contact.html">Contact</a>
+        </nav>
+
+        <button class="join-btn" id="openModalBtn">
+            <i class="fas fa-leaf"></i>
+            <span>Join Now</span>
+        </button>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Mobile dropdown -->
+    <div class="mobile-dropdown" id="mobileDropdown">
+        <a href="index.html">Home</a>
+        <a href="About.html">About</a>
+        <a href="Events.html">Events</a>
+        <a href="Projects.html">Projects</a>
+        <a href="Members.html">Members</a>
+        <a href="Contact.html">Contact</a>
+        <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
+    </div>
+
+    <!-- ============================================================
+    MAIN CONTENT
+    ============================================================ -->
+    <main>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero section" id="home">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="pulse"></span>
+                    UNIVERSITY BIOTECHNOLOGY COMMUNITY
+                </div>
+                <p class="welcome">WELCOME TO</p>
+                <h1>BIO<span>GENIUS</span></h1>
+                <h2>Biotechnology Club</h2>
+                <p class="hero-description">
+                    A student-driven community exploring biotechnology,
+                    research, innovation and sustainable solutions for
+                    a better tomorrow.
+                </p>
+                <div class="hero-buttons">
+                    <a href="About.html" class="primary-btn">
+                        Explore Club
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="Event.html" class="secondary-btn">
+                        <i class="fa-regular fa-calendar"></i>
+                        Upcoming Events
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div><strong>250+</strong><span>Members</span></div>
+                    <div><strong>35+</strong><span>Events</span></div>
+                    <div><strong>18+</strong><span>Projects</span></div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="orb orb-one"></div>
+                <div class="orb orb-two"></div>
+
+                <!-- DNA Helix -->
+                <div class="dna-main">
+                    <div class="dna-line left"></div>
+                    <div class="dna-line right"></div>
+                    <div class="dna-rung r1"></div>
+                    <div class="dna-rung r2"></div>
+                    <div class="dna-rung r3"></div>
+                    <div class="dna-rung r4"></div>
+                    <div class="dna-rung r5"></div>
+                    <div class="dna-rung r6"></div>
+                    <div class="dna-rung r7"></div>
+                </div>
+
+                <!-- Plant -->
+                <div class="plant">
+                    <div class="stem">
+                        <div class="leaf leaf-1"></div>
+                        <div class="leaf leaf-2"></div>
+                        <div class="leaf leaf-3"></div>
+                    </div>
+                    <div class="soil"></div>
+                </div>
+
+                <!-- Floating cards -->
+                <div class="science-card card-top">
+                    <div class="science-icon"><i class="fa-solid fa-flask"></i></div>
+                    <div><strong>Research</strong><span>Innovation</span></div>
+                </div>
+                <div class="science-card card-bottom">
+                    <div class="science-icon"><i class="fa-solid fa-microscope"></i></div>
+                    <div><strong>Explore</strong><span>Biotechnology</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ABOUT PREVIEW ===== -->
+        <section class="section About-section" id="About-preview">
+            <div class="section-heading">
+                <div>
+                    <p class="small-title">WHO WE ARE</p>
+                    <h2>Science that inspires. <span>Ideas that matter.</span></h2>
+                </div>
+                <p>BioGenius brings together curious students who want to explore the world of biotechnology beyond classrooms and textbooks.</p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-dna"></i></div>
+                    <h3>Learn</h3>
+                    <p>Workshops, seminars and interactive sessions that make biotechnology easier to understand.</p>
+                    <a href="E.html">Discover E <i class="fa-solid fa-arrow-right"></i></a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-flask-vial"></i></div>
+                    <h3>Research</h3>
+                    <p>Work on student projects and explore real-world applications of biotechnology.</p>
+                    <a href="projects.html">Explore projects <i class="fa-solid fa-arrow-right"></i></a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                    <h3>Innovate</h3>
+                    <p>Turn creative ideas into meaningful solutions for health, agriculture and sustainability.</p>
+                    <a href="projects.html">See innovation <i class="fa-solid fa-arrow-right"></i></a>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-people-group"></i></div>
+                    <h3>Connect</h3>
+                    <p>Meet students, researchers and professionals who share your interest in biotechnology.</p>
+                    <a href="Members.html">Meet community <i class="fa-solid fa-arrow-right"></i></a>
+                </article>
+            </div>
+        </section>
+
+        <!-- ===== E PREVIEW ===== -->
+        <section class="section E-section" id="E-preview">
+            <div class="section-heading">
+                <div>
+                    <p class="small-title">WHAT'S HAPPENING</p>
+                    <h2>Upcoming <span>Events</span></h2>
+                </div>
+                <a href="Event.html" class="view-all">View all Event <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="Event-grid">
+                <article class="event-card">
+                    <div class="event-date"><strong>18</strong><span>SEP</span></div>
+                    <div class="event-content">
+                        <span class="event-type">WORKSHOP</span>
+                        <h3>Introduction to Bioinformatics</h3>
+                        <p>Learn how computational tools are transforming modern biological research.</p>
+                        <div class="event-meta">
+                            <span><i class="fa-regular fa-clock"></i> 11:00 AM</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Seminar Hall</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="event-card">
+                    <div class="event-date"><strong>24</strong><span>SEP</span></div>
+                    <div class="event-content">
+                        <span class="event-type">SEMINAR</span>
+                        <h3>Careers in Biotechnology</h3>
+                        <p>Discover career opportunities in research, pharma, bioinformatics and industry.</p>
+                        <div class="event-meta">
+                            <span><i class="fa-regular fa-clock"></i> 02:00 PM</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Auditorium</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="event-card">
+                    <div class="event-date"><strong>02</strong><span>OCT</span></div>
+                    <div class="event-content">
+                        <span class="event-type">COMPETITION</span>
+                        <h3>BioHack 2026</h3>
+                        <p>Build innovative biotechnology ideas with your Members in our student innovation challenge.</p>
+                        <div class="event-meta">
+                            <span><i class="fa-regular fa-clock"></i> 10:00 AM</span>
+                            <span><i class="fa-solid fa-location-dot"></i> Innovation Lab</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ===== PROJECTS PREVIEW ===== -->
+        <section class="section projects-section" id="projects-preview">
+            <div class="section-heading center-heading">
+                <p class="small-title">STUDENT INNOVATION</p>
+                <h2>Projects with <span>purpose.</span></h2>
+                <p>From laboratory concepts to technology-driven solutions, our members build projects that address real-world challenges.</p>
+            </div>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <div class="project-number">01</div>
+                    <div class="project-icon"><i class="fa-solid fa-seedling"></i></div>
+                    <span>AGRICULTURAL BIOTECH</span>
+                    <h3>Sustainable Plant Growth</h3>
+                    <p>Exploring biotechnology-based approaches for sustainable agriculture and improved plant growth.</p>
+                    <a href="projects.html">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                </article>
+                <article class="project-card">
+                    <div class="project-number">02</div>
+                    <div class="project-icon"><i class="fa-solid fa-microscope"></i></div>
+                    <span>BIOMEDICAL</span>
+                    <h3>Microbial Analysis</h3>
+                    <p>Student research exploring microbial identification and analysis.</p>
+                    <a href="projects.html">View project <i class="fa-solid fa-arrow-right"></i></a>
+                </article>
+                <article class="project-card">
+                    <div class="project-number">03</div>
+                    <div class="project-icon"><i class="fa-solid fa-brain"></i></div>
+                    <span>AI + BIOLOGY</span>
+                    <h3>AI for Life Sciences</h3>
+                    <p>Exploring machine learning applications in biological datasets.</p>
+                    <a href="projects.html">View project <i class="fa-solid fa-arrow-right"></i></a>
+                </article>
+            </div>
+        </section>
+
+        <!-- ===== COMMUNITY PREVIEW ===== -->
+        <section class="section community-section" id="Members-preview">
+            <div class="community-card">
+                <div>
+                    <p class="small-title">OUR COMMUNITY</p>
+                    <h2>Learn together. <span>Grow together.</span></h2>
+                    <p>BioGenius is more than a university club. It is a community where students can share ideas, build projects and develop skills.</p>
+                    <button class="primary-btn" onclick="openJoinModal()">
+                        Become a Member <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="community-stats">
+                    <div><strong>250+</strong><span>Active Students</span></div>
+                    <div><strong>35+</strong><span>EventsConducted</span></div>
+                    <div><strong>18+</strong><span>Research Projects</span></div>
+                    <div><strong>12</strong><span>Core Members Members</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT PREVIEW ===== -->
+        <section class="section contact-section" id="contact-preview">
+            <div class="contact-left">
+                <p class="small-title">GET IN TOUCH</p>
+                <h2>Let's build the future <span>of biotechnology.</span></h2>
+                <p>Have a project idea, want to collaborate, or simply want to join the community? We'd love to hear from you.</p>
+                <div class="contact-info">
+                    <a href="mailto:biogenius@university.edu">
+                        <i class="fa-solid fa-envelope"></i> biogenius@university.edu
+                    </a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i> @biogenius.club</a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i> BioGenius Biotechnology Club</a>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text" id="name" placeholder="Your name" required />
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="you@example.com" required />
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Message</label>
+                    <textarea id="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+                </div>
+                <button type="submit" class="primary-btn">
+                    Send Message <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer>
+        <div class="footer-main">
+            <div class="footer-brand">
+                <div class="logo" style="gap:10px;">
+                    <div class="logo-icon"><i class="fa-solid fa-dna"></i></div>
+                    <div class="logo-text"><strong>BIOGENIUS</strong><small>BIOTECH CLUB</small></div>
+                </div>
+                <p>Learn. Innovate. Research. Inspire.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <a href="About.html">About</a>
+                <a href="Event.html">Events</a>
+                <a href="Projects.html">Projects</a>
+                <a href="Members.html">Community</a>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <a href="#">Instagram</a>
+                <a href="#">LinkedIn</a>
+                <a href="mailto:biogenius@university.edu">Email</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 BioGenius Biotechnology Club</span>
+            <span>Made for science & innovation 🧬</span>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    JOIN MODAL
+    ============================================================ -->
+    <div class="modal" id="joinModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeJoinModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-icon"><i class="fa-solid fa-dna"></i></div>
+            <h2>Join BioGenius</h2>
+            <p>Become part of our biotechnology community.</p>
+            <form id="joinForm">
+                <input type="text" id="joinName" placeholder="Full Name" required />
+                <input type="email" id="joinEmail" placeholder="University Email" required />
+                <select id="department" required>
+                    <option value="">Select Department</option>
+                    <option>Biotechnology</option>
+                    <option>Bioinformatics</option>
+                    <option>Computer Science</option>
+                    <option>Life Sciences</option>
+                    <option>Other</option>
+                </select>
+                <button class="primary-btn" type="submit">
+                    Submit Application <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Application submitted successfully!</span>
+    </div>
+
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---- 1. Navbar shrink on scroll ----
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 40) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // ---- 2. Mobile menu toggle ----
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileDropdown = document.getElementById('mobileDropdown');
+            let mobileOpen = false;
+
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                mobileOpen = !mobileOpen;
+                mobileDropdown.classList.toggle('show', mobileOpen);
+                menuBtn.innerHTML = mobileOpen ?
+                    '<i class="fa-solid fa-xmark"></i>' :
+                    '<i class="fa-solid fa-bars"></i>';
+            });
+
+            document.addEventListener('click', function(e) {
+                if (mobileOpen &&
+                    !mobileDropdown.contains(e.target) &&
+                    e.target !== menuBtn &&
+                    !menuBtn.contains(e.target)) {
+                    mobileDropdown.classList.remove('show');
+                    mobileOpen = false;
+                    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && mobileOpen) {
+                    mobileDropdown.classList.remove('show');
+                    mobileOpen = false;
+                    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                }
+            });
+
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 820 && mobileOpen) {
+                    mobileDropdown.classList.remove('show');
+                    mobileOpen = false;
+                    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                }
+            });
+
+            // ---- 3. Mobile join button ----
+            document.getElementById('mobileJoinBtn').addEventListener('click', function() {
+                openJoinModal();
+                mobileDropdown.classList.remove('show');
+                mobileOpen = false;
+                menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            });
+
+            // ---- 4. Modal ----
+            const modal = document.getElementById('joinModal');
+            const openBtn = document.getElementById('openModalBtn');
+
+            window.openJoinModal = function() {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.closeJoinModal = function() {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            };
+
+            openBtn.addEventListener('click', openJoinModal);
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeJoinModal();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeJoinModal();
+            });
+
+            // ---- 5. Join form ----
+            document.getElementById('joinForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                closeJoinModal();
+                showToast('Application submitted successfully!');
+                this.reset();
+            });
+
+            // ---- 6. Contact form ----
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                showToast('Message sent! We\'ll get back to you soon.');
+                this.reset();
+            });
+
+            // ---- 7. Toast ----
+            const toast = document.getElementById('toast');
+
+            function showToast(message) {
+                const span = toast.querySelector('span');
+                if (span) span.textContent = message;
+                toast.classList.add('show');
+                clearTimeout(toast._timer);
+                toast._timer = setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3500);
+            }
+
+            // ---- 8. Active nav link ----
+            const navLinkEls = document.querySelectorAll('.nav-links a');
+            navLinkEls.forEach(function(link) {
+                if (link.getAttribute('href') === 'index.html') {
+                    link.classList.add('active');
+                }
+            });
+
+            console.log('✅ BioGenius — Home page loaded with multi-page navigation!');
+        })();
+    </script>
+
+</body>
+</html>
