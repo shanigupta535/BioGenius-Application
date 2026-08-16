@@ -85,14 +85,14 @@
                 radial-gradient(ellipse at 20% 30%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
                 radial-gradient(ellipse at 80% 70%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
                 linear-gradient(180deg, rgba(10, 30, 28, 0.55) 0%, rgba(6, 18, 17, 0.70) 100%);
-            pointer-events: none;
+            pointer-Events: none;
         }
 
         .bg-wall::before {
             content: '';
             position: absolute;
             inset: 0;
-            pointer-events: none;
+            pointer-Events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
             background-size: 300px 300px;
             opacity: 0.3;
@@ -452,9 +452,9 @@
         }
 
         /* ============================================================
-           EVENTS GRID
+           Events GRID
            ============================================================ */
-        .events-grid {
+        .Events-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 24px;
@@ -915,7 +915,7 @@
             .mobile-dropdown.show {
                 display: flex;
             }
-            .events-grid {
+            .Events-grid {
                 grid-template-columns: 1fr 1fr;
             }
             .footer-main {
@@ -935,7 +935,7 @@
             .section-heading h1 {
                 font-size: clamp(32px, 8vw, 44px);
             }
-            .events-grid {
+            .Events-grid {
                 grid-template-columns: 1fr;
             }
             .event-card {
@@ -1047,11 +1047,11 @@
 
         <nav class="nav-links" id="navLinks">
             <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="events.html" class="active">Events</a>
-            <a href="projects.html">Projects</a>
-            <a href="team.html">Team</a>
-            <a href="contact.html">Contact</a>
+            <a href="About.html">About</a>
+            <a href="Events.html" class="active">Events</a>
+            <a href="Projects.html">Projects</a>
+            <a href="Members.html">Members</a>
+            <a href="Contact.html">Contact</a>
         </nav>
 
         <button class="join-btn" id="openModalBtn">
@@ -1067,16 +1067,16 @@
     <!-- Mobile dropdown -->
     <div class="mobile-dropdown" id="mobileDropdown">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="projects.html">Projects</a>
-        <a href="team.html">Team</a>
-        <a href="contact.html">Contact</a>
+        <a href="About.html">About</a>
+        <a href="Events.html">Events</a>
+        <a href="Projects.html">Projects</a>
+        <a href="Members.html">Members</a>
+        <a href="Contact.html">Contact</a>
         <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
     </div>
 
     <!-- ============================================================
-    EVENTS PAGE
+    Events PAGE
     ============================================================ -->
     <main>
 
@@ -1085,11 +1085,11 @@
             <div class="section-heading">
                 <p class="small-title">WHAT'S HAPPENING</p>
                 <h1>Our <span>Events</span></h1>
-                <p>From workshops and seminars to competitions and networking — explore all the events that make BioGenius a vibrant community.</p>
+                <p>From workshops and seminars to competitions and networking — explore all the Events that make BioGenius a vibrant community.</p>
             </div>
         </section>
 
-        <!-- ===== PAST EVENTS ===== -->
+        <!-- ===== PAST Events ===== -->
         <section class="section" style="padding-top:0; padding-bottom:30px;">
             <div class="divider-wrap">
                 <span class="divider-line"></span>
@@ -1097,7 +1097,7 @@
                 <span class="divider-line"></span>
             </div>
 
-            <div class="events-grid">
+            <div class="Events-grid">
 
                 <!-- Past Event 1 -->
                 <div class="event-card past">
@@ -1135,7 +1135,7 @@
                 <div class="event-card past">
                     <span class="event-badge past"><i class="fa-regular fa-circle-check"></i> Completed</span>
                     <h3>BioHack 2025</h3>
-                    <p class="description">Student innovation challenge where teams built biotech solutions for real-world problems in just 48 hours.</p>
+                    <p class="description">Student innovation challenge where Memberss built biotech solutions for real-world problems in just 48 hours.</p>
                     <div class="event-meta">
                         <span><i class="fa-regular fa-calendar"></i> 2–3 Oct 2025</span>
                         <span><i class="fa-regular fa-clock"></i> 10:00 AM – 6:00 PM</span>
@@ -1165,7 +1165,7 @@
             </div>
         </section>
 
-        <!-- ===== UPCOMING EVENTS ===== -->
+        <!-- ===== UPCOMING Events ===== -->
         <section class="section" style="padding-top:0; padding-bottom:40px;">
             <div class="divider-wrap">
                 <span class="divider-line green"></span>
@@ -1173,7 +1173,7 @@
                 <span class="divider-line green"></span>
             </div>
 
-            <div class="events-grid">
+            <div class="Events-grid">
 
                 <!-- Upcoming Event 1 -->
                 <div class="event-card upcoming">
@@ -1226,7 +1226,7 @@
                 <div class="event-card upcoming">
                     <span class="event-badge upcoming"><i class="fa-regular fa-calendar-plus"></i> Upcoming</span>
                     <h3>BioGenius Annual Meet 2026</h3>
-                    <p class="description">Celebrate our community's achievements, showcase projects, and network with fellow biotech enthusiasts.</p>
+                    <p class="description">Celebrate our community's achievements, showcase Projects, and network with fellow biotech enthusiasts.</p>
                     <div class="event-meta">
                         <span><i class="fa-regular fa-calendar"></i> 10 Jan 2026</span>
                         <span><i class="fa-regular fa-clock"></i> 9:00 AM – 6:00 PM</span>
@@ -1272,10 +1272,10 @@
             </div>
             <div class="footer-links">
                 <h4>Explore</h4>
-                <a href="about.html">About</a>
-                <a href="events.html">Events</a>
-                <a href="projects.html">Projects</a>
-                <a href="team.html">Community</a>
+                <a href="About.html">About</a>
+                <a href="Events.html">Events</a>
+                <a href="Projects.html">Projects</a>
+                <a href="Members.html">Community</a>
             </div>
             <div class="footer-links">
                 <h4>Connect</h4>

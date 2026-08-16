@@ -85,14 +85,14 @@
                 radial-gradient(ellipse at 20% 30%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
                 radial-gradient(ellipse at 80% 70%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
                 linear-gradient(180deg, rgba(10, 30, 28, 0.55) 0%, rgba(6, 18, 17, 0.70) 100%);
-            pointer-events: none;
+            pointer-Events: none;
         }
 
         .bg-wall::before {
             content: '';
             position: absolute;
             inset: 0;
-            pointer-events: none;
+            pointer-Events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
             background-size: 300px 300px;
             opacity: 0.3;
@@ -488,9 +488,9 @@
         }
 
         /* ============================================================
-           PROJECTS GRID
+           Projects GRID
            ============================================================ */
-        .projects-grid {
+        .Projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 24px;
@@ -608,7 +608,7 @@
             margin-bottom: 16px;
         }
 
-        .project-team {
+        .project-Members {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -617,7 +617,7 @@
             margin-bottom: 16px;
         }
 
-        .project-team i {
+        .project-Members i {
             color: #7eddb0;
             width: 18px;
             font-size: 14px;
@@ -947,7 +947,7 @@
             .mobile-dropdown.show {
                 display: flex;
             }
-            .projects-grid {
+            .Projects-grid {
                 grid-template-columns: 1fr 1fr;
             }
             .footer-main {
@@ -967,7 +967,7 @@
             .section-heading h1 {
                 font-size: clamp(32px, 8vw, 44px);
             }
-            .projects-grid {
+            .Projects-grid {
                 grid-template-columns: 1fr;
             }
             .project-card {
@@ -1084,11 +1084,11 @@
 
         <nav class="nav-links" id="navLinks">
             <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="events.html">Events</a>
-            <a href="projects.html" class="active">Projects</a>
-            <a href="team.html">Team</a>
-            <a href="contact.html">Contact</a>
+            <a href="About.html">About</a>
+            <a href="Events.html">Events</a>
+            <a href="Projects.html" class="active">Projects</a>
+            <a href="Members.html">Members</a>
+            <a href="Contact.html">Contact</a>
         </nav>
 
         <button class="join-btn" id="openModalBtn">
@@ -1104,16 +1104,16 @@
     <!-- Mobile dropdown -->
     <div class="mobile-dropdown" id="mobileDropdown">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="projects.html">Projects</a>
-        <a href="team.html">Team</a>
-        <a href="contact.html">Contact</a>
+        <a href="About.html">About</a>
+        <a href="Events.html">Events</a>
+        <a href="Projects.html">Projects</a>
+        <a href="Members.html">Members</a>
+        <a href="Contact.html">Contact</a>
         <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
     </div>
 
     <!-- ============================================================
-    PROJECTS PAGE
+    Projects PAGE
     ============================================================ -->
     <main>
 
@@ -1122,7 +1122,7 @@
             <div class="section-heading">
                 <p class="small-title">STUDENT INNOVATION</p>
                 <h1>Projects with <span>purpose</span></h1>
-                <p>From lab bench to real-world solutions — explore the research and innovation projects built by our members.</p>
+                <p>From lab bench to real-world solutions — explore the research and innovation Projects built by our members.</p>
             </div>
         </section>
 
@@ -1138,7 +1138,7 @@
 
         <!-- Projects Grid -->
         <section class="section" style="padding-top:0; padding-bottom:60px;">
-            <div class="projects-grid" id="projectsGrid">
+            <div class="Projects-grid" id="ProjectsGrid">
 
                 <!-- Project 1: Ongoing -->
                 <div class="project-card ongoing" data-status="ongoing">
@@ -1147,9 +1147,9 @@
                     <h3>Sustainable Plant Growth</h3>
                     <p class="project-category">Agricultural Biotech</p>
                     <p class="description">Exploring biofertilizers and plant-microbe interactions to enhance crop yield without chemical inputs.</p>
-                    <div class="project-team">
+                    <div class="project-Members">
                         <i class="fa-solid fa-users"></i>
-                        <span>Team: Ananya, Rohan, Priya</span>
+                        <span>Members: Ananya, Rohan, Priya</span>
                     </div>
                     <div class="project-actions">
                         <button class="learn-btn">Learn More <i class="fa-solid fa-arrow-right"></i></button>
@@ -1164,9 +1164,9 @@
                     <h3>Microbial Resistance Study</h3>
                     <p class="project-category">Biomedical</p>
                     <p class="description">Investigating antibiotic resistance patterns in environmental bacterial isolates from local water sources.</p>
-                    <div class="project-team">
+                    <div class="project-Members">
                         <i class="fa-solid fa-users"></i>
-                        <span>Team: Vikram, Sneha, Arjun</span>
+                        <span>Members: Vikram, Sneha, Arjun</span>
                     </div>
                     <div class="project-actions">
                         <button class="learn-btn">Learn More <i class="fa-solid fa-arrow-right"></i></button>
@@ -1181,9 +1181,9 @@
                     <h3>CRISPR Detection Kit</h3>
                     <p class="project-category">Molecular Biology</p>
                     <p class="description">Developed a low-cost CRISPR-based diagnostic platform for rapid pathogen detection in resource-limited settings.</p>
-                    <div class="project-team">
+                    <div class="project-Members">
                         <i class="fa-solid fa-users"></i>
-                        <span>Team: Kavya, Sameer, Neha</span>
+                        <span>Members: Kavya, Sameer, Neha</span>
                     </div>
                     <div class="project-actions">
                         <button class="learn-btn">Learn More <i class="fa-solid fa-arrow-right"></i></button>
@@ -1198,9 +1198,9 @@
                     <h3>AI for Protein Folding</h3>
                     <p class="project-category">AI + Biology</p>
                     <p class="description">Built a machine learning model to predict protein secondary structure from amino acid sequences.</p>
-                    <div class="project-team">
+                    <div class="project-Members">
                         <i class="fa-solid fa-users"></i>
-                        <span>Team: Aditya, Meera, Dev</span>
+                        <span>Members: Aditya, Meera, Dev</span>
                     </div>
                     <div class="project-actions">
                         <button class="learn-btn">Learn More <i class="fa-solid fa-arrow-right"></i></button>
@@ -1215,9 +1215,9 @@
                     <h3>BioPlastics from Algae</h3>
                     <p class="project-category">Environmental Biotech</p>
                     <p class="description">Developing biodegradable plastic alternatives using algae-derived polymers. Lab phase starting Jan 2026.</p>
-                    <div class="project-team">
+                    <div class="project-Members">
                         <i class="fa-solid fa-users"></i>
-                        <span>Team: Riya, Karan, Zara</span>
+                        <span>Members: Riya, Karan, Zara</span>
                     </div>
                     <div class="project-actions">
                         <button class="learn-btn">Learn More <i class="fa-solid fa-arrow-right"></i></button>
@@ -1232,9 +1232,9 @@
                     <h3>Synthetic Biology Toolkit</h3>
                     <p class="project-category">Synthetic Biology</p>
                     <p class="description">Building a modular genetic circuit toolkit for engineering microbes with novel functions.</p>
-                    <div class="project-team">
+                    <div class="project-Members">
                         <i class="fa-solid fa-users"></i>
-                        <span>Team: Anjali, Rohit, Mira</span>
+                        <span>Members: Anjali, Rohit, Mira</span>
                     </div>
                     <div class="project-actions">
                         <button class="learn-btn">Learn More <i class="fa-solid fa-arrow-right"></i></button>
@@ -1276,10 +1276,10 @@
             </div>
             <div class="footer-links">
                 <h4>Explore</h4>
-                <a href="about.html">About</a>
-                <a href="events.html">Events</a>
-                <a href="projects.html">Projects</a>
-                <a href="team.html">Community</a>
+                <a href="About.html">About</a>
+                <a href="Events.html">Events</a>
+                <a href="Projects.html">Projects</a>
+                <a href="Members.html">Community</a>
             </div>
             <div class="footer-links">
                 <h4>Connect</h4>
