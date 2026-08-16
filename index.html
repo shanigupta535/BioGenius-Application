@@ -6,7 +6,6 @@
     <title>BioGenius | Home</title>
 
     <!-- Google Fonts -->
-     <script src="script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -2090,7 +2089,118 @@
     <!-- ============================================================
     JAVASCRIPT — FIXED: wrapped in script tags
     ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
 
+            // ---- 1. Navbar shrink on scroll ----
+            var navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 40) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // ---- 2. Mobile menu toggle (HAMBURGER FIX) ----
+            var menuBtn = document.getElementById('menuBtn');
+            var mobileDropdown = document.getElementById('mobileDropdown');
+            var mobileOpen = false;
+
+            if (menuBtn && mobileDropdown) {
+                menuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    mobileOpen = !mobileOpen;
+                    mobileDropdown.classList.toggle('show', mobileOpen);
+                    menuBtn.innerHTML = mobileOpen ?
+                        '<i class="fa-solid fa-xmark"></i>' :
+                        '<i class="fa-solid fa-bars"></i>';
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (mobileOpen &&
+                        !mobileDropdown.contains(e.target) &&
+                        e.target !== menuBtn &&
+                        !menuBtn.contains(e.target)) {
+                        mobileDropdown.classList.remove('show');
+                        mobileOpen = false;
+                        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                    }
+                });
+
+                // Close on Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && mobileOpen) {
+                        mobileDropdown.classList.remove('show');
+                        mobileOpen = false;
+                        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                    }
+                });
+
+                // Close on resize back to desktop
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 820 && mobileOpen) {
+                        mobileDropdown.classList.remove('show');
+                        mobileOpen = false;
+                        menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                    }
+                });
+            }
+
+            // ---- 3. Mobile join button ----
+            var mobileJoinBtn = document.getElementById('mobileJoinBtn');
+            if (mobileJoinBtn) {
+                mobileJoinBtn.addEventListener('click', function() {
+                    // Redirect to Join page or handle join action
+                    window.location.href = 'Join.html';
+                    // Close dropdown
+                    if (mobileDropdown && mobileOpen) {
+                        mobileDropdown.classList.remove('show');
+                        mobileOpen = false;
+                        if (menuBtn) {
+                            menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                        }
+                    }
+                });
+            }
+
+            // ---- 4. Toast system ----
+            var toast = document.getElementById('toast');
+
+            function showToast(message) {
+                if (!toast) return;
+                var span = toast.querySelector('span');
+                if (span) span.textContent = message;
+                toast.classList.add('show');
+                clearTimeout(toast._timer);
+                toast._timer = setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3500);
+            }
+
+            // ---- 5. Contact form ----
+            var contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showToast('Message sent! We\'ll get back to you soon.');
+                    this.reset();
+                });
+            }
+
+            // ---- 6. Active nav link ----
+            var navLinkEls = document.querySelectorAll('.nav-links a');
+            navLinkEls.forEach(function(link) {
+                if (link.getAttribute('href') === 'index.html') {
+                    link.classList.add('active');
+                }
+            });
+
+            console.log('✅ BioGenius — Home page loaded with hamburger menu fixed!');
+        })();
+    </script>
 
 </body>
 </html>
