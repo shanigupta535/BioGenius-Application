@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BioGenius | Leadership Team</title>
+    <title>BioGenius | Leadership Members</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -454,13 +454,13 @@
         /* ============================================================
            TEAM GRID
            ============================================================ */
-        .team-grid {
+        .Members-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 24px;
         }
 
-        .team-card {
+        .Members-card {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 24px;
@@ -477,7 +477,7 @@
             overflow: hidden;
         }
 
-        .team-card::before {
+        .Members-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -488,7 +488,7 @@
             opacity: 0.6;
         }
 
-        .team-card:hover {
+        .Members-card:hover {
             transform: translateY(-6px);
             background: rgba(255, 255, 255, 0.07);
             border-color: rgba(126, 221, 176, 0.12);
@@ -529,7 +529,7 @@
             letter-spacing: 0.5px;
         }
 
-        .team-card h3 {
+        .Members-card h3 {
             font-size: 19px;
             font-weight: 700;
             color: #ecfbf5;
@@ -871,7 +871,7 @@
             .mobile-dropdown.show {
                 display: flex;
             }
-            .team-grid {
+            .Members-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             .footer-main {
@@ -891,12 +891,12 @@
             .section-heading h1 {
                 font-size: clamp(32px, 8vw, 44px);
             }
-            .team-grid {
+            .Members-grid {
                 grid-template-columns: 1fr;
                 max-width: 380px;
                 margin-inline: auto;
             }
-            .team-card {
+            .Members-card {
                 padding: 22px 18px;
             }
             .footer-main {
@@ -1010,7 +1010,7 @@
             <a href="about.html">About</a>
             <a href="events.html">Events</a>
             <a href="projects.html">Projects</a>
-            <a href="team.html" class="active">Team</a>
+            <a href="Members.html" class="active">Members</a>
             <a href="contact.html">Contact</a>
         </nav>
 
@@ -1030,7 +1030,7 @@
         <a href="about.html">About</a>
         <a href="events.html">Events</a>
         <a href="projects.html">Projects</a>
-        <a href="team.html">Team</a>
+        <a href="Members.html">Members</a>
         <a href="contact.html">Contact</a>
         <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
     </div>
@@ -1044,18 +1044,18 @@
         <section class="section" style="padding-bottom:30px;">
             <div class="section-heading">
                 <p class="small-title">EXECUTIVE BOARD 2026–2027</p>
-                <h1>Leadership <span>Team</span></h1>
-                <p>Meet the dedicated core team driving BioGenius — appointed through a rigorous selection process to lead with vision and integrity.</p>
+                <h1>Leadership <span>Members</span></h1>
+                <p>Meet the dedicated core Members driving BioGenius — appointed through a rigorous selection process to lead with vision and integrity.</p>
             </div>
         </section>
 
         <!-- Members Grid -->
         <section class="section" style="padding-top:0; padding-bottom:60px;">
-            <div class="team-grid">
+            <div class="Members-grid">
 
                 <!-- ===== SENIOR LEADERSHIP ===== -->
                 <!-- Member 1 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#01</span>
                     <div class="member-avatar"><span class="initials">SJ</span></div>
                     <span class="member-badge senior">Senior Leadership</span>
@@ -1066,7 +1066,7 @@
                 </div>
 
                 <!-- Member 2 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#02</span>
                     <div class="member-avatar"><span class="initials">DT</span></div>
                     <span class="member-badge senior">Senior Leadership</span>
@@ -1077,7 +1077,7 @@
                 </div>
 
                 <!-- Member 3 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#03</span>
                     <div class="member-avatar"><span class="initials">SS</span></div>
                     <span class="member-badge senior">Senior Leadership</span>
@@ -1088,7 +1088,7 @@
                 </div>
 
                 <!-- Member 4 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#04</span>
                     <div class="member-avatar"><span class="initials">TP</span></div>
                     <span class="member-badge senior">Senior Leadership</span>
@@ -1099,7 +1099,7 @@
                 </div>
 
                 <!-- Member 5 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#05</span>
                     <div class="member-avatar"><span class="initials">SG</span></div>
                     <span class="member-badge senior">Senior Leadership</span>
@@ -1111,7 +1111,7 @@
 
                 <!-- ===== EXECUTIVE HEADS ===== -->
                 <!-- Member 6 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#06</span>
                     <div class="member-avatar"><span class="initials">VP</span></div>
                     <span class="member-badge executive">Executive Head</span>
@@ -1122,7 +1122,7 @@
                 </div>
 
                 <!-- Member 7 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#07</span>
                     <div class="member-avatar"><span class="initials">TM</span></div>
                     <span class="member-badge executive">Executive Head</span>
@@ -1133,7 +1133,7 @@
                 </div>
 
                 <!-- Member 8 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#08</span>
                     <div class="member-avatar"><span class="initials">KC</span></div>
                     <span class="member-badge executive">Executive Head</span>
@@ -1144,7 +1144,7 @@
                 </div>
 
                 <!-- Member 9 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#09</span>
                     <div class="member-avatar"><span class="initials">DG</span></div>
                     <span class="member-badge executive">Executive Head</span>
@@ -1155,7 +1155,7 @@
                 </div>
 
                 <!-- Member 10 -->
-                <div class="team-card">
+                <div class="Members-card">
                     <span class="member-number">#10</span>
                     <div class="member-avatar"><span class="initials">AR</span></div>
                     <span class="member-badge executive">Executive Head</span>
@@ -1183,7 +1183,7 @@
                         <strong style="color:#7eddb0;">II.</strong> All appointed Executive Board members are required to attend the mandatory Inaugural Strategy Meeting. Detailed schedule, venue, and agenda items will be communicated via official channels shortly. Attendance is strictly compulsory.
                     </p>
                     <p style="margin-top:6px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06); font-style:italic; color:rgba(200,230,220,0.60);">
-                        The Executive Board extends its gratitude to all candidates who participated in the recruitment process. With this powerful leadership team in place, BioGenius embarks on a vision of academic excellence, innovation, and impactful student initiatives.
+                        The Executive Board extends its gratitude to all candidates who participated in the recruitment process. With this powerful leadership Members in place, BioGenius embarks on a vision of academic excellence, innovation, and impactful student initiatives.
                     </p>
                     <p style="font-weight:600; color:#7eddb0; letter-spacing:0.5px; margin-top:4px;">
                         BY ORDER OF THE EXECUTIVE COUNCIL
@@ -1226,7 +1226,7 @@
                 <a href="about.html">About</a>
                 <a href="events.html">Events</a>
                 <a href="projects.html">Projects</a>
-                <a href="team.html">Community</a>
+                <a href="Members.html">Community</a>
             </div>
             <div class="footer-links">
                 <h4>Connect</h4>
@@ -1397,7 +1397,7 @@
                 }, 3500);
             }
 
-            console.log('✅ Executive Board team page loaded!');
+            console.log('✅ Executive Board Members page loaded!');
         })();
     </script>
 
