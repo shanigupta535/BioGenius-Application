@@ -6,6 +6,7 @@
     <title>BioGenius | Home</title>
 
     <!-- Google Fonts -->
+     <script src="Join.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -2136,25 +2137,56 @@
                     <a href="#"><i class="fa-brands fa-linkedin-in"></i> BioGenius Biotechnology Club</a>
                 </div>
             </div>
-            <form class="contact-form" id="contactForm">
-                <div class="input-row">
-                    <div class="input-group">
-                        <label>Name</label>
-                        <input type="text" id="name" placeholder="Your name" required />
-                    </div>
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" id="email" placeholder="you@example.com" required />
-                    </div>
-                </div>
+            <!-- _______________________________________________ Support section  -->
+            <form
+            class="contact-form"
+            id="contactForm"
+            action="https://formsubmit.co/shanigupta8282@gmail.com"
+            method="POST"
+        >
+            <!-- FormSubmit settings -->
+            <input type="hidden" name="_subject" value="📩 New Message from BioGenius" />
+            <input type="hidden" name="_captcha" value="false" />
+        
+            <div class="input-row">
                 <div class="input-group">
-                    <label>Message</label>
-                    <textarea id="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Your name"
+                        required
+                    />
                 </div>
-                <button type="submit" class="primary-btn">
-                    Send Message <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </form>
+        
+                <div class="input-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        required
+                    />
+                </div>
+            </div>
+        
+            <div class="input-group">
+                <label>Message</label>
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    placeholder="Tell us how we can help..."
+                    required
+                ></textarea>
+            </div>
+        
+            <button type="submit" class="primary-btn">
+                Send Message <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>
         </section>
 
     </main>
@@ -2198,126 +2230,7 @@
     <!-- ============================================================
     JAVASCRIPT
     ============================================================ -->
-    <script>
-        (function() {
-            'use strict';
 
-            // ---- 1. Navbar shrink on scroll ----
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 40) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-
-            // ---- 2. Mobile menu toggle ----
-            const menuBtn = document.getElementById('menuBtn');
-            const mobileDropdown = document.getElementById('mobileDropdown');
-            let mobileOpen = false;
-
-            menuBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                mobileOpen = !mobileOpen;
-                mobileDropdown.classList.toggle('show', mobileOpen);
-                menuBtn.innerHTML = mobileOpen ?
-                    '<i class="fa-solid fa-xmark"></i>' :
-                    '<i class="fa-solid fa-bars"></i>';
-            });
-
-            document.addEventListener('click', function(e) {
-                if (mobileOpen &&
-                    !mobileDropdown.contains(e.target) &&
-                    e.target !== menuBtn &&
-                    !menuBtn.contains(e.target)) {
-                    mobileDropdown.classList.remove('show');
-                    mobileOpen = false;
-                    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-                }
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileOpen) {
-                    mobileDropdown.classList.remove('show');
-                    mobileOpen = false;
-                    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-                }
-            });
-
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 820 && mobileOpen) {
-                    mobileDropdown.classList.remove('show');
-                    mobileOpen = false;
-                    menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-                }
-            });
-
-            // ---- 3. Mobile join button ----
-            document.getElementById('mobileJoinBtn').addEventListener('click', function() {
-                openJoinModal();
-                mobileDropdown.classList.remove('show');
-                mobileOpen = false;
-                menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
-            });
-
-            // ---- 4. Modal ----
-            const modal = document.getElementById('joinModal');
-            const openBtn = document.getElementById('openModalBtn');
-
-            window.openJoinModal = function() {
-                modal.classList.add('show');
-                document.body.style.overflow = 'hidden';
-            };
-
-            window.closeJoinModal = function() {
-                modal.classList.remove('show');
-                document.body.style.overflow = '';
-            };
-
-            openBtn.addEventListener('click', openJoinModal);
-
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) closeJoinModal();
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') closeJoinModal();
-            });
-
-           
-
-            // ---- 6. Contact form ----
-            document.getElementById('contactForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                showToast('Message sent! We\'ll get back to you soon.');
-                this.reset();
-            });
-
-            // ---- 7. Toast ----
-            const toast = document.getElementById('toast');
-
-            function showToast(message) {
-                const span = toast.querySelector('span');
-                if (span) span.textContent = message;
-                toast.classList.add('show');
-                clearTimeout(toast._timer);
-                toast._timer = setTimeout(function() {
-                    toast.classList.remove('show');
-                }, 3500);
-            }
-
-            // ---- 8. Active nav link ----
-            const navLinkEls = document.querySelectorAll('.nav-links a');
-            navLinkEls.forEach(function(link) {
-                if (link.getAttribute('href') === 'index.html') {
-                    link.classList.add('active');
-                }
-            });
-
-            console.log('✅ BioGenius — Home page loaded with multi-page navigation!');
-        })();
-    </script>
 
 </body>
 </html>
