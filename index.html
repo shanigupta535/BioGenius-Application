@@ -6,7 +6,7 @@
     <title>BioGenius | Home</title>
 
     <!-- Google Fonts -->
-     <script src="Join.js"></script>
+     <script src="script.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -87,14 +87,14 @@
                 radial-gradient(ellipse at 20% 30%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
                 radial-gradient(ellipse at 80% 70%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
                 linear-gradient(180deg, rgba(10, 30, 28, 0.55) 0%, rgba(6, 18, 17, 0.70) 100%);
-            pointer-E: none;
+            pointer-events: none;
         }
 
         .bg-wall::before {
             content: '';
             position: absolute;
             inset: 0;
-            pointer-E: none;
+            pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
             background-size: 300px 300px;
             opacity: 0.3;
@@ -347,6 +347,8 @@
             transition: all 0.3s ease;
             flex-shrink: 0;
             backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
         }
         .menu-btn:hover {
             background: rgba(255, 255, 255, 0.12);
@@ -375,7 +377,7 @@
             animation: fadeDown 0.25s ease;
         }
         .mobile-dropdown.show {
-            display: flex;
+            display: flex !important;
         }
         .mobile-dropdown a {
             padding: 12px 16px;
@@ -861,9 +863,9 @@
         }
 
         /* ============================================================
-           E
+           EVENTS
            ============================================================ */
-        .E-grid {
+        .Event-grid {
             display: grid;
             gap: 15px;
         }
@@ -940,10 +942,13 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
         .view-all:hover {
             color: #b5f0d4;
-            gap: 12px;
+            gap: 14px;
         }
 
         /* ============================================================
@@ -1158,9 +1163,7 @@
             font-weight: 600;
         }
         .input-group input,
-        .input-group textarea,
-        #joinForm input,
-        #joinForm select {
+        .input-group textarea {
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.08);
             outline: none;
@@ -1172,25 +1175,17 @@
             font-size: 14px;
         }
         .input-group input::placeholder,
-        .input-group textarea::placeholder,
-        #joinForm input::placeholder,
-        #joinForm select {
+        .input-group textarea::placeholder {
             color: rgba(200, 230, 220, 0.40);
         }
         .input-group input:focus,
-        .input-group textarea:focus,
-        #joinForm input:focus,
-        #joinForm select:focus {
+        .input-group textarea:focus {
             border-color: rgba(126, 221, 176, 0.30);
             box-shadow: 0 0 0 4px rgba(126, 221, 176, 0.05);
             background: rgba(255, 255, 255, 0.06);
         }
         .input-group textarea {
             resize: vertical;
-        }
-        #joinForm select option {
-            background: #0d1f1e;
-            color: #ecfbf5;
         }
 
         /* ============================================================
@@ -1242,113 +1237,6 @@
             justify-content: space-between;
             color: rgba(200, 230, 220, 0.40);
             font-size: 11px;
-        }
-
-        /* ============================================================
-           MODAL
-           ============================================================ */
-        .modal {
-            position: fixed;
-            inset: 0;
-            z-index: 500;
-            display: none;
-            place-items: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.50);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-        .modal.show {
-            display: grid;
-        }
-        .modal-content {
-            width: min(450px, 100%);
-            padding: 40px;
-            position: relative;
-            border-radius: 30px;
-            background: rgba(13, 31, 30, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.50);
-            animation: modalIn 0.3s ease;
-            color: #ecfbf5;
-        }
-        @keyframes modalIn {
-            from {
-                transform: scale(0.92) translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-        }
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.04);
-            color: rgba(235, 255, 245, 0.60);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
-            display: grid;
-            place-items: center;
-            font-size: 18px;
-        }
-        .close-modal:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ecfbf5;
-        }
-        .modal-icon {
-            width: 60px;
-            height: 60px;
-            display: grid;
-            place-items: center;
-            border-radius: 18px;
-            background: linear-gradient(135deg, rgba(8, 127, 112, 0.40), rgba(6, 90, 79, 0.30));
-            color: #7eddb0;
-            font-size: 25px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(126, 221, 176, 0.08);
-        }
-        .modal-content h2 {
-            font-size: 30px;
-            color: #ecfbf5;
-        }
-        .modal-content>p {
-            color: rgba(200, 230, 220, 0.70);
-            margin: 8px 0 25px;
-        }
-        #joinForm {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        #joinForm input,
-        #joinForm select {
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            outline: none;
-            border-radius: 13px;
-            padding: 14px 16px;
-            color: #ecfbf5;
-            background: rgba(255, 255, 255, 0.04);
-            transition: all 0.25s ease;
-            font-size: 14px;
-        }
-        #joinForm input:focus,
-        #joinForm select:focus {
-            border-color: rgba(126, 221, 176, 0.25);
-            box-shadow: 0 0 0 4px rgba(126, 221, 176, 0.04);
-            background: rgba(255, 255, 255, 0.06);
-        }
-        #joinForm .primary-btn {
-            margin-top: 8px;
-        }
-        #joinForm select option {
-            background: #0d1f1e;
         }
 
         /* ============================================================
@@ -1457,7 +1345,7 @@
                 border-radius: 18px;
             }
             .nav-links {
-                display: none;
+                display: none !important;
             }
             .join-btn {
                 padding: 10px 16px;
@@ -1470,12 +1358,12 @@
                 font-size: 14px;
             }
             .menu-btn {
-                display: flex;
+                display: flex !important;
                 align-items: center;
                 justify-content: center;
             }
             .mobile-dropdown.show {
-                display: flex;
+                display: flex !important;
             }
         }
 
@@ -1579,7 +1467,7 @@
                 min-height: 0;
                 padding: 26px;
             }
-            .E-grid {
+            .Event-grid {
                 gap: 12px;
             }
             .event-card {
@@ -1791,13 +1679,6 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-            .modal {
-                padding: 12px;
-            }
-            .modal-content {
-                padding: 30px 20px;
-                border-radius: 24px;
-            }
             .toast {
                 left: 12px;
                 right: 12px;
@@ -1882,7 +1763,6 @@
             <a href="Events.html">Events</a>
             <a href="Projects.html">Projects</a>
             <a href="Board.html">Board</a>
-            <!-- <a href="Contact.html">Contact</a> -->
         </nav>
 
         <a href="Join.html" class="join-btn">
@@ -1902,7 +1782,6 @@
         <a href="Events.html">Events</a>
         <a href="Projects.html">Projects</a>
         <a href="Board.html">Board</a>
-        <!-- <a href="Contact.html">Contact</a> -->
         <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
     </div>
 
@@ -1937,7 +1816,7 @@
                     </a>
                 </div>
                 <div class="hero-stats">
-                    <div><strong>250+</strong><span>Board</span></div>
+                    <div><strong>250+</strong><span>Members</span></div>
                     <div><strong>35+</strong><span>Events</span></div>
                     <div><strong>18+</strong><span>Projects</span></div>
                 </div>
@@ -1996,19 +1875,19 @@
                     <div class="feature-icon"><i class="fa-solid fa-dna"></i></div>
                     <h3>Learn</h3>
                     <p>Workshops, seminars and interactive sessions that make biotechnology easier to understand.</p>
-                    <a href="E.html">Discover E <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="Events.html">Discover Events <i class="fa-solid fa-arrow-right"></i></a>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon"><i class="fa-solid fa-flask-vial"></i></div>
                     <h3>Research</h3>
                     <p>Work on student projects and explore real-world applications of biotechnology.</p>
-                    <a href="projects.html">Explore projects <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="Projects.html">Explore projects <i class="fa-solid fa-arrow-right"></i></a>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon"><i class="fa-solid fa-lightbulb"></i></div>
                     <h3>Innovate</h3>
                     <p>Turn creative ideas into meaningful solutions for health, agriculture and sustainability.</p>
-                    <a href="projects.html">See innovation <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="Projects.html">See innovation <i class="fa-solid fa-arrow-right"></i></a>
                 </article>
                 <article class="feature-card">
                     <div class="feature-icon"><i class="fa-solid fa-people-group"></i></div>
@@ -2019,14 +1898,14 @@
             </div>
         </section>
 
-        <!-- ===== Events PREVIEW ===== -->
+        <!-- ===== EVENTS PREVIEW ===== -->
         <section class="section E-section" id="E-preview">
             <div class="section-heading">
                 <div>
                     <p class="small-title">WHAT'S HAPPENING</p>
-                    <h2>Upcoming <span>Event</span></h2>
+                    <h2>Upcoming <span>Events</span></h2>
                 </div>
-                <a href="Events.html" class="view-all">View all Event <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="Events.html" class="view-all">View all Events <i class="fa-solid fa-arrow-right"></i></a>
             </div>
             <div class="Event-grid">
                 <article class="event-card">
@@ -2058,7 +1937,7 @@
                     <div class="event-content">
                         <span class="event-type">COMPETITION</span>
                         <h3>BioHack 2026</h3>
-                        <p>Build innovative biotechnology ideas with your Board in our student innovation challenge.</p>
+                        <p>Build innovative biotechnology ideas with your team in our student innovation challenge.</p>
                         <div class="event-meta">
                             <span><i class="fa-regular fa-clock"></i> 10:00 AM</span>
                             <span><i class="fa-solid fa-location-dot"></i> Innovation Lab</span>
@@ -2073,7 +1952,7 @@
             <div class="section-heading center-heading">
                 <p class="small-title">STUDENT INNOVATION</p>
                 <h2>Projects with <span>purpose.</span></h2>
-                <p>From laboratory concepts to technology-driven solutions, our Board build projects that address real-world challenges.</p>
+                <p>From laboratory concepts to technology-driven solutions, our members build projects that address real-world challenges.</p>
             </div>
             <div class="projects-grid">
                 <article class="project-card">
@@ -2082,7 +1961,7 @@
                     <span>AGRICULTURAL BIOTECH</span>
                     <h3>Sustainable Plant Growth</h3>
                     <p>Exploring biotechnology-based approaches for sustainable agriculture and improved plant growth.</p>
-                    <a href="projects.html">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    <a href="Projects.html">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                 </article>
                 <article class="project-card">
                     <div class="project-number">02</div>
@@ -2090,7 +1969,7 @@
                     <span>BIOMEDICAL</span>
                     <h3>Microbial Analysis</h3>
                     <p>Student research exploring microbial identification and analysis.</p>
-                    <a href="projects.html">View project <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="Projects.html">View project <i class="fa-solid fa-arrow-right"></i></a>
                 </article>
                 <article class="project-card">
                     <div class="project-number">03</div>
@@ -2098,7 +1977,7 @@
                     <span>AI + BIOLOGY</span>
                     <h3>AI for Life Sciences</h3>
                     <p>Exploring machine learning applications in biological datasets.</p>
-                    <a href="projects.html">View project <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="Projects.html">View project <i class="fa-solid fa-arrow-right"></i></a>
                 </article>
             </div>
         </section>
@@ -2110,15 +1989,17 @@
                     <p class="small-title">OUR COMMUNITY</p>
                     <h2>Learn together. <span>Grow together.</span></h2>
                     <p>BioGenius is more than a university club. It is a community where students can share ideas, build projects and develop skills.</p>
-                   <a href="Join.html"> <button class="primary-btn" onclick="openJoinModal()">
-                        Become a Member <i class="fa-solid fa-arrow-right"></i>
-                    </button> </a>
+                    <a href="Join.html">
+                        <button class="primary-btn">
+                            Become a Member <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </a>
                 </div>
                 <div class="community-stats">
                     <div><strong>250+</strong><span>Active Students</span></div>
-                    <div><strong>35+</strong><span>EventsConducted</span></div>
+                    <div><strong>35+</strong><span>Events Conducted</span></div>
                     <div><strong>18+</strong><span>Research Projects</span></div>
-                    <div><strong>12</strong><span>Core Board Board</span></div>
+                    <div><strong>12</strong><span>Core Team Members</span></div>
                 </div>
             </div>
         </section>
@@ -2137,56 +2018,31 @@
                     <a href="#"><i class="fa-brands fa-linkedin-in"></i> BioGenius Biotechnology Club</a>
                 </div>
             </div>
-            <!-- _______________________________________________ Support section  -->
-            <form
-            class="contact-form"
-            id="contactForm"
-            action="https://formsubmit.co/shanigupta8282@gmail.com"
-            method="POST"
-        >
-            <!-- FormSubmit settings -->
-            <input type="hidden" name="_subject" value="📩 New Message from BioGenius" />
-            <input type="hidden" name="_captcha" value="false" />
-        
-            <div class="input-row">
-                <div class="input-group">
-                    <label>Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Your name"
-                        required
-                    />
+            <!-- Contact Form -->
+            <form class="contact-form" id="contactForm" action="https://formsubmit.co/shanigupta8282@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="📩 New Message from BioGenius" />
+                <input type="hidden" name="_captcha" value="false" />
+
+                <div class="input-row">
+                    <div class="input-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required />
+                    </div>
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+                    </div>
                 </div>
-        
+
                 <div class="input-group">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="you@example.com"
-                        required
-                    />
+                    <label>Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
                 </div>
-            </div>
-        
-            <div class="input-group">
-                <label>Message</label>
-                <textarea
-                    id="message"
-                    name="message"
-                    rows="5"
-                    placeholder="Tell us how we can help..."
-                    required
-                ></textarea>
-            </div>
-        
-            <button type="submit" class="primary-btn">
-                Send Message <i class="fa-solid fa-paper-plane"></i>
-            </button>
-        </form>
+
+                <button type="submit" class="primary-btn">
+                    Send Message <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
         </section>
 
     </main>
@@ -2197,7 +2053,7 @@
     <footer>
         <div class="footer-main">
             <div class="footer-brand">
-                <div class="logo" style="gap:10px;">
+                <div class="logo" style="gap:10px; cursor:default;">
                     <div class="logo-icon"><i class="fa-solid fa-dna"></i></div>
                     <div class="logo-text"><strong>BIOGENIUS</strong><small>BIOTECH CLUB</small></div>
                 </div>
@@ -2206,7 +2062,7 @@
             <div class="footer-links">
                 <h4>Explore</h4>
                 <a href="About.html">About</a>
-                <a href="Event.html">Events</a>
+                <a href="Events.html">Events</a>
                 <a href="Projects.html">Projects</a>
                 <a href="Board.html">Community</a>
             </div>
@@ -2224,11 +2080,15 @@
     </footer>
 
     <!-- ============================================================
-    JOIN MODAL
+    TOAST
     ============================================================ -->
-  
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Message sent successfully!</span>
+    </div>
+
     <!-- ============================================================
-    JAVASCRIPT
+    JAVASCRIPT — FIXED: wrapped in script tags
     ============================================================ -->
 
 
