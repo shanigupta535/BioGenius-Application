@@ -1884,10 +1884,10 @@
             <!-- <a href="Contact.html">Contact</a> -->
         </nav>
 
-        <button class="join-btn" id="openModalBtn">
+        <a href="Join.html" class="join-btn">
             <i class="fas fa-leaf"></i>
             <span>Join Now</span>
-        </button>
+        </a>
 
         <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
             <i class="fa-solid fa-bars"></i>
@@ -2109,9 +2109,9 @@
                     <p class="small-title">OUR COMMUNITY</p>
                     <h2>Learn together. <span>Grow together.</span></h2>
                     <p>BioGenius is more than a university club. It is a community where students can share ideas, build projects and develop skills.</p>
-                    <button class="primary-btn" onclick="openJoinModal()">
+                   <a href="Join.html"> <button class="primary-btn" onclick="openJoinModal()">
                         Become a Member <i class="fa-solid fa-arrow-right"></i>
-                    </button>
+                    </button> </a>
                 </div>
                 <div class="community-stats">
                     <div><strong>250+</strong><span>Active Students</span></div>
@@ -2194,40 +2194,7 @@
     <!-- ============================================================
     JOIN MODAL
     ============================================================ -->
-    <div class="modal" id="joinModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeJoinModal()">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="modal-icon"><i class="fa-solid fa-dna"></i></div>
-            <h2>Join BioGenius</h2>
-            <p>Become part of our biotechnology community.</p>
-            <form id="joinForm">
-                <input type="text" id="joinName" placeholder="Full Name" required />
-                <input type="email" id="joinEmail" placeholder="University Email" required />
-                <select id="department" required>
-                    <option value="">Select Department</option>
-                    <option>Biotechnology</option>
-                    <option>Bioinformatics</option>
-                    <option>Computer Science</option>
-                    <option>Life Sciences</option>
-                    <option>Other</option>
-                </select>
-                <button class="primary-btn" type="submit">
-                    Submit Application <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    TOAST
-    ============================================================ -->
-    <div class="toast" id="toast">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>Application submitted successfully!</span>
-    </div>
-
+  
     <!-- ============================================================
     JAVASCRIPT
     ============================================================ -->
@@ -2318,13 +2285,7 @@
                 if (e.key === 'Escape') closeJoinModal();
             });
 
-            // ---- 5. Join form ----
-            document.getElementById('joinForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                closeJoinModal();
-                showToast('Application submitted successfully!');
-                this.reset();
-            });
+           
 
             // ---- 6. Contact form ----
             document.getElementById('contactForm').addEventListener('submit', function(e) {
