@@ -86,14 +86,14 @@
                 radial-gradient(ellipse at 20% 30%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
                 radial-gradient(ellipse at 80% 70%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
                 linear-gradient(180deg, rgba(10, 30, 28, 0.55) 0%, rgba(6, 18, 17, 0.70) 100%);
-            pointer-events: none;
+            pointer-Events: none;
         }
 
         .bg-wall::before {
             content: '';
             position: absolute;
             inset: 0;
-            pointer-events: none;
+            pointer-Events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
             background-size: 300px 300px;
             opacity: 0.3;
@@ -443,7 +443,7 @@
             text-transform: uppercase;
         }
         .section-heading h2,
-        .contact-left h2,
+        .Contact-left h2,
         .community-card h2 {
             font-family: "Plus Jakarta Sans";
             font-size: clamp(35px, 5vw, 55px);
@@ -453,7 +453,7 @@
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
         }
         .section-heading h2 span,
-        .contact-left h2 span,
+        .Contact-left h2 span,
         .community-card h2 span {
             color: #7eddb0;
         }
@@ -474,46 +474,46 @@
         }
 
         /* ============================================================
-           ABOUT PAGE SPECIFIC
+           About PAGE SPECIFIC
            ============================================================ */
-        .about-hero {
+        .About-hero {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
             padding: 30px 0 60px;
         }
-        .about-hero-content h1 {
+        .About-hero-content h1 {
             font-family: "Plus Jakarta Sans", sans-serif;
             font-size: clamp(48px, 6vw, 72px);
             letter-spacing: -3px;
             color: #ecfbf5;
             text-shadow: 0 4px 30px rgba(0, 0, 0, 0.30);
         }
-        .about-hero-content h1 span {
+        .About-hero-content h1 span {
             color: #7eddb0;
         }
-        .about-hero-content p {
+        .About-hero-content p {
             color: rgba(200, 230, 220, 0.85);
             font-size: 17px;
             line-height: 1.8;
             margin-top: 20px;
             max-width: 580px;
         }
-        .about-hero-image {
+        .About-hero-image {
             min-height: 400px;
             position: relative;
             display: grid;
             place-items: center;
         }
-        .about-orb {
+        .About-orb {
             width: 420px;
             height: 420px;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(126, 221, 176, 0.15), rgba(8, 127, 112, 0.10), transparent 70%);
             position: absolute;
         }
-        .about-floating-icon {
+        .About-floating-icon {
             position: absolute;
             width: 80px;
             height: 80px;
@@ -527,12 +527,12 @@
             color: #7eddb0;
             animation: float 5s ease-in-out infinite;
         }
-        .about-floating-icon:nth-child(2) {
+        .About-floating-icon:nth-child(2) {
             top: 20px;
             left: 30px;
             animation-delay: 0.5s;
         }
-        .about-floating-icon:nth-child(3) {
+        .About-floating-icon:nth-child(3) {
             bottom: 30px;
             right: 20px;
             animation-delay: 1.2s;
@@ -540,7 +540,7 @@
             height: 70px;
             font-size: 28px;
         }
-        .about-floating-icon:nth-child(4) {
+        .About-floating-icon:nth-child(4) {
             top: 50%;
             right: 10px;
             transform: translateY(-50%);
@@ -625,12 +625,12 @@
             line-height: 1.6;
         }
 
-        .team-grid {
+        .Members-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
-        .team-member {
+        .Members-member {
             padding: 28px 20px;
             border-radius: 22px;
             text-align: center;
@@ -640,12 +640,12 @@
             color: #ecfbf5;
             transition: all 0.4s ease;
         }
-        .team-member:hover {
+        .Members-member:hover {
             transform: translateY(-6px);
             background: rgba(255, 255, 255, 0.07);
             border-color: rgba(126, 221, 176, 0.10);
         }
-        .team-avatar {
+        .Members-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -657,16 +657,16 @@
             color: #7eddb0;
             border: 2px solid rgba(126, 221, 176, 0.10);
         }
-        .team-member h4 {
+        .Members-member h4 {
             font-size: 17px;
             margin-bottom: 4px;
         }
-        .team-member .role {
+        .Members-member .role {
             font-size: 12px;
             color: #7eddb0;
             font-weight: 500;
         }
-        .team-member p {
+        .Members-member p {
             font-size: 12px;
             color: rgba(200, 230, 220, 0.60);
             margin-top: 10px;
@@ -898,7 +898,7 @@
                 padding: 10px 18px;
                 font-size: 13px;
             }
-            .team-grid {
+            .Members-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             .timeline-grid {
@@ -907,32 +907,32 @@
         }
 
         @media (max-width: 900px) {
-            .about-hero {
+            .About-hero {
                 grid-template-columns: 1fr;
                 gap: 30px;
                 text-align: center;
             }
-            .about-hero-content p {
+            .About-hero-content p {
                 margin-inline: auto;
             }
-            .about-hero-image {
+            .About-hero-image {
                 min-height: 300px;
             }
-            .about-orb {
+            .About-orb {
                 width: 300px;
                 height: 300px;
             }
-            .about-floating-icon {
+            .About-floating-icon {
                 width: 60px;
                 height: 60px;
                 font-size: 24px;
             }
-            .about-floating-icon:nth-child(3) {
+            .About-floating-icon:nth-child(3) {
                 width: 55px;
                 height: 55px;
                 font-size: 20px;
             }
-            .about-floating-icon:nth-child(4) {
+            .About-floating-icon:nth-child(4) {
                 width: 50px;
                 height: 50px;
                 font-size: 18px;
@@ -940,7 +940,7 @@
             .mission-grid {
                 grid-template-columns: 1fr 1fr;
             }
-            .team-grid {
+            .Members-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             .section-heading {
@@ -989,16 +989,16 @@
                 width: calc(100% - 28px);
                 padding: 50px 0;
             }
-            .about-hero {
+            .About-hero {
                 padding: 10px 0 30px;
             }
-            .about-hero-content h1 {
+            .About-hero-content h1 {
                 font-size: clamp(36px, 10vw, 52px);
             }
-            .about-hero-image {
+            .About-hero-image {
                 min-height: 250px;
             }
-            .about-orb {
+            .About-orb {
                 width: 220px;
                 height: 220px;
             }
@@ -1008,7 +1008,7 @@
             .timeline-grid {
                 grid-template-columns: 1fr;
             }
-            .team-grid {
+            .Members-grid {
                 grid-template-columns: 1fr;
                 max-width: 380px;
                 margin-inline: auto;
@@ -1070,13 +1070,13 @@
                 right: 12px;
                 padding: 14px 12px;
             }
-            .about-floating-icon {
+            .About-floating-icon {
                 display: none;
             }
-            .about-hero-image {
+            .About-hero-image {
                 min-height: 180px;
             }
-            .about-orb {
+            .About-orb {
                 width: 160px;
                 height: 160px;
             }
@@ -1120,11 +1120,11 @@
 
         <nav class="nav-links" id="navLinks">
             <a href="index.html">Home</a>
-            <a href="about.html" class="active">About</a>
-            <a href="events.html">Events</a>
-            <a href="projects.html">Projects</a>
-            <a href="team.html">Team</a>
-            <a href="contact.html">Contact</a>
+            <a href="About.html" class="active">About</a>
+            <a href="Events.html">Events</a>
+            <a href="Projects.html">Projects</a>
+            <a href="Members.html">Members</a>
+            <a href="Contact.html">Contact</a>
         </nav>
 
         <button class="join-btn" id="openModalBtn">
@@ -1140,16 +1140,16 @@
     <!-- Mobile dropdown -->
     <div class="mobile-dropdown" id="mobileDropdown">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="events.html">Events</a>
-        <a href="projects.html">Projects</a>
-        <a href="team.html">Team</a>
-        <a href="contact.html">Contact</a>
+        <a href="About.html">About</a>
+        <a href="Events.html">Events</a>
+        <a href="Projects.html">Projects</a>
+        <a href="Members.html">Members</a>
+        <a href="Contact.html">Contact</a>
         <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
     </div>
 
     <!-- ============================================================
-    ABOUT PAGE CONTENT
+    About PAGE CONTENT
     ============================================================ -->
     <main>
 
@@ -1172,7 +1172,7 @@
                 <div class="mission-card">
                     <i class="fa-solid fa-flask-vial"></i>
                     <h3>Research</h3>
-                    <p>Encourage student-led research projects that tackle real-world challenges in health, agriculture, and the environment.</p>
+                    <p>Encourage student-led research Projects that tackle real-world challenges in health, agriculture, and the environment.</p>
                 </div>
                 <div class="mission-card">
                     <i class="fa-solid fa-handshake"></i>
@@ -1213,34 +1213,34 @@
             </div>
         </section>
 
-        <!-- Core Team -->
-        <section class="section" id="team-preview">
+        <!-- Core Members -->
+        <section class="section" id="Members-preview">
             <div class="section-heading center-heading">
                 <p class="small-title">LEADERSHIP</p>
-                <h2>Core <span>Team</span></h2>
+                <h2>Core <span>Members</span></h2>
                 <p>Meet the passionate students who drive BioGenius forward.</p>
             </div>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="team-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="Members-grid">
+                <div class="Members-member">
+                    <div class="Members-avatar"><i class="fa-solid fa-user"></i></div>
                     <h4>Dr. Ananya Sharma</h4>
                     <span class="role">Faculty Advisor</span>
                     <p>Biotechnology professor with a focus on synthetic biology.</p>
                 </div>
-                <div class="team-member">
-                    <div class="team-avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="Members-member">
+                    <div class="Members-avatar"><i class="fa-solid fa-user"></i></div>
                     <h4>Arjun Mehta</h4>
                     <span class="role">President</span>
                     <p>Senior bioengineering student and founder member.</p>
                 </div>
-                <div class="team-member">
-                    <div class="team-avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="Members-member">
+                    <div class="Members-avatar"><i class="fa-solid fa-user"></i></div>
                     <h4>Priya Patel</h4>
                     <span class="role">Research Lead</span>
-                    <p>PhD candidate in molecular biology, leads student projects.</p>
+                    <p>PhD candidate in molecular biology, leads student Projects.</p>
                 </div>
-                <div class="team-member">
-                    <div class="team-avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="Members-member">
+                    <div class="Members-avatar"><i class="fa-solid fa-user"></i></div>
                     <h4>Rahul Singh</h4>
                     <span class="role">Events Director</span>
                     <p>Organizes workshops, seminars, and industry interactions.</p>
@@ -1261,7 +1261,7 @@
                     <div style="padding:24px; border-radius:20px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);"><strong style="font-size:32px; color:#7eddb0;">250+</strong><span style="display:block; color:rgba(200,230,220,0.70); font-size:12px;">Active Members</span></div>
                     <div style="padding:24px; border-radius:20px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);"><strong style="font-size:32px; color:#7eddb0;">35+</strong><span style="display:block; color:rgba(200,230,220,0.70); font-size:12px;">Events Conducted</span></div>
                     <div style="padding:24px; border-radius:20px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);"><strong style="font-size:32px; color:#7eddb0;">18+</strong><span style="display:block; color:rgba(200,230,220,0.70); font-size:12px;">Research Projects</span></div>
-                    <div style="padding:24px; border-radius:20px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);"><strong style="font-size:32px; color:#7eddb0;">12</strong><span style="display:block; color:rgba(200,230,220,0.70); font-size:12px;">Core Team</span></div>
+                    <div style="padding:24px; border-radius:20px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);"><strong style="font-size:32px; color:#7eddb0;">12</strong><span style="display:block; color:rgba(200,230,220,0.70); font-size:12px;">Core Members</span></div>
                 </div>
             </div>
         </section>
@@ -1282,10 +1282,10 @@
             </div>
             <div class="footer-links">
                 <h4>Explore</h4>
-                <a href="about.html">About</a>
-                <a href="events.html">Events</a>
-                <a href="projects.html">Projects</a>
-                <a href="team.html">Community</a>
+                <a href="About.html">About</a>
+                <a href="Events.html">Events</a>
+                <a href="Projects.html">Projects</a>
+                <a href="Members.html">Community</a>
             </div>
             <div class="footer-links">
                 <h4>Connect</h4>
