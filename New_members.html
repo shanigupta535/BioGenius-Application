@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioGenius Club | Members</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <style>
+        /* ============================================================
+           ROOT VARIABLES
+           ============================================================ */
+        :root {
+            --primary: #087f70;
+            --primary-dark: #065a4f;
+            --primary-light: #0ea58f;
+            --green: #4caf68;
+            --green-light: #8fdc9b;
+            --gold: #f0c040;
+            --card-radius: 22px;
+        }
+
+        /* ============================================================
+           RESET & BASE
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            min-height: 100vh;
+            background: #0a1a18;
+            color: #ecfbf5;
+            padding: 30px 20px 60px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ============================================================
+           ANIMATED BACKGROUND
+           ============================================================ */
+        .bg-wall {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: #0a1a18;
+        }
+        .bg-wall .bg-gradient {
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(8, 127, 112, 0.25) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 80%, rgba(76, 175, 104, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(10, 30, 28, 0.95) 0%, #0a1a18 100%);
+        }
+
+        .bg-wall .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.20;
+            pointer-events: none;
+            animation: orbFloat 14s ease-in-out infinite alternate;
+        }
+        .bg-wall .orb-1 {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            right: -150px;
+            background: rgba(8, 127, 112, 0.20);
+            animation-delay: 0s;
+        }
+        .bg-wall .orb-2 {
+            width: 500px;
+            height: 500px;
+            bottom: -150px;
+            left: -100px;
+            background: rgba(76, 175, 104, 0.12);
+            animation-delay: 5s;
+        }
+        .bg-wall .orb-3 {
+            width: 350px;
+            height: 350px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(126, 221, 176, 0.04);
+            animation-delay: 10s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -50px) scale(1.05); }
+            66% { transform: translate(-30px, 40px) scale(0.95); }
+            100% { transform: translate(30px, 30px) scale(1.02); }
+        }
+
+        .bg-wall .noise {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 300px 300px;
+            opacity: 0.4;
+            mix-blend-mode: overlay;
+        }
+
+        /* ============================================================
+           FLOATING PARTICLES (pure CSS)
+           ============================================================ */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(126, 221, 176, 0.18);
+            border-radius: 50%;
+            animation: particleFloat 22s linear infinite;
+        }
+        .particle:nth-child(1) { left: 8%; animation-delay: 0s; width: 6px; height: 6px; }
+        .particle:nth-child(2) { left: 18%; animation-delay: 2.5s; }
+        .particle:nth-child(3) { left: 32%; animation-delay: 4.5s; width: 8px; height: 8px; opacity: 0.10; }
+        .particle:nth-child(4) { left: 48%; animation-delay: 1.5s; }
+        .particle:nth-child(5) { left: 62%; animation-delay: 3.5s; width: 5px; height: 5px; }
+        .particle:nth-child(6) { left: 75%; animation-delay: 6s; width: 7px; height: 7px; opacity: 0.10; }
+        .particle:nth-child(7) { left: 85%; animation-delay: 2s; }
+        .particle:nth-child(8) { left: 42%; animation-delay: 7s; width: 9px; height: 9px; opacity: 0.06; }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* ============================================================
+           CONTAINER
+           ============================================================ */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+           HEADER — 3D CARD
+           ============================================================ */
+        .header-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(32px) saturate(1.4);
+            -webkit-backdrop-filter: blur(32px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            padding: 40px 44px 36px;
+            margin-bottom: 44px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            perspective: 800px;
+            transform: rotateX(0.5deg) rotateY(-0.3deg);
+        }
+
+        .header-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 28px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(126, 221, 176, 0), rgba(126, 221, 176, 0.06), rgba(8, 127, 112, 0.10), rgba(126, 221, 176, 0.06), rgba(126, 221, 176, 0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: all 0.6s ease;
+            opacity: 0.3;
+        }
+
+        .header-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(126, 221, 176, 0.04), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        .header-card:hover::after {
+            opacity: 1;
+        }
+
+        .header-card:hover {
+            transform: rotateX(0deg) rotateY(0deg) translateY(-4px) scale(1.003);
+            border-color: rgba(126, 221, 176, 0.10);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(126, 221, 176, 0.04);
+        }
+
+        .header-card:hover::before {
+            opacity: 0.8;
+            background: linear-gradient(135deg, rgba(126, 221, 176, 0.10), rgba(8, 127, 112, 0.15), rgba(126, 221, 176, 0.10));
+        }
+
+        .header-icon-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(8, 127, 112, 0.30), rgba(6, 90, 79, 0.20));
+            border: 2px solid rgba(126, 221, 176, 0.10);
+            font-size: 32px;
+            color: #7eddb0;
+            margin-bottom: 16px;
+            transition: all 0.5s ease;
+        }
+
+        .header-card:hover .header-icon-wrap {
+            transform: scale(1.06) rotate(-4deg);
+            border-color: rgba(126, 221, 176, 0.20);
+            box-shadow: 0 0 40px rgba(126, 221, 176, 0.06);
+        }
+
+        .header-card h1 {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 6px;
+        }
+
+        .header-card h1 span {
+            color: #7eddb0;
+        }
+
+        .header-card p {
+            color: rgba(200, 230, 220, 0.60);
+            font-size: 16px;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 18px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.4s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(126, 221, 176, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .stat-item .number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #7eddb0;
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+
+        .stat-item .label {
+            font-size: 13px;
+            color: rgba(200, 230, 220, 0.50);
+            font-weight: 500;
+        }
+
+        .stat-item i {
+            color: #7eddb0;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        /* ============================================================
+           MEMBERS GRID — 4 columns on large screens
+           ============================================================ */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        /* ============================================================
+           MEMBER CARD — 3D GLASS
+           ============================================================ */
+        .member-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px) saturate(1.3);
+            -webkit-backdrop-filter: blur(20px) saturate(1.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--card-radius);
+            padding: 28px 20px 22px;
+            text-align: center;
+            transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            perspective: 600px;
+            transform: rotateX(0.3deg) rotateY(0.2deg);
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--card-radius);
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(126, 221, 176, 0.05), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .member-card:hover::before {
+            opacity: 1;
+        }
+
+        .member-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2.5px;
+            background: linear-gradient(90deg, transparent, rgba(126, 221, 176, 0.20), rgba(8, 127, 112, 0.30), rgba(126, 221, 176, 0.20), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .member-card:hover::after {
+            opacity: 1;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px) scale(1.015);
+            border-color: rgba(126, 221, 176, 0.12);
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.40), 0 0 0 1px rgba(126, 221, 176, 0.04);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* ---- Photo ---- */
+        .member-photo-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        .member-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(126, 221, 176, 0.12);
+            transition: all 0.5s ease;
+            display: block;
+        }
+
+        .member-card:hover .member-photo {
+            border-color: rgba(126, 221, 176, 0.30);
+            transform: scale(1.04);
+            box-shadow: 0 0 40px rgba(126, 221, 176, 0.08);
+        }
+
+        /* Glow ring on hover */
+        .member-photo-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(126, 221, 176, 0.10), rgba(8, 127, 112, 0.05));
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+
+        .member-card:hover .member-photo-wrap::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ---- Name ---- */
+        .member-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ecfbf5;
+            margin-bottom: 3px;
+            transition: color 0.3s ease;
+        }
+
+        .member-card:hover .member-name {
+            color: #b5f0d4;
+        }
+
+        /* ---- Department ---- */
+        .member-department {
+            font-size: 14px;
+            font-weight: 600;
+            color: #7eddb0;
+            margin-bottom: 3px;
+        }
+
+        /* ---- Year ---- */
+        .member-year {
+            font-size: 13px;
+            color: rgba(200, 230, 220, 0.45);
+            font-weight: 500;
+        }
+
+        /* ---- Divider ---- */
+        .member-divider {
+            width: 36px;
+            height: 2px;
+            margin: 12px auto;
+            background: linear-gradient(90deg, transparent, rgba(126, 221, 176, 0.15), transparent);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .member-card:hover .member-divider {
+            width: 56px;
+            background: linear-gradient(90deg, transparent, rgba(126, 221, 176, 0.30), transparent);
+        }
+
+        /* ---- Email ---- */
+        .member-email {
+            font-size: 12px;
+            color: rgba(200, 230, 220, 0.45);
+            word-break: break-word;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .member-email i {
+            color: #7eddb0;
+            font-size: 12px;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .member-card:hover .member-email i {
+            opacity: 0.8;
+        }
+
+        .member-card:hover .member-email {
+            color: rgba(200, 230, 220, 0.65);
+        }
+
+        /* ---- Badge ---- */
+        .member-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            background: rgba(126, 221, 176, 0.06);
+            color: rgba(126, 221, 176, 0.40);
+            border: 1px solid rgba(126, 221, 176, 0.04);
+            transition: all 0.4s ease;
+        }
+
+        .member-card:hover .member-badge {
+            background: rgba(126, 221, 176, 0.08);
+            color: rgba(126, 221, 176, 0.70);
+            border-color: rgba(126, 221, 176, 0.06);
+        }
+
+        /* ============================================================
+           EMPTY STATE
+           ============================================================ */
+        .empty-state {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 60px 30px;
+            text-align: center;
+            color: rgba(200, 230, 220, 0.40);
+            transition: all 0.4s ease;
+        }
+
+        .empty-state:hover {
+            border-color: rgba(126, 221, 176, 0.06);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .empty-state i {
+            font-size: 56px;
+            color: rgba(126, 221, 176, 0.08);
+            margin-bottom: 18px;
+            display: block;
+        }
+
+        .empty-state h2 {
+            font-family: "Plus Jakarta Sans", sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: rgba(200, 230, 220, 0.50);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 15px;
+            color: rgba(200, 230, 220, 0.30);
+        }
+
+        /* ============================================================
+           LOADING
+           ============================================================ */
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(200, 230, 220, 0.30);
+        }
+
+        .loading-state i {
+            font-size: 40px;
+            color: #7eddb0;
+            margin-bottom: 16px;
+            display: block;
+            animation: spin 1.2s linear infinite;
+            opacity: 0.4;
+        }
+
+        .loading-state p {
+            font-size: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ============================================================
+           BACK LINK
+           ============================================================ */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(200, 230, 220, 0.60);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(126, 221, 176, 0.10);
+            color: #ecfbf5;
+            transform: translateX(-4px);
+        }
+
+        .back-link i {
+            color: #7eddb0;
+            font-size: 14px;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 1100px) {
+            .members-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+        }
+
+        @media (max-width: 820px) {
+            body {
+                padding: 20px 16px 40px;
+            }
+            .header-card {
+                padding: 30px 24px 28px;
+            }
+            .header-stats {
+                gap: 20px;
+            }
+            .stat-item .number {
+                font-size: 20px;
+            }
+            .members-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            .member-photo {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 14px 12px 30px;
+            }
+            .header-card {
+                padding: 24px 18px 22px;
+                border-radius: 20px;
+            }
+            .header-card h1 {
+                font-size: 28px;
+            }
+            .header-icon-wrap {
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+            .header-stats {
+                gap: 12px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .stat-item {
+                padding: 6px 16px;
+                width: 100%;
+                max-width: 200px;
+                justify-content: center;
+            }
+            .stat-item .number {
+                font-size: 18px;
+            }
+            .members-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                max-width: 380px;
+                margin: 0 auto;
+            }
+            .member-card {
+                padding: 22px 18px 20px;
+            }
+            .member-photo {
+                width: 80px;
+                height: 80px;
+            }
+            .member-name {
+                font-size: 17px;
+            }
+            .back-link {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .header-card h1 {
+                font-size: 24px;
+            }
+            .header-card p {
+                font-size: 14px;
+            }
+            .member-photo {
+                width: 72px;
+                height: 72px;
+            }
+            .member-name {
+                font-size: 16px;
+            }
+            .member-department {
+                font-size: 13px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bg-wall .orb,
+            .particle {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+            .member-card,
+            .header-card,
+            .stat-item,
+            .member-photo {
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+    ANIMATED BACKGROUND
+    ============================================================ -->
+    <div class="bg-wall">
+        <div class="bg-gradient"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="noise"></div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- ============================================================
+    MAIN CONTAINER
+    ============================================================ -->
+    <div class="container">
+
+        <!-- Back Link -->
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <!-- ============================================================
+        HEADER
+        ============================================================ -->
+        <div class="header-card" id="headerCard">
+            <div class="header-icon-wrap">
+                <i class="fas fa-users"></i>
+            </div>
+            <h1>Our <span>Members</span></h1>
+            <p>Meet the brilliant minds behind BioGenius — students passionate about biotechnology</p>
+
+            <div class="header-stats">
+                <div class="stat-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <span class="number" id="memberCount">0</span>
+                    <span class="label">Active Members</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-flask"></i>
+                    <span class="number" id="deptCount">0</span>
+                    <span class="label">Departments</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        MEMBERS GRID
+        ============================================================ -->
+        <div id="membersGrid" class="members-grid">
+            <div class="loading-state">
+                <i class="fas fa-spinner"></i>
+                <p>Loading members...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================
+    FIREBASE — KEPT EXACTLY AS PROVIDED
+    ============================================================ -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCuYhCw8NdMB0Nu5p00L2HxOJfOCsEoHwo",
+            authDomain: "biogenius-club.firebaseapp.com",
+            projectId: "biogenius-club",
+            storageBucket: "biogenius-club.firebasestorage.app",
+            messagingSenderId: "32774064333",
+            appId: "1:32774064333:web:cd43095a382f4949af8184"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const membersGrid = document.getElementById("membersGrid");
+
+        async function loadApprovedMembers() {
+            try {
+                const membersQuery = query(collection(db, "members"), where("status", "==", "approved"));
+                const snapshot = await getDocs(membersQuery);
+
+                membersGrid.innerHTML = "";
+
+                if (snapshot.empty) {
+                    membersGrid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-user-plus"></i>
+                            <h2>No members yet</h2>
+                            <p>Approved members will appear here. Be the first to join!</p>
+                        </div>
+                    `;
+                    document.getElementById("memberCount").textContent = "0";
+                    document.getElementById("deptCount").textContent = "0";
+                    return;
+                }
+
+                const members = [];
+                const departments = new Set();
+
+                snapshot.forEach((memberDoc) => {
+                    const member = memberDoc.data();
+                    members.push(member);
+                    if (member.department) departments.add(member.department);
+                });
+
+                // Update stats
+                document.getElementById("memberCount").textContent = members.length;
+                document.getElementById("deptCount").textContent = departments.size;
+
+                // Render cards
+                members.forEach((member) => {
+                    const card = document.createElement("div");
+                    card.className = "member-card";
+
+                    const name = member.name || "Member";
+                    const dept = member.department || "Biotechnology";
+                    const year = member.year || "Student";
+                    const email = member.email || "no-email@domain.com";
+                    const photo = member.photoURL ||
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=087f70&color=fff&size=128&bold=true`;
+
+                    card.innerHTML = `
+                        <div class="member-photo-wrap">
+                            <img src="${photo}" alt="${name}" class="member-photo" loading="lazy">
+                        </div>
+                        <div class="member-name">${name}</div>
+                        <div class="member-department">${dept}</div>
+                        <div class="member-year">${year}</div>
+                        <div class="member-divider"></div>
+                        <div class="member-email">
+                            <i class="fas fa-envelope"></i> ${email}
+                        </div>
+                        <span class="member-badge">
+                            <i class="fas fa-check-circle" style="margin-right:4px;font-size:9px;"></i> Verified
+                        </span>
+                    `;
+
+                    membersGrid.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error(error);
+                membersGrid.innerHTML = `
+                    <div class="empty-state" style="border-color:rgba(248,113,113,0.15);">
+                        <i class="fas fa-exclamation-triangle" style="color:#f87171;opacity:0.4;"></i>
+                        <h2 style="color:#f87171;opacity:0.7;">Unable to load members</h2>
+                        <p style="color:#f87171;opacity:0.4;">Please check your Firestore rules and try again.</p>
+                    </div>
+                `;
+            }
+        }
+
+        loadApprovedMembers();
+    </script>
+
+    <!-- ============================================================
+    ADDITIONAL 3D TILT EFFECTS — separate script (no conflict)
+    ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---- 3D Tilt on Header ----
+            const headerCard = document.getElementById('headerCard');
+            if (headerCard) {
+                headerCard.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    this.style.setProperty('--mouse-x', x + '%');
+                    this.style.setProperty('--mouse-y', y + '%');
+
+                    const cx = rect.left + rect.width / 2;
+                    const cy = rect.top + rect.height / 2;
+                    const dx = (e.clientX - cx) / cx;
+                    const dy = (e.clientY - cy) / cy;
+
+                    this.style.transform =
+                        `rotateX(${-dy * 1.2}deg) rotateY(${dx * 1.2}deg) translateY(-4px) scale(1.003)`;
+                });
+
+                headerCard.addEventListener('mouseleave', function() {
+                    this.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)';
+                });
+            }
+
+            // ---- 3D Tilt on Member Cards (delegated) ----
+            document.addEventListener('mousemove', function(e) {
+                document.querySelectorAll('.member-card').forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    if (e.clientX >= rect.left && e.clientX <= rect.right &&
+                        e.clientY >= rect.top && e.clientY <= rect.bottom) {
+                        const x = ((e.clientX - rect.left) / rect.width) * 100;
+                        const y = ((e.clientY - rect.top) / rect.height) * 100;
+                        card.style.setProperty('--mouse-x', x + '%');
+                        card.style.setProperty('--mouse-y', y + '%');
+
+                        const cx = rect.left + rect.width / 2;
+                        const cy = rect.top + rect.height / 2;
+                        const dx = (e.clientX - cx) / cx;
+                        const dy = (e.clientY - cy) / cy;
+                        card.style.transform =
+                            `rotateX(${-dy * 1.2}deg) rotateY(${dx * 1.2}deg) translateY(-10px) scale(1.015)`;
+                    } else {
+                        if (!card.matches(':hover')) {
+                            card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)';
+                        }
+                    }
+                });
+            });
+
+            console.log('✅ BioGenius — Members page loaded with 3D effects!');
+        })();
+    </script>
+
+</body>
+</html>
