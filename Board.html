@@ -90,7 +90,6 @@
             mix-blend-mode: overlay;
         }
 
-        /* floating orbs */
         .bg-wall .orb {
             position: absolute;
             border-radius: 50%;
@@ -363,6 +362,8 @@
             transition: all 0.3s ease;
             flex-shrink: 0;
             backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
         }
         .menu-btn:hover {
             background: rgba(255, 255, 255, 0.10);
@@ -505,7 +506,6 @@
             will-change: transform;
         }
 
-        /* card glow line — top */
         .Board-card::before {
             content: '';
             position: absolute;
@@ -518,7 +518,6 @@
             transition: opacity 0.4s ease, height 0.3s ease;
         }
 
-        /* card glow border on hover */
         .Board-card::after {
             content: '';
             position: absolute;
@@ -534,7 +533,6 @@
             opacity: 0;
         }
 
-        /* card shadow & lift */
         .Board-card:hover {
             transform: translateY(-8px) scale(1.01);
             background: rgba(255, 255, 255, 0.07);
@@ -556,7 +554,6 @@
             background: linear-gradient(135deg, rgba(126, 221, 176, 0.25), rgba(8, 127, 112, 0.15), rgba(126, 221, 176, 0.25));
         }
 
-        /* member number */
         .member-number {
             position: absolute;
             top: 16px;
@@ -573,26 +570,22 @@
         }
 
         /* ============================================================
-           AVATAR — with image hover effect
+           AVATAR — PHOTO PERFECTLY COVERS CIRCLE
            ============================================================ */
         .member-avatar {
-            width: 96px;
-            height: 96px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            display: grid;
-            place-items: center;
-            font-size: 34px;
-            color: #7eddb0;
-            margin-bottom: 16px;
             flex-shrink: 0;
             position: relative;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            margin-bottom: 16px;
+            overflow: hidden;
             background: linear-gradient(135deg, rgba(8, 127, 112, 0.30), rgba(76, 175, 104, 0.15));
             border: 2.5px solid rgba(126, 221, 176, 0.12);
-            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* avatar glow ring on hover */
+        /* Glow ring on hover */
         .member-avatar::before {
             content: '';
             position: absolute;
@@ -603,6 +596,7 @@
             transition: opacity 0.5s ease, transform 0.5s ease;
             transform: scale(0.9);
             pointer-events: none;
+            z-index: 3;
         }
 
         .Board-card:hover .member-avatar::before {
@@ -610,7 +604,7 @@
             transform: scale(1);
         }
 
-        /* avatar inner glow on hover */
+        /* Inner glow on hover */
         .member-avatar::after {
             content: '';
             position: absolute;
@@ -620,6 +614,7 @@
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
+            z-index: 2;
         }
 
         .Board-card:hover .member-avatar::after {
@@ -632,12 +627,13 @@
             box-shadow: 0 0 30px rgba(126, 221, 176, 0.08);
         }
 
-        /* avatar image styling */
+        /* ===== IMAGE — FILLS CIRCLE PERFECTLY ===== */
         .member-avatar .avatar-img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
+            object-position: center center;
             display: block;
             position: relative;
             z-index: 1;
@@ -648,17 +644,23 @@
             transform: scale(1.08);
         }
 
-        /* avatar initials fallback */
+        /* ===== INITIALS FALLBACK — CENTERED ===== */
         .member-avatar .initials {
-            font-size: 22px;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
             font-weight: 700;
-            color: #7eddb0;
+            color: #ecfbf5;
             font-family: "Plus Jakarta Sans", sans-serif;
             letter-spacing: 0.5px;
-            position: relative;
             z-index: 1;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.30);
+            background: linear-gradient(135deg, rgba(8, 127, 112, 0.50), rgba(6, 90, 79, 0.40));
+            border-radius: 50%;
             transition: all 0.4s ease;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.20);
         }
 
         .Board-card:hover .member-avatar .initials {
@@ -666,7 +668,7 @@
             transform: scale(1.04);
         }
 
-        /* avatar with image — overlay on hover */
+        /* Overlay on hover */
         .member-avatar .avatar-overlay {
             position: absolute;
             inset: 0;
@@ -1086,8 +1088,11 @@
                 padding: 26px 20px 22px;
             }
             .member-avatar {
-                width: 82px;
-                height: 82px;
+                width: 86px;
+                height: 86px;
+            }
+            .member-avatar .initials {
+                font-size: 22px;
             }
             .footer-main {
                 grid-template-columns: 1fr;
@@ -1150,11 +1155,11 @@
                 padding: 14px 12px;
             }
             .member-avatar {
-                width: 74px;
-                height: 74px;
+                width: 78px;
+                height: 78px;
             }
             .member-avatar .initials {
-                font-size: 18px;
+                font-size: 20px;
             }
             .Board-card {
                 padding: 22px 16px 18px;
@@ -1210,7 +1215,6 @@
             <a href="Projects.html">Projects</a>
             <a href="Board.html" class="active">Board</a>
             <a href="Showcase.html">Showcase</a>
-
         </nav>
 
         <button class="join-btn" id="openModalBtn">
@@ -1231,7 +1235,6 @@
         <a href="Projects.html">Projects</a>
         <a href="Board.html">Board</a>
         <a href="Showcase.html">Showcase</a>
-
         <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
     </div>
 
@@ -1253,14 +1256,12 @@
         <section class="section" style="padding-top:0; padding-bottom:60px;">
             <div class="Board-grid">
 
-                <!-- ===== SENIOR LEADERSHIP ===== -->
-
-                <!-- 1 — Shashwat Jaiswal (with image) -->
+                <!-- 1 — Shashwat Jaiswal -->
                 <div class="Board-card">
                     <span class="member-number">#01</span>
                     <div class="member-avatar">
-                        <img src="1.jpg" alt="Shashwat Jaiswal" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                        <span class="initials" style="display:none;">SJ</span>
+                        <img src="1.jpg" alt="Shashwat Jaiswal" class="avatar-img" />
+                        <span class="initials">SJ</span>
                         <span class="avatar-overlay"></span>
                     </div>
                     <span class="member-badge senior">Senior Leadership</span>
@@ -1274,7 +1275,7 @@
                 <div class="Board-card">
                     <span class="member-number">#02</span>
                     <div class="member-avatar">
-                        <img src="2.jpeg" alt="2" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="2.jpeg" alt="Dipali Tiwari" class="avatar-img" />
                         <span class="initials">DT</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1282,14 +1283,14 @@
                     <h3>Dipali Tiwari</h3>
                     <p class="member-role">Vice Chairperson</p>
                     <p class="member-program">B.Tech, BT · 3rd Year</p>
-                    <a href="https://www.linkedin.com/in/dipali-tiwari-a75222323" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/dipalitiwari</a>
+                    <a href="https://www.linkedin.com/in/dipali-tiwari-a75222323" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/dipalitiwari</a>
                 </div>
 
                 <!-- 3 — Saumya Singh -->
                 <div class="Board-card">
                     <span class="member-number">#03</span>
                     <div class="member-avatar">
-                        <img src="3.jpeg" alt="3" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="3.jpeg" alt="Saumya Singh" class="avatar-img" />
                         <span class="initials">SS</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1297,15 +1298,14 @@
                     <h3>Saumya Singh</h3>
                     <p class="member-role">Secretary</p>
                     <p class="member-program">B.Tech, BT · 3rd Year</p>
-                    <a href="https://www.linkedin.com/in/saumya-singh-146784320" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/saumyasingh</a>
+                    <a href="https://www.linkedin.com/in/saumya-singh-146784320" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/saumyasingh</a>
                 </div>
 
-              
                 <!-- 4 — Shani Gupta -->
                 <div class="Board-card">
                     <span class="member-number">#04</span>
                     <div class="member-avatar">
-                        <img src="4.jpg" alt="4" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="4.jpg" alt="Shani Gupta" class="avatar-img" />
                         <span class="initials">SG</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1313,14 +1313,14 @@
                     <h3>Shani Gupta</h3>
                     <p class="member-role">Web Master</p>
                     <p class="member-program">B.Tech, BT · 3rd Year</p>
-                    <a href="https://www.linkedin.com/in/shani-gupta-" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/shanigupta</a>
+                    <a href="https://www.linkedin.com/in/shani-gupta-" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/shanigupta</a>
                 </div>
 
-                  <!-- 5 — Trisha Pandey -->
-                  <div class="Board-card">
+                <!-- 5 — Trisha Pandey -->
+                <div class="Board-card">
                     <span class="member-number">#05</span>
                     <div class="member-avatar">
-                        <img src="5.jpeg" alt="5" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="5.jpeg" alt="Trisha Pandey" class="avatar-img" />
                         <span class="initials">TP</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1328,16 +1328,14 @@
                     <h3>Trisha Pandey</h3>
                     <p class="member-role">Management Head</p>
                     <p class="member-program">B.Tech, BT · 3rd Year</p>
-                    <a href="https://www.linkedin.com/in/trisha-pandey-789a39379" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/trishapandey</a>
+                    <a href="https://www.linkedin.com/in/trisha-pandey-789a39379" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/trishapandey</a>
                 </div>
-
-                <!-- ===== EXECUTIVE HEADS ===== -->
 
                 <!-- 6 — Vaibhav Pandey -->
                 <div class="Board-card">
                     <span class="member-number">#06</span>
                     <div class="member-avatar">
-                        <img src="6.jpeg" alt="6" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="6.jpeg" alt="Vaibhav Pandey" class="avatar-img" />
                         <span class="initials">VP</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1345,14 +1343,14 @@
                     <h3>Vaibhav Pandey</h3>
                     <p class="member-role">Marketing &amp; PR Head</p>
                     <p class="member-program">B.Sc. BT · 2nd Year</p>
-                    <a href="https://www.linkedin.com/in/vaibhav-pandey-173b3b388" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/vaibhavpandey</a>
+                    <a href="https://www.linkedin.com/in/vaibhav-pandey-173b3b388" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/vaibhavpandey</a>
                 </div>
 
                 <!-- 7 — Tammy Mishra -->
                 <div class="Board-card">
                     <span class="member-number">#07</span>
                     <div class="member-avatar">
-                        <img src="7.jpeg" alt="7" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="7.jpeg" alt="Tammy Mishra" class="avatar-img" />
                         <span class="initials">TM</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1360,14 +1358,14 @@
                     <h3>Tammy Mishra</h3>
                     <p class="member-role">Digital &amp; Social Media Head</p>
                     <p class="member-program">B.Tech, BT · 2nd Year</p>
-                    <a href="https://www.linkedin.com/in/tanmay-mishra-9775772b4" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/tammymishra</a>
+                    <a href="https://www.linkedin.com/in/tanmay-mishra-9775772b4" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/tammymishra</a>
                 </div>
 
                 <!-- 8 — Kunal Chaudhary -->
                 <div class="Board-card">
                     <span class="member-number">#08</span>
                     <div class="member-avatar">
-                        <img src="8.jpeg" alt="8" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="8.jpeg" alt="Kunal Chaudhary" class="avatar-img" />
                         <span class="initials">KC</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1375,14 +1373,14 @@
                     <h3>Kunal Chaudhary</h3>
                     <p class="member-role">Treasurer</p>
                     <p class="member-program">B.Sc. BT · 2nd Year</p>
-                    <a href="https://www.linkedin.com/in/kunal-karan-9b7b02428" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/kunalchaudhary</a>
+                    <a href="https://www.linkedin.com/in/kunal-karan-9b7b02428" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/kunalchaudhary</a>
                 </div>
 
                 <!-- 9 — Divya Gupta -->
                 <div class="Board-card">
                     <span class="member-number">#09</span>
                     <div class="member-avatar">
-                        <img src="9.jpeg" alt="9" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="9.jpeg" alt="Divya Gupta" class="avatar-img" />
                         <span class="initials">DG</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1390,14 +1388,14 @@
                     <h3>Divya Gupta</h3>
                     <p class="member-role">Content &amp; Creative Head</p>
                     <p class="member-program">B.Tech, BT · 2nd Year</p>
-                    <a href="https://www.linkedin.com/in/divya-gupta-21a267390" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/divyagupta</a>
+                    <a href="https://www.linkedin.com/in/divya-gupta-21a267390" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/divyagupta</a>
                 </div>
 
                 <!-- 10 — Arhama -->
                 <div class="Board-card">
                     <span class="member-number">#10</span>
                     <div class="member-avatar">
-                        <img src="10.jpeg" alt="10" class="avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <img src="10.jpeg" alt="Arhama" class="avatar-img" />
                         <span class="initials">AR</span>
                         <span class="avatar-overlay"></span>
                     </div>
@@ -1405,7 +1403,7 @@
                     <h3>Arhama</h3>
                     <p class="member-role">Boardhip Chair</p>
                     <p class="member-program">B.Sc. BT · 2nd Year</p>
-                    <a href="https://www.linkedin.com/in/arhama-junaid-390832301" class="member-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/arhama</a>
+                    <a href="https://www.linkedin.com/in/arhama-junaid-390832301" class="member-linkedin" target="_blank"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/arhama</a>
                 </div>
 
             </div>
@@ -1619,16 +1617,6 @@
                 this.reset();
             });
 
-            // ---- LinkedIn clicks (demo) ----
-            document.querySelectorAll('.member-linkedin').forEach(function(link) {
-                link.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === '#') {
-                        e.preventDefault();
-                        showToast('🔗 LinkedIn profile (demo) — would open in new tab.');
-                    }
-                });
-            });
-
             // ---- Toast ----
             const toast = document.getElementById('toast');
 
@@ -1642,18 +1630,51 @@
                 }, 3500);
             }
 
-            // ---- Avatar image fallback ----
+            // ---- Fix: Hide initials if image loads, show if it fails ----
             document.querySelectorAll('.member-avatar .avatar-img').forEach(function(img) {
-                img.addEventListener('error', function() {
-                    this.style.display = 'none';
-                    const initials = this.nextElementSibling;
-                    if (initials && initials.classList.contains('initials')) {
-                        initials.style.display = 'flex';
+                // Initially hide initials (they'll show if image fails)
+                const initials = img.nextElementSibling;
+                if (initials && initials.classList.contains('initials')) {
+                    initials.style.display = 'none';
+                }
+
+                img.addEventListener('load', function() {
+                    // Image loaded — hide initials
+                    const init = this.nextElementSibling;
+                    if (init && init.classList.contains('initials')) {
+                        init.style.display = 'none';
                     }
                 });
+
+                img.addEventListener('error', function() {
+                    // Image failed — show initials
+                    const init = this.nextElementSibling;
+                    if (init && init.classList.contains('initials')) {
+                        init.style.display = 'flex';
+                    }
+                    this.style.display = 'none';
+                });
+
+                // Check if image is already loaded
+                if (img.complete) {
+                    if (img.naturalHeight === 0) {
+                        // Image failed to load
+                        const init = img.nextElementSibling;
+                        if (init && init.classList.contains('initials')) {
+                            init.style.display = 'flex';
+                        }
+                        img.style.display = 'none';
+                    } else {
+                        // Image loaded
+                        const init = img.nextElementSibling;
+                        if (init && init.classList.contains('initials')) {
+                            init.style.display = 'none';
+                        }
+                    }
+                }
             });
 
-            console.log('✅ Executive Board page loaded!');
+            console.log('✅ Executive Board page loaded — photos perfectly cover the circle!');
         })();
     </script>
 
