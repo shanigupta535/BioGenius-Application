@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join BioGenius Club</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioGenius Club · Join</title>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet" />
 
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Font Awesome 6 (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
     <style>
         /* ============================================================
-           ROOT VARIABLES
-           ============================================================ */
+               ROOT VARIABLES
+               ============================================================ */
         :root {
-            --primary: #087f70;
+            --primary: #0a8f7a;
             --primary-dark: #065a4f;
-            --primary-light: #0ea58f;
+            --primary-light: #1db3a0;
+            --primary-glow: rgba(10, 143, 122, 0.35);
             --green: #4caf68;
             --green-light: #8fdc9b;
             --gold: #f0c040;
             --gold-light: #ffe066;
+            --bg-deep: #071412;
+            --surface: rgba(255, 255, 255, 0.04);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --text-primary: #ecfbf5;
+            --text-secondary: rgba(200, 230, 220, 0.65);
+            --text-muted: rgba(200, 230, 220, 0.30);
+            --radius-lg: 32px;
+            --radius-md: 20px;
+            --radius-sm: 14px;
+            --shadow-card: 0 30px 80px rgba(0, 0, 0, 0.55);
+            --transition-smooth: cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         /* ============================================================
-           RESET & BASE
-           ============================================================ */
+               RESET & BASE
+               ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -42,84 +55,170 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #0a1a18;
-            padding: 30px;
+            background: var(--bg-deep);
+            padding: 24px;
             position: relative;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ============================================================
-           ANIMATED BACKGROUND
-           ============================================================ */
-        .bg-wall {
+               ANIMATED BACKGROUND — DEEP SPACE
+               ============================================================ */
+        .bg-universe {
             position: fixed;
             inset: 0;
             z-index: -2;
-            background: #0a1a18;
+            background: var(--bg-deep);
         }
-        .bg-wall .bg-gradient {
+
+        .bg-universe .gradient-layer {
             width: 100%;
             height: 100%;
             background:
-                radial-gradient(ellipse at 20% 20%, rgba(8, 127, 112, 0.30) 0%, transparent 55%),
-                radial-gradient(ellipse at 80% 80%, rgba(76, 175, 104, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(10, 30, 28, 0.95) 0%, #0a1a18 100%);
+                radial-gradient(ellipse at 15% 15%, rgba(10, 143, 122, 0.25) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 80%, rgba(76, 175, 104, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(7, 20, 18, 0.96) 0%, #071412 100%);
         }
 
-        .bg-wall .orb {
+        /* Glowing orbs */
+        .bg-universe .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.25;
+            filter: blur(120px);
             pointer-events: none;
-            animation: orbFloat 12s ease-in-out infinite alternate;
+            animation: orbDrift 18s ease-in-out infinite alternate;
         }
-        .bg-wall .orb-1 {
-            width: 600px;
-            height: 600px;
-            top: -200px;
-            right: -150px;
-            background: rgba(8, 127, 112, 0.25);
+        .bg-universe .orb--1 {
+            width: 650px;
+            height: 650px;
+            top: -250px;
+            right: -180px;
+            background: rgba(10, 143, 122, 0.20);
             animation-delay: 0s;
         }
-        .bg-wall .orb-2 {
+        .bg-universe .orb--2 {
             width: 500px;
             height: 500px;
-            bottom: -150px;
-            left: -100px;
-            background: rgba(76, 175, 104, 0.15);
-            animation-delay: 4s;
+            bottom: -200px;
+            left: -120px;
+            background: rgba(76, 175, 104, 0.12);
+            animation-delay: 5s;
         }
-        .bg-wall .orb-3 {
-            width: 300px;
-            height: 300px;
-            top: 50%;
+        .bg-universe .orb--3 {
+            width: 350px;
+            height: 350px;
+            top: 45%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(126, 221, 176, 0.06);
-            animation-delay: 8s;
+            background: rgba(126, 221, 176, 0.04);
+            animation-delay: 10s;
         }
 
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -40px) scale(1.05); }
-            66% { transform: translate(-20px, 30px) scale(0.95); }
-            100% { transform: translate(20px, 20px) scale(1.02); }
+        @keyframes orbDrift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(40px, -50px) scale(1.06);
+            }
+            66% {
+                transform: translate(-30px, 40px) scale(0.94);
+            }
+            100% {
+                transform: translate(25px, 25px) scale(1.03);
+            }
         }
 
-        .bg-wall .noise {
+        /* Subtle noise texture */
+        .bg-universe .noise-overlay {
             position: absolute;
             inset: 0;
             pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-            background-size: 300px 300px;
-            opacity: 0.5;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.70' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+            background-size: 280px 280px;
+            opacity: 0.6;
             mix-blend-mode: overlay;
         }
 
         /* ============================================================
-           FLOATING PARTICLES (CSS only)
-           ============================================================ */
+               FLOATING 3D GEO-SHAPES (CSS only)
+               ============================================================ */
+        .shapes {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.06;
+            animation: shapeFloat 22s ease-in-out infinite alternate;
+        }
+
+        .shape--cube {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            background: rgba(126, 221, 176, 0.15);
+            border: 1px solid rgba(126, 221, 176, 0.06);
+            transform: rotate(25deg);
+            animation-duration: 26s;
+        }
+        .shape--cube:nth-child(1) {
+            top: 12%;
+            left: 6%;
+            animation-delay: 0s;
+        }
+        .shape--cube:nth-child(2) {
+            bottom: 18%;
+            right: 5%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 6s;
+            border-radius: 12px;
+        }
+        .shape--sphere {
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(126, 221, 176, 0.12), rgba(10, 143, 122, 0.04));
+            border: 1px solid rgba(126, 221, 176, 0.04);
+        }
+        .shape--sphere:nth-child(3) {
+            width: 140px;
+            height: 140px;
+            top: 55%;
+            left: 4%;
+            animation-delay: 3s;
+        }
+        .shape--sphere:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            bottom: 30%;
+            right: 8%;
+            animation-delay: 9s;
+        }
+
+        @keyframes shapeFloat {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            33% {
+                transform: translate(25px, -35px) rotate(12deg) scale(1.04);
+            }
+            66% {
+                transform: translate(-20px, 30px) rotate(-8deg) scale(0.96);
+            }
+            100% {
+                transform: translate(15px, 20px) rotate(6deg) scale(1.02);
+            }
+        }
+
+        /* ============================================================
+               FLOATING PARTICLES
+               ============================================================ */
         .particles {
             position: fixed;
             inset: 0;
@@ -127,194 +226,332 @@
             pointer-events: none;
             overflow: hidden;
         }
+
         .particle {
             position: absolute;
             width: 4px;
             height: 4px;
-            background: rgba(126, 221, 176, 0.25);
+            background: rgba(126, 221, 176, 0.20);
             border-radius: 50%;
-            animation: particleFloat 20s linear infinite;
+            animation: particleRise 24s linear infinite;
         }
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 6px; height: 6px; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 2s; }
-        .particle:nth-child(3) { left: 35%; animation-delay: 4s; width: 8px; height: 8px; opacity: 0.15; }
-        .particle:nth-child(4) { left: 50%; animation-delay: 1s; }
-        .particle:nth-child(5) { left: 65%; animation-delay: 3s; width: 5px; height: 5px; }
-        .particle:nth-child(6) { left: 78%; animation-delay: 5s; width: 7px; height: 7px; opacity: 0.15; }
-        .particle:nth-child(7) { left: 88%; animation-delay: 2.5s; }
-        .particle:nth-child(8) { left: 45%; animation-delay: 6s; width: 9px; height: 9px; opacity: 0.1; }
-        .particle:nth-child(9) { left: 72%; animation-delay: 3.5s; width: 3px; height: 3px; }
-        .particle:nth-child(10) { left: 92%; animation-delay: 4.5s; width: 5px; height: 5px; }
 
-        @keyframes particleFloat {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        .particle:nth-child(1) {
+            left: 8%;
+            animation-delay: 0s;
+            width: 6px;
+            height: 6px;
+        }
+        .particle:nth-child(2) {
+            left: 18%;
+            animation-delay: 2.2s;
+        }
+        .particle:nth-child(3) {
+            left: 30%;
+            animation-delay: 4.5s;
+            width: 8px;
+            height: 8px;
+            opacity: 0.12;
+        }
+        .particle:nth-child(4) {
+            left: 45%;
+            animation-delay: 1.1s;
+        }
+        .particle:nth-child(5) {
+            left: 58%;
+            animation-delay: 3.3s;
+            width: 5px;
+            height: 5px;
+        }
+        .particle:nth-child(6) {
+            left: 70%;
+            animation-delay: 5.6s;
+            width: 7px;
+            height: 7px;
+            opacity: 0.12;
+        }
+        .particle:nth-child(7) {
+            left: 82%;
+            animation-delay: 2.8s;
+        }
+        .particle:nth-child(8) {
+            left: 92%;
+            animation-delay: 6.4s;
+            width: 9px;
+            height: 9px;
+            opacity: 0.08;
+        }
+        .particle:nth-child(9) {
+            left: 52%;
+            animation-delay: 3.9s;
+            width: 3px;
+            height: 3px;
+        }
+        .particle:nth-child(10) {
+            left: 75%;
+            animation-delay: 5.0s;
+            width: 5px;
+            height: 5px;
+        }
+        .particle:nth-child(11) {
+            left: 38%;
+            animation-delay: 7.1s;
+            width: 6px;
+            height: 6px;
+            opacity: 0.10;
+        }
+        .particle:nth-child(12) {
+            left: 65%;
+            animation-delay: 4.2s;
+            width: 4px;
+            height: 4px;
+        }
+
+        @keyframes particleRise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            12% {
+                opacity: 1;
+            }
+            88% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
         }
 
         /* ============================================================
-           MAIN CONTAINER — 3D PERSPECTIVE
-           ============================================================ */
+               MAIN CONTAINER — 3D PERSPECTIVE
+               ============================================================ */
         .form-wrapper {
             width: 100%;
-            max-width: 560px;
-            perspective: 1200px;
+            max-width: 580px;
+            perspective: 1400px;
             position: relative;
             z-index: 1;
+            animation: wrapperEntrance 0.9s var(--transition-bounce) both;
         }
 
-        .form-box {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(32px) saturate(1.4);
-            -webkit-backdrop-filter: blur(32px) saturate(1.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            padding: 44px 40px 40px;
+        @keyframes wrapperEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ============================================================
+               MAIN CARD — 3D GLASS
+               ============================================================ */
+        .form-card {
+            background: rgba(255, 255, 255, 0.035);
+            backdrop-filter: blur(40px) saturate(1.5);
+            -webkit-backdrop-filter: blur(40px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-lg);
+            padding: 48px 44px 44px;
             box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.50),
-                0 0 0 1px rgba(255, 255, 255, 0.04),
+                var(--shadow-card),
+                0 0 0 1px rgba(255, 255, 255, 0.03),
                 inset 0 1px 0 rgba(255, 255, 255, 0.06);
-            transform: rotateX(2deg) rotateY(-1deg);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: rotateX(1.5deg) rotateY(-0.8deg);
+            transition: transform 0.6s var(--transition-smooth),
+                box-shadow 0.6s var(--transition-smooth),
+                border-color 0.6s var(--transition-smooth);
             position: relative;
             overflow: hidden;
         }
 
-        /* 3D glow border on hover */
-        .form-box::before {
+        /* Glow border */
+        .form-card::before {
             content: '';
             position: absolute;
             inset: -1px;
-            border-radius: 32px;
+            border-radius: var(--radius-lg);
             padding: 1px;
-            background: linear-gradient(135deg, rgba(126, 221, 176, 0), rgba(126, 221, 176, 0.08), rgba(8, 127, 112, 0.15), rgba(126, 221, 176, 0.08), rgba(126, 221, 176, 0));
+            background: linear-gradient(135deg,
+                    rgba(126, 221, 176, 0),
+                    rgba(126, 221, 176, 0.06),
+                    rgba(10, 143, 122, 0.12),
+                    rgba(126, 221, 176, 0.06),
+                    rgba(126, 221, 176, 0));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
-            transition: all 0.6s ease;
-            opacity: 0.5;
+            transition: opacity 0.6s ease, background 0.6s ease;
+            opacity: 0.4;
         }
 
-        .form-box::after {
+        /* Radial highlight following mouse */
+        .form-card::after {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 32px;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(126, 221, 176, 0.06), transparent 60%);
+            border-radius: var(--radius-lg);
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+                    rgba(126, 221, 176, 0.05),
+                    transparent 60%);
             opacity: 0;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.5s ease;
             pointer-events: none;
         }
 
-        .form-box:hover::after {
+        .form-card:hover::after {
             opacity: 1;
         }
-
-        .form-box:hover {
-            transform: rotateX(0deg) rotateY(0deg) translateY(-6px) scale(1.01);
-            border-color: rgba(126, 221, 176, 0.12);
+        .form-card:hover {
+            transform: rotateX(0deg) rotateY(0deg) translateY(-8px) scale(1.008);
+            border-color: rgba(126, 221, 176, 0.10);
             box-shadow:
-                0 40px 100px rgba(0, 0, 0, 0.55),
-                0 0 0 1px rgba(126, 221, 176, 0.06),
+                0 45px 110px rgba(0, 0, 0, 0.55),
+                0 0 0 1px rgba(126, 221, 176, 0.05),
                 inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
-
-        .form-box:hover::before {
+        .form-card:hover::before {
             opacity: 1;
-            background: linear-gradient(135deg, rgba(126, 221, 176, 0.15), rgba(8, 127, 112, 0.25), rgba(126, 221, 176, 0.15));
+            background: linear-gradient(135deg,
+                    rgba(126, 221, 176, 0.12),
+                    rgba(10, 143, 122, 0.20),
+                    rgba(126, 221, 176, 0.12));
+        }
+
+        /* Decorative corner glints */
+        .form-card .glint {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.03;
+            background: radial-gradient(circle, #7eddb0, transparent 70%);
+        }
+        .form-card .glint--tl {
+            width: 180px;
+            height: 180px;
+            top: -70px;
+            left: -70px;
+        }
+        .form-card .glint--br {
+            width: 140px;
+            height: 140px;
+            bottom: -50px;
+            right: -50px;
         }
 
         /* ============================================================
-           HEADER
-           ============================================================ */
+               HEADER
+               ============================================================ */
         .form-header {
             text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .form-header .icon-wrap {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(8, 127, 112, 0.30), rgba(6, 90, 79, 0.20));
-            border: 2px solid rgba(126, 221, 176, 0.12);
-            margin-bottom: 16px;
-            font-size: 36px;
-            color: #7eddb0;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            margin-bottom: 32px;
             position: relative;
         }
 
-        .form-header .icon-wrap::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
+        .form-header .icon-ring {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 84px;
+            height: 84px;
             border-radius: 50%;
-            background: radial-gradient(circle at center, rgba(126, 221, 176, 0.10), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            background: linear-gradient(135deg, rgba(10, 143, 122, 0.25), rgba(6, 90, 79, 0.15));
+            border: 2px solid rgba(126, 221, 176, 0.10);
+            margin-bottom: 18px;
+            font-size: 38px;
+            color: #7eddb0;
+            transition: all 0.6s var(--transition-bounce);
+            position: relative;
+            box-shadow: 0 0 40px rgba(126, 221, 176, 0.04);
         }
 
-        .form-box:hover .form-header .icon-wrap::after {
-            opacity: 1;
+        .form-card:hover .form-header .icon-ring {
+            transform: scale(1.07) rotate(-5deg);
+            border-color: rgba(126, 221, 176, 0.22);
+            box-shadow: 0 0 60px rgba(126, 221, 176, 0.08);
         }
 
-        .form-box:hover .form-header .icon-wrap {
-            transform: scale(1.06) rotate(-4deg);
-            border-color: rgba(126, 221, 176, 0.25);
-            box-shadow: 0 0 40px rgba(126, 221, 176, 0.08);
+        .form-header .icon-ring .pulse-ring {
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 1px solid rgba(126, 221, 176, 0.06);
+            animation: pulseRing 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseRing {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: scale(1.12);
+                opacity: 0;
+            }
         }
 
         .form-header h1 {
             font-family: "Plus Jakarta Sans", sans-serif;
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 800;
-            color: #ecfbf5;
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+            color: var(--text-primary);
+            letter-spacing: -0.6px;
+            text-shadow: 0 2px 24px rgba(0, 0, 0, 0.30);
+            line-height: 1.2;
         }
 
-        .form-header h1 span {
-            color: #7eddb0;
+        .form-header h1 .highlight {
+            background: linear-gradient(135deg, #7eddb0, #4caf68);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .form-header .subtitle {
-            color: rgba(200, 230, 220, 0.65);
+        .form-header .sub {
+            color: var(--text-secondary);
             font-size: 14px;
-            margin-top: 6px;
+            margin-top: 8px;
             font-weight: 400;
+            letter-spacing: 0.2px;
         }
 
         /* ============================================================
-           PHOTO UPLOAD
-           ============================================================ */
+               PHOTO UPLOAD — ENHANCED
+               ============================================================ */
         .photo-section {
             text-align: center;
-            margin-bottom: 22px;
-            padding: 20px 16px 16px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px dashed rgba(255, 255, 255, 0.06);
-            transition: all 0.4s ease;
+            margin-bottom: 24px;
+            padding: 22px 18px 18px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px dashed rgba(255, 255, 255, 0.05);
+            transition: all 0.5s var(--transition-smooth);
             position: relative;
         }
 
         .photo-section:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(126, 221, 176, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(126, 221, 176, 0.10);
+        }
+        .photo-section.drag-over {
+            border-color: rgba(126, 221, 176, 0.30);
+            background: rgba(126, 221, 176, 0.04);
+            transform: scale(1.005);
         }
 
         .photo-section .photo-label {
             font-size: 13px;
             font-weight: 600;
-            color: rgba(200, 230, 220, 0.70);
+            color: var(--text-secondary);
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            letter-spacing: 0.3px;
         }
 
         .photo-section .photo-label i {
@@ -326,63 +563,90 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         #preview {
-            width: 110px;
-            height: 110px;
+            width: 120px;
+            height: 120px;
             object-fit: cover;
             border-radius: 50%;
-            border: 3px solid rgba(126, 221, 176, 0.15);
+            border: 3px solid rgba(126, 221, 176, 0.12);
             display: none;
-            transition: all 0.4s ease;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.30);
+            transition: all 0.5s var(--transition-bounce);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.30);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         #preview.show {
             display: block;
-            animation: previewPop 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: previewPop 0.6s var(--transition-bounce);
         }
 
         @keyframes previewPop {
-            0% { transform: scale(0.7) rotate(-8deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            0% {
+                transform: scale(0.6) rotate(-12deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
         }
 
         .photo-upload-btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 50px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            color: rgba(200, 230, 220, 0.70);
+            color: var(--text-secondary);
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.4s var(--transition-smooth);
             position: relative;
             overflow: hidden;
         }
 
+        .photo-upload-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(10, 143, 122, 0.10), rgba(76, 175, 104, 0.04));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
         .photo-upload-btn:hover {
-            background: rgba(8, 127, 112, 0.15);
-            border-color: rgba(126, 221, 176, 0.20);
-            color: #ecfbf5;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(8, 127, 112, 0.10);
+            background: rgba(10, 143, 122, 0.12);
+            border-color: rgba(126, 221, 176, 0.18);
+            color: var(--text-primary);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(10, 143, 122, 0.08);
+        }
+
+        .photo-upload-btn:hover::before {
+            opacity: 1;
         }
 
         .photo-upload-btn i {
             color: #7eddb0;
             font-size: 16px;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s var(--transition-smooth);
+            position: relative;
+            z-index: 1;
         }
 
         .photo-upload-btn:hover i {
-            transform: scale(1.1) rotate(-4deg);
+            transform: scale(1.15) rotate(-6deg);
+        }
+
+        .photo-upload-btn span {
+            position: relative;
+            z-index: 1;
         }
 
         #photo {
@@ -391,125 +655,162 @@
 
         .photo-hint {
             font-size: 10px;
-            color: rgba(200, 230, 220, 0.30);
-            margin-top: 4px;
-            letter-spacing: 0.3px;
+            color: var(--text-muted);
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
         }
 
         /* ============================================================
-           FORM FIELDS
-           ============================================================ */
+               FORM FIELDS — FLOATING LABEL STYLE
+               ============================================================ */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         .form-group label {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: rgba(200, 230, 220, 0.75);
-            margin-bottom: 6px;
-            transition: color 0.3s ease;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
         .form-group label i {
             color: #7eddb0;
-            font-size: 14px;
+            font-size: 13px;
             width: 18px;
-            transition: all 0.3s ease;
+            transition: all 0.3s var(--transition-smooth);
         }
 
-        .form-group:hover label i {
-            transform: scale(1.1);
+        .form-group:focus-within label i {
+            color: #b5f0d4;
+            transform: scale(1.12) rotate(-4deg);
         }
 
         .form-group input {
             width: 100%;
-            padding: 14px 18px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
+            padding: 15px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
             outline: none;
-            background: rgba(255, 255, 255, 0.04);
-            color: #ecfbf5;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
             font-size: 14px;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.4s var(--transition-smooth);
             font-family: "Inter", sans-serif;
+            letter-spacing: 0.2px;
         }
 
         .form-group input::placeholder {
-            color: rgba(200, 230, 220, 0.25);
+            color: rgba(200, 230, 220, 0.20);
         }
 
         .form-group input:focus {
-            border-color: rgba(126, 221, 176, 0.30);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 0 0 4px rgba(126, 221, 176, 0.04), inset 0 0 0 1px rgba(126, 221, 176, 0.05);
-            transform: translateY(-1px);
+            border-color: rgba(126, 221, 176, 0.25);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow:
+                0 0 0 5px rgba(126, 221, 176, 0.03),
+                inset 0 0 0 1px rgba(126, 221, 176, 0.04);
+            transform: translateY(-2px);
         }
 
-        .form-group input:focus + label {
+        .form-group input:focus~label {
             color: #7eddb0;
         }
 
         .form-group input:hover {
-            border-color: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.08);
         }
 
-        /* Input focus glow */
-        .form-group:focus-within label i {
-            color: #b5f0d4;
-            transform: scale(1.1) rotate(-4deg);
+        .form-group .input-shimmer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, #7eddb0, #4caf68);
+            border-radius: 0 0 4px 4px;
+            transition: width 0.6s var(--transition-smooth);
+        }
+
+        .form-group:focus-within .input-shimmer {
+            width: 100%;
         }
 
         /* ============================================================
-           SUBMIT BUTTON
-           ============================================================ */
+               SUBMIT BUTTON — 3D DEPTH
+               ============================================================ */
         .submit-btn {
             width: 100%;
-            padding: 16px;
+            padding: 18px 20px;
             border: none;
-            border-radius: 16px;
+            border-radius: var(--radius-sm);
             background: linear-gradient(135deg, #1a9b85, #08766c);
-            color: white;
+            color: #fff;
             font-size: 16px;
             font-weight: 700;
             font-family: "Inter", sans-serif;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.5s var(--transition-smooth);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 12px 40px rgba(8, 127, 112, 0.30);
-            margin-top: 6px;
+            box-shadow:
+                0 12px 40px rgba(10, 143, 122, 0.30),
+                inset 0 1px 0 rgba(255, 255, 255, 0.10);
+            margin-top: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.4px;
+            transform: translateY(0);
         }
 
         .submit-btn::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 16px;
+            border-radius: var(--radius-sm);
             background: linear-gradient(135deg, #26b396, #0e8a7a);
             opacity: 0;
             transition: opacity 0.5s ease;
         }
 
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-sm);
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+                    rgba(255, 255, 255, 0.12),
+                    transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
         .submit-btn:hover:not(:disabled) {
-            transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 18px 50px rgba(8, 127, 112, 0.40);
+            transform: translateY(-4px) scale(1.015);
+            box-shadow:
+                0 20px 55px rgba(10, 143, 122, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
         }
 
         .submit-btn:hover:not(:disabled)::before {
             opacity: 1;
         }
 
+        .submit-btn:hover:not(:disabled)::after {
+            opacity: 1;
+        }
+
         .submit-btn:active:not(:disabled) {
-            transform: scale(0.97);
+            transform: scale(0.97) translateY(0);
         }
 
         .submit-btn i,
@@ -520,7 +821,7 @@
 
         .submit-btn i {
             font-size: 18px;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s var(--transition-smooth);
         }
 
         .submit-btn:hover:not(:disabled) i {
@@ -528,24 +829,42 @@
         }
 
         .submit-btn:disabled {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             box-shadow: none;
             cursor: not-allowed;
-            color: rgba(200, 230, 220, 0.40);
+            color: rgba(200, 230, 220, 0.30);
+            transform: none !important;
+        }
+
+        /* Ripple effect */
+        .submit-btn .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(0);
+            animation: rippleAnim 0.7s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         /* ============================================================
-           MESSAGE
-           ============================================================ */
+               MESSAGE
+               ============================================================ */
         #message {
-            margin-top: 18px;
+            margin-top: 20px;
             text-align: center;
             font-weight: 600;
             font-size: 14px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            transition: all 0.4s ease;
-            min-height: 48px;
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            transition: all 0.5s var(--transition-smooth);
+            min-height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -555,117 +874,153 @@
         #message.success {
             color: #7eddb0;
             background: rgba(126, 221, 176, 0.06);
-            border: 1px solid rgba(126, 221, 176, 0.06);
+            border: 1px solid rgba(126, 221, 176, 0.08);
+            animation: msgPop 0.5s var(--transition-bounce);
         }
 
         #message.error {
             color: #f87171;
             background: rgba(248, 113, 113, 0.06);
-            border: 1px solid rgba(248, 113, 113, 0.06);
+            border: 1px solid rgba(248, 113, 113, 0.08);
+            animation: msgPop 0.5s var(--transition-bounce);
+        }
+
+        @keyframes msgPop {
+            0% {
+                transform: scale(0.92);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* ============================================================
-           DECORATIVE ELEMENTS
-           ============================================================ */
-        .form-box .deco-dot {
-            position: absolute;
-            border-radius: 50%;
+               SUCCESS OVERLAY (celebration)
+               ============================================================ */
+        .success-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
             pointer-events: none;
-            opacity: 0.04;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .form-box .deco-dot-1 {
-            width: 120px;
-            height: 120px;
-            top: -40px;
-            right: -40px;
-            background: #7eddb0;
+
+        .success-overlay .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            opacity: 0;
+            animation: confettiFall 3s ease-in forwards;
         }
-        .form-box .deco-dot-2 {
-            width: 80px;
-            height: 80px;
-            bottom: -20px;
-            left: -20px;
-            background: #4caf68;
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-20vh) rotate(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(110vh) rotate(720deg) scale(0.3);
+            }
         }
 
         /* ============================================================
-           RESPONSIVE
-           ============================================================ */
-        @media (max-width: 600px) {
+               RESPONSIVE
+               ============================================================ */
+        @media (max-width: 640px) {
             body {
                 padding: 16px;
             }
-            .form-box {
-                padding: 30px 22px 28px;
+            .form-card {
+                padding: 32px 22px 28px;
                 border-radius: 24px;
             }
             .form-header h1 {
-                font-size: 26px;
-            }
-            .form-header .icon-wrap {
-                width: 64px;
-                height: 64px;
                 font-size: 28px;
             }
+            .form-header .icon-ring {
+                width: 68px;
+                height: 68px;
+                font-size: 30px;
+            }
             .form-group input {
-                padding: 12px 14px;
+                padding: 13px 14px;
                 font-size: 13px;
             }
             .submit-btn {
-                padding: 14px;
+                padding: 15px;
                 font-size: 15px;
             }
             .photo-section {
-                padding: 16px 12px;
+                padding: 18px 12px;
             }
             #preview {
-                width: 90px;
-                height: 90px;
+                width: 100px;
+                height: 100px;
             }
-            .form-box .deco-dot-1,
-            .form-box .deco-dot-2 {
+            .form-card .glint--tl,
+            .form-card .glint--br {
+                display: none;
+            }
+            .shape--cube:nth-child(1),
+            .shape--cube:nth-child(2),
+            .shape--sphere:nth-child(3),
+            .shape--sphere:nth-child(4) {
                 display: none;
             }
         }
 
         @media (max-width: 400px) {
-            .form-box {
+            .form-card {
                 padding: 24px 16px 22px;
                 border-radius: 20px;
             }
             .form-header h1 {
-                font-size: 22px;
+                font-size: 24px;
             }
-            .form-header .icon-wrap {
+            .form-header .icon-ring {
                 width: 56px;
                 height: 56px;
                 font-size: 24px;
             }
             .form-group input {
-                padding: 10px 12px;
+                padding: 11px 12px;
                 font-size: 12px;
                 border-radius: 12px;
             }
             .submit-btn {
-                padding: 12px;
+                padding: 13px;
                 font-size: 14px;
-                border-radius: 12px;
             }
             #preview {
-                width: 76px;
-                height: 76px;
+                width: 80px;
+                height: 80px;
+            }
+            .photo-upload-btn {
+                padding: 10px 18px;
+                font-size: 12px;
             }
         }
 
+        /* Reduce motion */
         @media (prefers-reduced-motion: reduce) {
-            .bg-wall .orb,
+            .bg-universe .orb,
+            .shape,
             .particle {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
             }
-            .form-box,
-            .form-box * {
+            .form-card,
+            .form-card * {
                 transition-duration: 0.01ms !important;
+            }
+            #preview.show {
+                animation-duration: 0.01ms !important;
             }
         }
     </style>
@@ -676,12 +1031,20 @@
     <!-- ============================================================
     ANIMATED BACKGROUND
     ============================================================ -->
-    <div class="bg-wall">
-        <div class="bg-gradient"></div>
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-        <div class="noise"></div>
+    <div class="bg-universe">
+        <div class="gradient-layer"></div>
+        <div class="orb orb--1"></div>
+        <div class="orb orb--2"></div>
+        <div class="orb orb--3"></div>
+        <div class="noise-overlay"></div>
+    </div>
+
+    <!-- 3D Geometric Shapes -->
+    <div class="shapes">
+        <div class="shape shape--cube"></div>
+        <div class="shape shape--cube"></div>
+        <div class="shape shape--sphere"></div>
+        <div class="shape shape--sphere"></div>
     </div>
 
     <!-- Floating Particles -->
@@ -696,43 +1059,46 @@
         <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
 
     <!-- ============================================================
-    FORM
+    MAIN FORM
     ============================================================ -->
     <div class="form-wrapper">
 
-        <div class="form-box" id="formBox">
+        <div class="form-card" id="formCard">
 
-            <!-- Decorative dots -->
-            <div class="deco-dot deco-dot-1"></div>
-            <div class="deco-dot deco-dot-2"></div>
+            <!-- Decorative glints -->
+            <div class="glint glint--tl"></div>
+            <div class="glint glint--br"></div>
 
             <!-- Header -->
             <div class="form-header">
-                <div class="icon-wrap">
+                <div class="icon-ring">
+                    <span class="pulse-ring"></span>
                     <i class="fas fa-dna"></i>
                 </div>
-                <h1>Join <span>BioGenius</span></h1>
-                <p class="subtitle">Become part of the biotechnology community</p>
+                <h1>Join <span class="highlight">BioGenius</span></h1>
+                <p class="sub">Become part of the biotechnology community</p>
             </div>
 
             <!-- Form -->
-            <form id="memberForm">
+            <form id="memberForm" novalidate>
 
                 <!-- Photo Upload -->
-                <div class="photo-section">
+                <div class="photo-section" id="photoSection">
                     <span class="photo-label">
                         <i class="fas fa-camera"></i> Profile Photo
                     </span>
                     <div class="photo-upload-wrap">
-                        <img id="preview" alt="Profile Preview">
-                        <label class="photo-upload-btn" for="photo">
+                        <img id="preview" alt="Profile preview" />
+                        <label class="photo-upload-btn" for="photo" id="uploadLabel">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <span>Choose Photo</span>
                         </label>
-                        <input type="file" id="photo" accept="image/png,image/jpeg,image/webp" required>
+                        <input type="file" id="photo" accept="image/png,image/jpeg,image/webp" required />
                         <span class="photo-hint">PNG, JPG · Max 2MB</span>
                     </div>
                 </div>
@@ -740,25 +1106,29 @@
                 <!-- Name -->
                 <div class="form-group">
                     <label for="name"><i class="fas fa-user"></i> Full Name</label>
-                    <input type="text" id="name" placeholder="Enter your full name" required>
+                    <input type="text" id="name" placeholder="Enter your full name" required autocomplete="name" />
+                    <div class="input-shimmer"></div>
                 </div>
 
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email"><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" id="email" placeholder="Enter your university email" required>
+                    <input type="email" id="email" placeholder="Enter your university email" required autocomplete="email" />
+                    <div class="input-shimmer"></div>
                 </div>
 
                 <!-- Department -->
                 <div class="form-group">
                     <label for="department"><i class="fas fa-graduation-cap"></i> Department / Branch</label>
-                    <input type="text" id="department" placeholder="e.g. Biotechnology" required>
+                    <input type="text" id="department" placeholder="e.g. Biotechnology" required />
+                    <div class="input-shimmer"></div>
                 </div>
 
                 <!-- Year -->
                 <div class="form-group">
                     <label for="year"><i class="fas fa-calendar-alt"></i> Year / Semester</label>
-                    <input type="text" id="year" placeholder="e.g. 2nd Year" required>
+                    <input type="text" id="year" placeholder="e.g. 2nd Year" required />
+                    <div class="input-shimmer"></div>
                 </div>
 
                 <!-- Submit -->
@@ -776,16 +1146,18 @@
     </div>
 
     <!-- ============================================================
-    FIREBASE + CLOUDINARY
+    FIREBASE + CLOUDINARY (ES Modules)
     ============================================================ -->
     <script type="module">
-
+        // ============================================================
+        // IMPORTS
+        // ============================================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-        // ============================
+        // ============================================================
         // FIREBASE CONFIG
-        // ============================
+        // ============================================================
         const firebaseConfig = {
             apiKey: "AIzaSyCuYhCw8NdMB0Nu5p00L2HxOJfOCsEoHwo",
             authDomain: "biogenius-club.firebaseapp.com",
@@ -798,53 +1170,62 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ============================
+        // ============================================================
         // CLOUDINARY SETTINGS
-        // ============================
+        // ============================================================
         const CLOUD_NAME = "jdada6qn";
         const UPLOAD_PRESET = "biogenius_members";
 
-        // ============================
-        // DOM ELEMENTS
-        // ============================
+        // ============================================================
+        // DOM REFS
+        // ============================================================
         const form = document.getElementById("memberForm");
         const photoInput = document.getElementById("photo");
         const preview = document.getElementById("preview");
         const registerBtn = document.getElementById("registerBtn");
         const message = document.getElementById("message");
+        const formCard = document.getElementById("formCard");
+        const photoSection = document.getElementById("photoSection");
 
-        // ============================
+        // ============================================================
         // 3D TILT ON MOUSE MOVE
-        // ============================
-        const formBox = document.getElementById("formBox");
-
-        formBox.addEventListener("mousemove", function(e) {
+        // ============================================================
+        /**
+         * Applies a subtle 3D tilt to the card based on mouse position,
+         * and updates the radial highlight origin.
+         */
+        formCard.addEventListener("mousemove", function(e) {
             const rect = this.getBoundingClientRect();
             const x = ((e.clientX - rect.left) / rect.width) * 100;
             const y = ((e.clientY - rect.top) / rect.height) * 100;
-            this.style.setProperty("--mouse-x", x + "%");
-            this.style.setProperty("--mouse-y", y + "%");
 
-            // Subtle 3D tilt
+            // Update custom properties for the radial highlight
+            this.style.setProperty("--mx", x + "%");
+            this.style.setProperty("--my", y + "%");
+
+            // Calculate tilt angles (clamped for subtlety)
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             const deltaX = (e.clientX - centerX) / centerX;
             const deltaY = (e.clientY - centerY) / centerY;
-
-            const rotateY = deltaX * 2.5;
-            const rotateX = -deltaY * 2.5;
+            const rotateY = Math.max(-3, Math.min(3, deltaX * 3));
+            const rotateX = Math.max(-3, Math.min(3, -deltaY * 3));
 
             this.style.transform =
-                `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px) scale(1.01)`;
+                `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.008)`;
         });
 
-        formBox.addEventListener("mouseleave", function() {
+        formCard.addEventListener("mouseleave", function() {
             this.style.transform = "rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)";
         });
 
-        // ============================
+        // ============================================================
         // PHOTO PREVIEW
-        // ============================
+        // ============================================================
+        /**
+         * Reads the selected image file, validates size, and displays
+         * a preview with a pop animation.
+         */
         photoInput.addEventListener("change", function() {
             const file = this.files[0];
             if (!file) return;
@@ -859,15 +1240,104 @@
             reader.onload = function(e) {
                 preview.src = e.target.result;
                 preview.classList.add("show");
+                // Reset upload label text
+                document.querySelector("#uploadLabel span").textContent = "Change Photo";
             };
             reader.readAsDataURL(file);
         });
 
-        // ============================
-        // FORM SUBMIT
-        // ============================
+        // ============================================================
+        // DRAG & DROP SUPPORT FOR PHOTO
+        // ============================================================
+        /**
+         * Allows users to drag & drop an image onto the photo section.
+         */
+        photoSection.addEventListener("dragover", function(e) {
+            e.preventDefault();
+            this.classList.add("drag-over");
+        });
+
+        photoSection.addEventListener("dragleave", function(e) {
+            e.preventDefault();
+            this.classList.remove("drag-over");
+        });
+
+        photoSection.addEventListener("drop", function(e) {
+            e.preventDefault();
+            this.classList.remove("drag-over");
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                photoInput.files = files;
+                photoInput.dispatchEvent(new Event("change"));
+            }
+        });
+
+        // ============================================================
+        // BUTTON RIPPLE EFFECT
+        // ============================================================
+        /**
+         * Creates a ripple animation on the button at the click position.
+         */
+        registerBtn.addEventListener("click", function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const ripple = document.createElement("span");
+            ripple.className = "ripple";
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + "px";
+            ripple.style.left = x - size / 2 + "px";
+            ripple.style.top = y - size / 2 + "px";
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 700);
+        });
+
+        // ============================================================
+        // CONFETTI CELEBRATION (on success)
+        // ============================================================
+        /**
+         * Launches a confetti burst when registration succeeds.
+         */
+        function fireConfetti() {
+            const overlay = document.createElement("div");
+            overlay.className = "success-overlay";
+            document.body.appendChild(overlay);
+
+            const colors = ["#7eddb0", "#4caf68", "#f0c040", "#ff6b6b", "#4dabf7", "#da77f2"];
+            for (let i = 0; i < 80; i++) {
+                const piece = document.createElement("div");
+                piece.className = "confetti-piece";
+                const size = 4 + Math.random() * 8;
+                piece.style.width = size + "px";
+                piece.style.height = size * (0.5 + Math.random() * 0.8) + "px";
+                piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.left = Math.random() * 100 + "%";
+                piece.style.top = Math.random() * 20 + "%";
+                piece.style.animationDuration = 2 + Math.random() * 2.5 + "s";
+                piece.style.animationDelay = Math.random() * 1.2 + "s";
+                piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+                overlay.appendChild(piece);
+            }
+
+            setTimeout(() => overlay.remove(), 4000);
+        }
+
+        // ============================================================
+        // FORM SUBMIT — MAIN LOGIC
+        // ============================================================
+        /**
+         * Handles form submission:
+         * 1. Validates photo selection
+         * 2. Uploads image to Cloudinary
+         * 3. Saves member data to Firestore
+         * 4. Shows success / error feedback
+         */
         form.addEventListener("submit", async function(e) {
             e.preventDefault();
+
+            // Clear previous message
+            message.textContent = "";
+            message.className = "";
 
             const file = photoInput.files[0];
             const name = document.getElementById("name").value.trim();
@@ -875,64 +1345,83 @@
             const department = document.getElementById("department").value.trim();
             const year = document.getElementById("year").value.trim();
 
+            // Basic validation
             if (!file) {
                 message.textContent = "❌ Please select a profile photo.";
                 message.className = "error";
                 return;
             }
+            if (!name || !email || !department || !year) {
+                message.textContent = "❌ Please fill in all fields.";
+                message.className = "error";
+                return;
+            }
 
             try {
+                // Disable button and show loading state
                 registerBtn.disabled = true;
                 registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Uploading...</span>';
 
-                // ---- Upload to Cloudinary ----
+                // ---- 1. Upload to Cloudinary ----
                 const cloudinaryData = new FormData();
                 cloudinaryData.append("file", file);
                 cloudinaryData.append("upload_preset", UPLOAD_PRESET);
 
                 const uploadResponse = await fetch(
-                    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-                    { method: "POST", body: cloudinaryData }
+                    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                        method: "POST",
+                        body: cloudinaryData
+                    }
                 );
 
                 if (!uploadResponse.ok) {
-                    throw new Error("Photo upload failed.");
+                    throw new Error("Photo upload failed. Please try again.");
                 }
 
                 const uploadResult = await uploadResponse.json();
                 const photoURL = uploadResult.secure_url;
 
-                // ---- Save to Firestore ----
+                // ---- 2. Save to Firestore ----
                 registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Submitting...</span>';
 
                 await addDoc(collection(db, "members"), {
-                    name: name,
-                    email: email,
-                    department: department,
-                    year: year,
-                    photoURL: photoURL,
+                    name,
+                    email,
+                    department,
+                    year,
+                    photoURL,
                     status: "pending",
                     createdAt: serverTimestamp()
                 });
 
-                // ---- Success ----
+                // ---- 3. Success ----
                 message.textContent = "✅ Registration submitted! Waiting for admin approval.";
                 message.className = "success";
+
+                // Launch confetti celebration
+                fireConfetti();
+
+                // Reset form
                 form.reset();
                 preview.classList.remove("show");
                 preview.src = "";
+                document.querySelector("#uploadLabel span").textContent = "Choose Photo";
 
             } catch (error) {
-                console.error(error);
-                message.textContent = "❌ Something went wrong. Please try again.";
+                console.error("Registration error:", error);
+                message.textContent = "❌ " + (error.message || "Something went wrong. Please try again.");
                 message.className = "error";
             } finally {
+                // Re-enable button
                 registerBtn.disabled = false;
                 registerBtn.innerHTML = '<i class="fas fa-leaf"></i><span>Register</span>';
             }
         });
 
-        console.log("✅ BioGenius — Registration page loaded with 3D effects!");
+        // ============================================================
+        // CONSOLE LOG (reference note)
+        // ============================================================
+        console.log("✅ BioGenius Club — Registration page loaded with 3D effects, smooth transitions, and enhanced UX.");
     </script>
 
 </body>
