@@ -1356,6 +1356,87 @@
         }
 
         /* ============================================================
+           CHAT ICON — bottom left, sticky, theme-matched, interactive
+           ============================================================ */
+        .chat-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a9b85, #08766c);
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(8, 127, 112, 0.45);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            text-decoration: none;
+            font-size: 26px;
+        }
+        .chat-float:hover {
+            transform: scale(1.12) translateY(-4px);
+            box-shadow: 0 14px 40px rgba(8, 127, 112, 0.6);
+            background: linear-gradient(135deg, #26b396, #0e8a7a);
+        }
+        .chat-float:active {
+            transform: scale(0.92);
+        }
+        .chat-float i {
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+        .chat-float:hover i {
+            transform: rotate(-8deg) scale(1.05);
+        }
+        /* small pulse ring */
+        .chat-float::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(126, 221, 176, 0.3);
+            animation: chat-pulse 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes chat-pulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* responsive tweak for smaller screens */
+        @media (max-width: 520px) {
+            .chat-float {
+                width: 52px;
+                height: 52px;
+                bottom: 20px;
+                left: 20px;
+                font-size: 22px;
+            }
+        }
+        @media (max-width: 400px) {
+            .chat-float {
+                width: 46px;
+                height: 46px;
+                bottom: 16px;
+                left: 16px;
+                font-size: 19px;
+            }
+        }
+
+        /* ============================================================
            RESPONSIVE — REST OF THE PAGE
            ============================================================ */
         @media (max-width: 1024px) {
@@ -1781,7 +1862,12 @@
         </button>
     </div>
 
-    
+    <!-- ============================================================
+    CHAT ICON — bottom left, sticky, theme-matched, interactive
+    ============================================================ -->
+    <a href="Chatbot.html" class="chat-float" aria-label="Open chat">
+        <i class="fa-regular fa-comment-dots"></i>
+    </a>
 
     <!-- ============================================================
     MAIN CONTENT
@@ -2053,8 +2139,6 @@
             <span>Made for science & innovation 🧬</span>
         </div>
     </footer>
-
-    
 
     <!-- ============================================================
     TOAST
