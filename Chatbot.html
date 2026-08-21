@@ -3,278 +3,597 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coding Helper Bot</title>
+  <title>BioGenius · Coding Helper</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="shortcut icon" href="chat.png" type="image/x-icon">
-  
   <style>
+    /* ---------- RESET & BASE ---------- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #4f46e5, #6d28d9);
-      margin: 0;
-      padding: 20px;
+      font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      color: #333;
+      background: #0d1f1e;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
-    
+
+    /* ---------- 3D AMBIENT BACKGROUND (matches BioGenius) ---------- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: radial-gradient(ellipse at 30% 20%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 80%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
+                  #0a1a18;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+      background-size: 300px 300px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* ---------- 3D CHAT CONTAINER ---------- */
     #chatbot {
-      width: 380px;
-      height: 580px;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 420px;
+      max-width: 98vw;
+      height: 620px;
+      max-height: 90vh;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(24px) saturate(1.6);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      border-radius: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.08);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: all 0.3s ease;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  box-shadow 0.4s ease;
+      transform: perspective(1200px) rotateX(2deg) rotateY(-1deg) translateZ(0);
     }
-    
+
+    #chatbot:hover {
+      transform: perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(10px);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      border-color: rgba(126, 221, 176, 0.20);
+    }
+
+    /* ---------- HEADER (glassmorphism + 3D shine) ---------- */
     #chat-header {
-      background: linear-gradient(to right, #4f46e5, #6d28d9);
-      color: white;
-      padding: 16px;
-      font-weight: bold;
-      text-align: center;
+      background: linear-gradient(145deg, rgba(8, 127, 112, 0.40), rgba(6, 90, 79, 0.30));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 18px 20px;
+      font-weight: 700;
       font-size: 18px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
+      color: #ecfbf5;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 14px;
       position: relative;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
     }
-    
-    #chat-header .status-indicator {
+
+    #chat-header i {
+      color: #7eddb0;
+      filter: drop-shadow(0 0 8px rgba(126, 221, 176, 0.3));
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    #chat-header:hover i {
+      transform: scale(1.1) rotate(-4deg);
+    }
+
+    .status-indicator {
       width: 10px;
       height: 10px;
-      background: #22c55e;
+      background: #4ecb72;
       border-radius: 50%;
       position: absolute;
-      bottom: 12px;
-      right: 20px;
+      bottom: 14px;
+      right: 24px;
+      box-shadow: 0 0 0 4px rgba(78, 203, 114, 0.15);
+      animation: pulse-dot 2s ease-in-out infinite;
     }
-    
+
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(78, 203, 114, 0.2); }
+      50% { box-shadow: 0 0 0 8px rgba(78, 203, 114, 0.02); }
+    }
+
+    /* ---------- MESSAGES AREA (custom scroll) ---------- */
     #chat-messages {
       flex: 1;
-      padding: 16px;
+      padding: 20px 18px;
       overflow-y: auto;
       font-size: 14px;
-      background: #f8fafc;
+      background: rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
       gap: 12px;
+      scroll-behavior: smooth;
     }
-    
+
     #chat-messages::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
-    
     #chat-messages::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
     }
-    
     #chat-messages::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
+      background: rgba(126, 221, 176, 0.25);
+      border-radius: 10px;
     }
-    
+
+    /* ---------- MESSAGES ---------- */
     .message-container {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
-    
-    .message-time {
-      font-size: 10px;
-      color: #64748b;
-      margin-left: 8px;
-    }
-    
+
     .user {
       align-self: flex-end;
-      color: #111;
       margin: 0;
-      padding: 10px 14px;
-      background: #4f46e5;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, #1a9b85, #08766c);
       color: white;
-      border-radius: 12px 12px 4px 12px;
+      border-radius: 18px 18px 4px 18px;
       max-width: 80%;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 0.3s ease;
+      box-shadow: 0 6px 18px rgba(8, 127, 112, 0.25);
+      animation: fadeSlide 0.35s ease;
+      font-weight: 500;
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
-    
+
     .bot {
       align-self: flex-start;
-      color: #222;
       margin: 0;
-      padding: 12px 14px;
-      background: #f1f5f9;
-      border-radius: 12px 12px 12px 4px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #e8f5f0;
+      border-radius: 18px 18px 18px 4px;
       max-width: 85%;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      animation: fadeIn 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      animation: fadeSlide 0.35s ease;
+      line-height: 1.6;
     }
-    
+
     .bot b {
-      color: #4f46e5;
+      color: #7eddb0;
+      font-weight: 600;
     }
-    
+
+    .bot code {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.85em;
+      color: #b5f0d4;
+    }
+
+    .welcome-message {
+      text-align: center;
+      padding: 16px 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      color: #cce8e0;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .welcome-message b {
+      color: #7eddb0;
+      font-weight: 700;
+    }
+
+    /* ---------- TYPING INDICATOR (3D pulse) ---------- */
+    .typing-indicator {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 30px;
+      width: fit-content;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background: #7eddb0;
+      border-radius: 50%;
+      animation: typingBounce 1.4s infinite ease-in-out;
+      box-shadow: 0 0 10px rgba(126, 221, 176, 0.2);
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1.1); opacity: 1; }
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ---------- SUGGESTION CHIPS (3D glass) ---------- */
+    .suggestion-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 14px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(4px);
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: #b5f0d4;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip:hover {
+      background: rgba(126, 221, 176, 0.12);
+      border-color: rgba(126, 221, 176, 0.25);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 24px rgba(8, 127, 112, 0.2);
+      color: #ecfbf5;
+    }
+
+    .chip:active {
+      transform: scale(0.94);
+    }
+
+    /* ---------- INPUT AREA (3D glass) ---------- */
     .input-area {
       display: flex;
-      padding: 12px;
-      border-top: 1px solid #e2e8f0;
-      background: #fff;
-      gap: 8px;
+      padding: 14px 18px 18px;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.10);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(4px);
     }
-    
+
     #chat-input {
       flex: 1;
-      border: 1px solid #e2e8f0;
-      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 14px 18px;
       outline: none;
       font-size: 14px;
-      border-radius: 24px;
-      background: #f8fafc;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ecfbf5;
       transition: all 0.3s ease;
+      font-weight: 400;
+      letter-spacing: 0.2px;
     }
-    
+
+    #chat-input::placeholder {
+      color: rgba(200, 230, 220, 0.40);
+      font-weight: 300;
+    }
+
     #chat-input:focus {
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+      border-color: rgba(126, 221, 176, 0.30);
+      box-shadow: 0 0 0 4px rgba(126, 221, 176, 0.05), inset 0 0 20px rgba(126, 221, 176, 0.02);
+      background: rgba(255, 255, 255, 0.06);
     }
-    
+
     #send-button {
-      background: #4f46e5;
+      background: linear-gradient(135deg, #1a9b85, #08766c);
       color: white;
       border: none;
-      width: 44px;
-      height: 44px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: 0 8px 24px rgba(8, 127, 112, 0.25);
+      flex-shrink: 0;
     }
-    
+
     #send-button:hover {
-      background: #4338ca;
-      transform: scale(1.05);
+      transform: scale(1.06) translateY(-2px);
+      box-shadow: 0 12px 32px rgba(8, 127, 112, 0.4);
+      background: linear-gradient(135deg, #26b396, #0e8a7a);
     }
-    
-    .suggestion-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 12px 16px;
-      border-top: 1px solid #e2e8f0;
-      background: #f8fafc;
+
+    #send-button:active {
+      transform: scale(0.92);
     }
-    
-    .chip {
-      background: #eef2ff;
-      color: #4f46e5;
-      padding: 6px 12px;
-      border-radius: 16px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
+
+    #send-button i {
+      font-size: 18px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
     }
-    
-    .chip:hover {
-      background: #e0e7ff;
-      transform: translateY(-2px);
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 480px) {
+      #chatbot {
+        height: 94vh;
+        border-radius: 24px;
+        transform: perspective(800px) rotateX(1deg) rotateY(0deg);
+      }
+      #chatbot:hover {
+        transform: perspective(800px) rotateX(0deg) rotateY(0deg);
+      }
+      .chip {
+        font-size: 11px;
+        padding: 6px 12px;
+      }
+      .suggestion-chips {
+        padding: 10px 12px;
+        gap: 6px;
+      }
+      .input-area {
+        padding: 10px 12px 14px;
+      }
+      #send-button {
+        width: 44px;
+        height: 44px;
+      }
     }
-    
-    .typing-indicator {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
-      background: #f1f5f9;
-      border-radius: 12px;
-      width: fit-content;
-      margin: 4px 0;
+
+    @media (max-width: 380px) {
+      #chat-header {
+        font-size: 15px;
+        padding: 14px 16px;
+      }
+      .user, .bot {
+        font-size: 13px;
+        padding: 10px 12px;
+      }
     }
-    
-    .typing-dot {
-      width: 6px;
-      height: 6px;
-      background: #64748b;
+
+    /* ---------- 3D FLOATING ORBS (ambient) ---------- */
+    .orb-glow {
+      position: fixed;
       border-radius: 50%;
-      animation: pulse 1.5s infinite ease-in-out;
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: -1;
     }
-    
-    .typing-dot:nth-child(2) {
-      animation-delay: 0.2s;
+
+    .orb-glow:nth-child(1) {
+      width: 300px;
+      height: 300px;
+      background: rgba(8, 127, 112, 0.10);
+      top: -5%;
+      right: -5%;
     }
-    
-    .typing-dot:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.7; }
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .welcome-message {
-      text-align: center;
-      padding: 12px;
-      background: #f1f5f9;
-      border-radius: 12px;
-      margin-bottom: 12px;
+
+    .orb-glow:nth-child(2) {
+      width: 400px;
+      height: 400px;
+      background: rgba(76, 175, 104, 0.06);
+      bottom: -10%;
+      left: -10%;
     }
   </style>
 </head>
 <body>
 
-<div id="chatbot">
-  <div id="chat-header">
-    <i class="fas fa-robot"></i>
-    Coding Helper Bot
-    <i class="fas fa-code"></i>
-    <div class="status-indicator"></div>
-  </div>
-  
-  <div id="chat-messages">
-    <div class="welcome-message">
-      <b>Welcome to Coding Helper!</b> I can assist you with programming concepts from beginner to advanced.
+  <!-- ambient 3D orbs -->
+  <div class="orb-glow"></div>
+  <div class="orb-glow"></div>
+
+  <div id="chatbot">
+    <!-- HEADER -->
+    <div id="chat-header">
+      <i class="fas fa-dna"></i>
+      BioGenius · Code Helper
+      <i class="fas fa-microscope"></i>
+      <div class="status-indicator"></div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div id="chat-messages">
+      <div class="welcome-message">
+        <b>🧬 Bio-Coding Assistant</b><br>
+        Ask me about DNA, bioinformatics, Python, biotech, or any programming topic.
+      </div>
+    </div>
+
+    <!-- SUGGESTION CHIPS (BioTech themed) -->
+    <div class="suggestion-chips">
+      <div class="chip" onclick="suggestionChip('dna')">🧬 DNA</div>
+      <div class="chip" onclick="suggestionChip('bioinformatics')">🧪 Bioinformatics</div>
+      <div class="chip" onclick="suggestionChip('biotechnology')">🔬 Biotech</div>
+      <div class="chip" onclick="suggestionChip('python')">🐍 Python</div>
+      <div class="chip" onclick="suggestionChip('pcr')">🧫 PCR</div>
+      <div class="chip" onclick="suggestionChip('advanced')">🚀 Advanced</div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="input-area">
+      <input id="chat-input" type="text" placeholder="Ask about code, biotech, or data..." onkeypress="handleKeyPress(event)">
+      <button id="send-button" onclick="sendMessage()">
+        <i class="fas fa-paper-plane"></i>
+      </button>
     </div>
   </div>
-  
-  <div class="suggestion-chips">
-  <div class="chip" onclick="suggestionChip('dna')">🧬 DNA</div>
-  <div class="chip" onclick="suggestionChip('bioinformatics')">💻 Bioinformatics</div>
-  <div class="chip" onclick="suggestionChip('biotechnology')">🔬 Biotechnology</div>
-  <div class="chip" onclick="suggestionChip('python')">🐍 Python</div>
-  <div class="chip" onclick="suggestionChip('pcr')">🧪 PCR</div>
-  <div class="chip" onclick="suggestionChip('advanced')">🚀 Advanced Topics</div>
-</div>
-  
-  <div class="input-area">
-    <input id="chat-input" type="text" placeholder="Ask about programming..." onkeypress="handleKeyPress(event)">
-    <button id="send-button" onclick="sendMessage()">
-      <i class="fas fa-paper-plane"></i>
-    </button>
-  </div>
-</div>
 
-<script src="chatbot.js"></script>
+  <!-- ========== JAVASCRIPT (standalone, no external file) ========== -->
+  <script>
+    (function() {
+      'use strict';
+
+      // --- DOM refs ---
+      const messagesContainer = document.getElementById('chat-messages');
+      const chatInput = document.getElementById('chat-input');
+      const sendBtn = document.getElementById('send-button');
+
+      // --- typing indicator element ---
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'typing-indicator';
+      typingDiv.id = 'typingIndicator';
+      typingDiv.innerHTML = `
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      `;
+      messagesContainer.appendChild(typingDiv);
+
+      // --- helper: scroll to bottom ---
+      function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+
+      // --- show / hide typing ---
+      function showTyping(show) {
+        const indicator = document.getElementById('typingIndicator');
+        if (indicator) {
+          indicator.style.display = show ? 'flex' : 'none';
+          if (show) scrollToBottom();
+        }
+      }
+
+      // --- add message (user or bot) ---
+      function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.className = sender; // 'user' or 'bot'
+        div.textContent = text;
+        messagesContainer.insertBefore(div, document.getElementById('typingIndicator'));
+        scrollToBottom();
+        return div;
+      }
+
+      // --- bot reply (with simulated delay) ---
+      function botReply(text) {
+        showTyping(true);
+        const delay = 400 + Math.random() * 600;
+        setTimeout(() => {
+          showTyping(false);
+          addMessage(text, 'bot');
+        }, delay);
+      }
+
+      // --- send message (user + bot) ---
+      window.sendMessage = function() {
+        const msg = chatInput.value.trim();
+        if (!msg) return;
+
+        // user message
+        addMessage(msg, 'user');
+        chatInput.value = '';
+        chatInput.focus();
+
+        // --- bot logic (biotech + coding helper) ---
+        const lower = msg.toLowerCase();
+
+        // BioGenius specific replies
+        if (lower.includes('dna') || lower.includes('gene') || lower.includes('genetic')) {
+          botReply('🧬 DNA (deoxyribonucleic acid) is the molecule that carries genetic instructions. In programming, we often represent DNA sequences as strings (e.g., `"ATGCGTA"`). Want to learn about reverse complement or codon translation?');
+        }
+        else if (lower.includes('bioinformatics') || lower.includes('sequence') || lower.includes('alignment')) {
+          botReply('🧪 Bioinformatics combines biology, computer science, and statistics. Common tasks: sequence alignment (BLAST), genome assembly, and variant calling. Python libraries like Biopython and pandas are essential.');
+        }
+        else if (lower.includes('biotechnology') || lower.includes('biotech') || lower.includes('ferment')) {
+          botReply('🔬 Biotechnology applies biological systems to develop products. In coding, we simulate metabolic pathways, design CRISPR guides, or analyze microscopy images with OpenCV and deep learning.');
+        }
+        else if (lower.includes('python') || lower.includes('py') || lower.includes('code')) {
+          botReply('🐍 Python is the #1 language for biotech & bioinformatics. Use `Biopython` for sequences, `pandas` for data, `matplotlib` for plots. Try: `from Bio import SeqIO` to read FASTA files.');
+        }
+        else if (lower.includes('pcr') || lower.includes('primer') || lower.includes('amplify')) {
+          botReply('🧫 PCR (Polymerase Chain Reaction) amplifies DNA. In silico PCR: we design primers with tools like Primer3. Python can calculate melting temperature (Tm) using the nearest-neighbor method.');
+        }
+        else if (lower.includes('advanced') || lower.includes('ml') || lower.includes('ai') || lower.includes('deep')) {
+          botReply('🚀 Advanced topics: Deep learning for protein structure prediction (AlphaFold), single-cell RNA-seq analysis, and CRISPR off-target prediction. Start with `scikit-learn` and `PyTorch`.');
+        }
+        else if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
+          botReply('👋 Hello! I\'m your Bio-Coding assistant. Ask me about DNA, Python, biotech, bioinformatics, or any programming challenge.');
+        }
+        else if (lower.includes('help') || lower.includes('what can')) {
+          botReply('💡 I can help with: DNA/RNA sequences, Python for biotech, bioinformatics pipelines, PCR primer design, ML in biology, and more. Just ask!');
+        }
+        else {
+          // fallback — generic coding helper
+          botReply('🤖 That\'s a great question! I\'m here to help with coding, biotech, and bioinformatics. Could you rephrase or choose a topic from the chips above?');
+        }
+      };
+
+      // --- suggestion chip handler ---
+      window.suggestionChip = function(topic) {
+        const map = {
+          'dna': 'Tell me about DNA structure and how to manipulate sequences in Python.',
+          'bioinformatics': 'What is bioinformatics and how do I start with sequence analysis?',
+          'biotechnology': 'Explain biotechnology and its intersection with programming.',
+          'python': 'How can I use Python for biotech and bioinformatics?',
+          'pcr': 'Explain PCR primer design and how to automate it with code.',
+          'advanced': 'What are advanced topics in computational biology and AI?'
+        };
+        chatInput.value = map[topic] || topic;
+        sendMessage();
+      };
+
+      // --- keypress handler ---
+      window.handleKeyPress = function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          sendMessage();
+        }
+      };
+
+      // --- initial greeting (after a tiny delay) ---
+      setTimeout(() => {
+        botReply('🧬 Hello! I\'m your Bio-Coding Helper. Ask me anything about DNA, Python, biotech, or bioinformatics. Let\'s innovate together!');
+      }, 400);
+
+      console.log('✅ BioGenius · Coding Helper (3D glass + biotech theme) loaded.');
+    })();
+  </script>
 </body>
 </html>
-
