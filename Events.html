@@ -85,14 +85,14 @@
                 radial-gradient(ellipse at 20% 30%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
                 radial-gradient(ellipse at 80% 70%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
                 linear-gradient(180deg, rgba(10, 30, 28, 0.55) 0%, rgba(6, 18, 17, 0.70) 100%);
-            pointer-Events: none;
+            pointer-events: none;
         }
 
         .bg-wall::before {
             content: '';
             position: absolute;
             inset: 0;
-            pointer-Events: none;
+            pointer-events: none;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
             background-size: 300px 300px;
             opacity: 0.3;
@@ -115,7 +115,7 @@
         }
 
         /* ============================================================
-           NAVBAR
+           NAVBAR — FULLY RESPONSIVE (FIXED)
            ============================================================ */
         .navbar {
             width: min(1480px, calc(100% - 50px));
@@ -277,6 +277,7 @@
             width: 24px;
         }
 
+        /* ---- Desktop Join Button (leaf icon visible) ---- */
         .join-btn {
             display: flex;
             align-items: center;
@@ -328,6 +329,7 @@
             transform: scale(0.96);
         }
 
+        /* ---- Hamburger Menu Button ---- */
         .menu-btn {
             display: none;
             background: rgba(255, 255, 255, 0.06);
@@ -341,6 +343,8 @@
             transition: all 0.3s ease;
             flex-shrink: 0;
             backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
         }
         .menu-btn:hover {
             background: rgba(255, 255, 255, 0.12);
@@ -350,6 +354,7 @@
             transform: scale(0.92);
         }
 
+        /* ---- Mobile Dropdown ---- */
         .mobile-dropdown {
             display: none;
             position: fixed;
@@ -368,7 +373,7 @@
             animation: fadeDown 0.25s ease;
         }
         .mobile-dropdown.show {
-            display: flex;
+            display: flex !important;
         }
         .mobile-dropdown a {
             padding: 12px 16px;
@@ -383,6 +388,8 @@
             background: rgba(255, 255, 255, 0.06);
             color: #b5f0d4;
         }
+
+        /* ---- Mobile Join Button (leaf icon visible inside dropdown) ---- */
         .mobile-dropdown .join-mobile {
             margin-top: 8px;
             padding: 14px;
@@ -395,10 +402,19 @@
             cursor: pointer;
             transition: all 0.25s ease;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         .mobile-dropdown .join-mobile:hover {
             transform: scale(1.02);
             box-shadow: 0 8px 24px rgba(8, 127, 112, 0.30);
+        }
+        .mobile-dropdown .join-mobile i {
+            font-size: 16px;
+            color: #fff;
         }
 
         @keyframes fadeDown {
@@ -409,6 +425,93 @@
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ============================================================
+           RESPONSIVE BREAKPOINTS — NAVBAR ONLY
+           ============================================================ */
+
+        /* Tablets & small laptops: show hamburger, hide nav links & desktop join button */
+        @media (max-width: 820px) {
+            .nav-links {
+                display: none !important;
+            }
+            .menu-btn {
+                display: flex !important;
+            }
+            /* Hide desktop join button on mobile */
+            .join-btn {
+                display: none !important;
+            }
+        }
+
+        /* Mobile (small screens) */
+        @media (max-width: 520px) {
+            .navbar {
+                padding: 8px 14px 8px 16px;
+                min-height: 58px;
+                top: 10px;
+                border-radius: 16px;
+                width: calc(100% - 24px);
+            }
+            .logo-icon {
+                width: 38px;
+                height: 38px;
+                border-radius: 11px;
+            }
+            .logo-icon i {
+                font-size: 17px;
+            }
+            .logo-text strong {
+                font-size: 16px;
+                letter-spacing: 1.2px;
+            }
+            .logo-text small {
+                font-size: 6.5px;
+                letter-spacing: 2px;
+            }
+            .menu-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 17px;
+                border-radius: 11px;
+            }
+            .mobile-dropdown {
+                top: 70px;
+                left: 12px;
+                right: 12px;
+                padding: 14px 12px;
+            }
+            .mobile-dropdown a {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+            .mobile-dropdown .join-mobile {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+
+        /* Extra small */
+        @media (max-width: 400px) {
+            .logo-text small {
+                display: none;
+            }
+            .logo {
+                gap: 8px;
+            }
+            .navbar {
+                padding: 6px 10px 6px 12px;
+                min-height: 52px;
+                top: 8px;
+                border-radius: 14px;
+            }
+            .mobile-dropdown {
+                top: 62px;
+                left: 8px;
+                right: 8px;
+                padding: 12px 10px;
             }
         }
 
@@ -870,7 +973,7 @@
         }
 
         /* ============================================================
-           RESPONSIVE
+           RESPONSIVE — REST OF PAGE
            ============================================================ */
         @media (max-width: 1024px) {
             .nav-links {
@@ -883,47 +986,6 @@
             .join-btn {
                 padding: 10px 18px;
                 font-size: 13px;
-            }
-        }
-
-        @media (max-width: 820px) {
-            .navbar {
-                padding: 10px 18px 10px 22px;
-                width: calc(100% - 24px);
-                min-height: 66px;
-                top: 12px;
-                border-radius: 18px;
-            }
-            .nav-links {
-                display: none;
-            }
-            .join-btn {
-                padding: 10px 16px;
-            }
-            .join-btn span {
-                display: inline;
-                font-size: 12px;
-            }
-            .join-btn i {
-                font-size: 14px;
-            }
-            .menu-btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .mobile-dropdown.show {
-                display: flex;
-            }
-            .Events-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .footer-main {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 35px 25px;
-            }
-            .footer-brand {
-                grid-column: 1 / -1;
             }
         }
 
@@ -961,54 +1023,6 @@
             }
         }
 
-        @media (max-width: 520px) {
-            .navbar {
-                padding: 8px 14px 8px 16px;
-                min-height: 58px;
-                top: 10px;
-                border-radius: 16px;
-            }
-            .logo-icon {
-                width: 38px;
-                height: 38px;
-                border-radius: 11px;
-            }
-            .logo-icon i {
-                font-size: 17px;
-            }
-            .logo-text strong {
-                font-size: 16px;
-                letter-spacing: 1.2px;
-            }
-            .logo-text small {
-                font-size: 6.5px;
-                letter-spacing: 2px;
-            }
-            .join-btn {
-                padding: 8px 14px;
-                font-size: 12px;
-                border-radius: 40px;
-            }
-            .join-btn span {
-                display: none;
-            }
-            .join-btn i {
-                font-size: 15px;
-            }
-            .menu-btn {
-                width: 38px;
-                height: 38px;
-                font-size: 17px;
-                border-radius: 11px;
-            }
-            .mobile-dropdown {
-                top: 70px;
-                left: 12px;
-                right: 12px;
-                padding: 14px 12px;
-            }
-        }
-
         @media (prefers-reduced-motion: reduce) {
             html {
                 scroll-behavior: auto;
@@ -1034,7 +1048,7 @@
     </div>
 
     <!-- ============================================================
-    NAVBAR
+    NAVBAR — FULLY RESPONSIVE (FIXED)
     ============================================================ -->
     <header class="navbar" id="navbar">
         <a href="index.html" class="logo">
@@ -1055,17 +1069,19 @@
             <a href="Members.html">Members</a>
         </nav>
 
+        <!-- Desktop Join Button — leaf icon visible on desktop -->
         <button class="join-btn" id="openModalBtn">
             <i class="fas fa-leaf"></i>
             <span>Join Now</span>
         </button>
 
+        <!-- Hamburger Menu Button -->
         <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
             <i class="fa-solid fa-bars"></i>
         </button>
     </header>
 
-    <!-- Mobile dropdown -->
+    <!-- Mobile Dropdown — leaf icon visible inside dropdown -->
     <div class="mobile-dropdown" id="mobileDropdown">
         <a href="index.html">Home</a>
         <a href="About.html">About</a>
@@ -1074,7 +1090,9 @@
         <a href="Board.html">Board</a>
         <a href="Showcase.html">Showcase</a>
         <a href="Members.html">Members</a>
-        <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
+        <button class="join-mobile" id="mobileJoinBtn">
+            <i class="fas fa-leaf"></i> Join BioGenius
+        </button>
     </div>
 
     <!-- ============================================================
@@ -1183,7 +1201,7 @@
                     <h3>Python for Biologists</h3>
                     <p class="description">Learn Python programming from scratch with a focus on biological data analysis and visualization.</p>
                     <div class="event-meta">
-                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DESIDED </span>
+                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DECIDED</span>
                         <span><i class="fa-regular fa-clock"></i> 10:00 AM – 12:00 PM</span>
                         <span><i class="fa-solid fa-location-dot"></i> Computer Lab 2</span>
                     </div>
@@ -1199,7 +1217,7 @@
                     <h3>Biotech Startup Panel</h3>
                     <p class="description">Founders from leading biotech startups share their journey, challenges, and advice for aspiring entrepreneurs.</p>
                     <div class="event-meta">
-                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DESIDED</span>
+                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DECIDED</span>
                         <span><i class="fa-regular fa-clock"></i> 3:00 PM – 5:00 PM</span>
                         <span><i class="fa-solid fa-location-dot"></i> Auditorium</span>
                     </div>
@@ -1214,7 +1232,7 @@
                     <h3>AI in Drug Discovery</h3>
                     <p class="description">Explore how artificial intelligence is revolutionizing drug discovery and development in the pharmaceutical industry.</p>
                     <div class="event-meta">
-                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DESIDED</span>
+                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DECIDED</span>
                         <span><i class="fa-regular fa-clock"></i> 11:00 AM – 1:00 PM</span>
                         <span><i class="fa-solid fa-location-dot"></i> Seminar Hall</span>
                     </div>
@@ -1230,7 +1248,7 @@
                     <h3>BioGenius Annual Meet 2026</h3>
                     <p class="description">Celebrate our community's achievements, showcase Projects, and network with fellow biotech enthusiasts.</p>
                     <div class="event-meta">
-                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DESIDED</span>
+                        <span><i class="fa-regular fa-calendar"></i> DATE NOT DECIDED</span>
                         <span><i class="fa-regular fa-clock"></i> 9:00 AM – 6:00 PM</span>
                         <span><i class="fa-solid fa-location-dot"></i> University Convention Center</span>
                     </div>
@@ -1260,7 +1278,7 @@
 
     </main>
 
-   <!-- ============================================================
+    <!-- ============================================================
     FOOTER
     ============================================================ -->
     <footer>
@@ -1292,7 +1310,6 @@
             <span>Made for science & innovation 🧬</span>
         </div>
     </footer>
-
 
     <!-- ============================================================
     JOIN MODAL
@@ -1458,7 +1475,7 @@
                 }, 3500);
             }
 
-            console.log('✅ Events page loaded!');
+            console.log('✅ Events page loaded with responsive navbar!');
         })();
     </script>
 

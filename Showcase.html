@@ -119,10 +119,11 @@
             border: none;
             cursor: pointer;
         }
-/* ============================================================
-           PREMIUM NAVBAR
+
+        /* ============================================================
+           NAVBAR — FULLY RESPONSIVE (FIXED)
            ============================================================ */
-           .navbar {
+        .navbar {
             width: min(1480px, calc(100% - 50px));
             margin: 18px auto 0;
             min-height: var(--nav-height);
@@ -286,6 +287,7 @@
             width: 24px;
         }
 
+        /* ---- Desktop Join Button (leaf icon visible) ---- */
         .join-btn {
             display: flex;
             align-items: center;
@@ -337,6 +339,7 @@
             transform: scale(0.96);
         }
 
+        /* ---- Hamburger Menu Button ---- */
         .menu-btn {
             display: none;
             background: rgba(255, 255, 255, 0.06);
@@ -361,6 +364,7 @@
             transform: scale(0.92);
         }
 
+        /* ---- Mobile Dropdown ---- */
         .mobile-dropdown {
             display: none;
             position: fixed;
@@ -395,6 +399,8 @@
             background: rgba(255, 255, 255, 0.06);
             color: #b5f0d4;
         }
+
+        /* ---- Mobile Join Button (leaf icon visible inside dropdown) ---- */
         .mobile-dropdown .join-mobile {
             margin-top: 8px;
             padding: 14px;
@@ -407,10 +413,19 @@
             cursor: pointer;
             transition: all 0.25s ease;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         .mobile-dropdown .join-mobile:hover {
             transform: scale(1.02);
             box-shadow: 0 8px 24px rgba(8, 127, 112, 0.30);
+        }
+        .mobile-dropdown .join-mobile i {
+            font-size: 16px;
+            color: #fff;
         }
 
         @keyframes fadeDown {
@@ -424,6 +439,92 @@
             }
         }
 
+        /* ============================================================
+           RESPONSIVE BREAKPOINTS — NAVBAR ONLY
+           ============================================================ */
+
+        /* Tablets & small laptops: show hamburger, hide nav links & desktop join button */
+        @media (max-width: 820px) {
+            .nav-links {
+                display: none !important;
+            }
+            .menu-btn {
+                display: flex !important;
+            }
+            /* Hide desktop join button on mobile */
+            .join-btn {
+                display: none !important;
+            }
+        }
+
+        /* Mobile (small screens) */
+        @media (max-width: 520px) {
+            .navbar {
+                padding: 8px 14px 8px 16px;
+                min-height: 58px;
+                top: 10px;
+                border-radius: 16px;
+                width: calc(100% - 24px);
+            }
+            .logo-icon {
+                width: 38px;
+                height: 38px;
+                border-radius: 11px;
+            }
+            .logo-icon i {
+                font-size: 17px;
+            }
+            .logo-text strong {
+                font-size: 16px;
+                letter-spacing: 1.2px;
+            }
+            .logo-text small {
+                font-size: 6.5px;
+                letter-spacing: 2px;
+            }
+            .menu-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 17px;
+                border-radius: 11px;
+            }
+            .mobile-dropdown {
+                top: 70px;
+                left: 12px;
+                right: 12px;
+                padding: 14px 12px;
+            }
+            .mobile-dropdown a {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+            .mobile-dropdown .join-mobile {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+
+        /* Extra small */
+        @media (max-width: 400px) {
+            .logo-text small {
+                display: none;
+            }
+            .logo {
+                gap: 8px;
+            }
+            .navbar {
+                padding: 6px 10px 6px 12px;
+                min-height: 52px;
+                top: 8px;
+                border-radius: 14px;
+            }
+            .mobile-dropdown {
+                top: 62px;
+                left: 8px;
+                right: 8px;
+                padding: 12px 10px;
+            }
+        }
 
         /* ============================================================
            SECTION
@@ -788,7 +889,7 @@
         }
 
         /* ============================================================
-           RESPONSIVE
+           RESPONSIVE — REST OF PAGE
            ============================================================ */
         @media (max-width: 1024px) {
             .nav-links {
@@ -801,22 +902,6 @@
         }
 
         @media (max-width: 820px) {
-            .navbar {
-                padding: 10px 18px 10px 22px;
-                width: calc(100% - 24px);
-                min-height: 66px;
-                top: 12px;
-                border-radius: 18px;
-            }
-            .nav-links {
-                display: none !important;
-            }
-            .menu-btn {
-                display: flex !important;
-            }
-            .mobile-dropdown.show {
-                display: flex !important;
-            }
             .showcase-grid {
                 grid-template-columns: 1fr;
                 max-width: 500px;
@@ -886,40 +971,6 @@
         }
 
         @media (max-width: 520px) {
-            .navbar {
-                padding: 8px 14px 8px 16px;
-                min-height: 58px;
-                top: 10px;
-                border-radius: 16px;
-            }
-            .logo-icon {
-                width: 38px;
-                height: 38px;
-                border-radius: 11px;
-            }
-            .logo-icon i {
-                font-size: 17px;
-            }
-            .logo-text strong {
-                font-size: 16px;
-                letter-spacing: 1.2px;
-            }
-            .logo-text small {
-                font-size: 6.5px;
-                letter-spacing: 2px;
-            }
-            .menu-btn {
-                width: 38px;
-                height: 38px;
-                font-size: 17px;
-                border-radius: 11px;
-            }
-            .mobile-dropdown {
-                top: 70px;
-                left: 12px;
-                right: 12px;
-                padding: 14px 12px;
-            }
             .showcase-card {
                 min-height: 270px;
                 padding: 28px 16px 24px;
@@ -964,8 +1015,8 @@
         <div class="orb orb-2"></div>
     </div>
 
-  <!-- ============================================================
-    PREMIUM NAVBAR
+    <!-- ============================================================
+    NAVBAR — FULLY RESPONSIVE (FIXED)
     ============================================================ -->
     <header class="navbar" id="navbar">
         <a href="index.html" class="logo">
@@ -977,25 +1028,27 @@
         </a>
 
         <nav class="nav-links" id="navLinks">
-            <a href="index.html" class="active">Home</a>
+            <a href="index.html">Home</a>
             <a href="About.html">About</a>
             <a href="Events.html">Events</a>
             <a href="Projects.html">Projects</a>
             <a href="Board.html">Board</a>
-            <a href="Showcase.html">Showcase</a>
+            <a href="Showcase.html" class="active">Showcase</a>
         </nav>
 
-        <a href="Join.html" class="join-btn">
+        <!-- Desktop Join Button — leaf icon visible on desktop -->
+        <button class="join-btn" id="openModalBtn">
             <i class="fas fa-leaf"></i>
             <span>Join Now</span>
-        </a>
+        </button>
 
-        <!-- <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <!-- Hamburger Menu Button -->
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
             <i class="fa-solid fa-bars"></i>
-        </button> -->
+        </button>
     </header>
 
-    <!-- Mobile dropdown -->
+    <!-- Mobile Dropdown — leaf icon visible inside dropdown -->
     <div class="mobile-dropdown" id="mobileDropdown">
         <a href="index.html">Home</a>
         <a href="About.html">About</a>
@@ -1003,10 +1056,10 @@
         <a href="Projects.html">Projects</a>
         <a href="Board.html">Board</a>
         <a href="Showcase.html">Showcase</a>
-
-        <button class="join-mobile" id="mobileJoinBtn">Join BioGenius</button>
+        <button class="join-mobile" id="mobileJoinBtn">
+            <i class="fas fa-leaf"></i> Join BioGenius
+        </button>
     </div>
-
 
     <!-- ============================================================
     SHOWCASE PAGE
@@ -1033,10 +1086,6 @@
                     <div class="card-icon"><i class="fa-solid fa-film"></i></div>
                     <h2>Videos</h2>
                     <p>Watch event recaps, workshop recordings, and exclusive interviews with our members and guest speakers.</p>
-                    <!-- <div class="card-stats">
-                        <span><i class="fa-solid fa-video"></i> 15+ Videos</span>
-                        <span><i class="fa-regular fa-clock"></i> Latest: Sep 2026</span>
-                    </div> -->
                     <span class="explore-btn">
                         Explore Videos <i class="fa-solid fa-arrow-right"></i>
                     </span>
@@ -1049,10 +1098,6 @@
                     <div class="card-icon"><i class="fa-solid fa-images"></i></div>
                     <h2>Photos</h2>
                     <p>Browse through our photo galleries from events, lab sessions, seminars, and community meetups.</p>
-                    <!-- <div class="card-stats">
-                        <span><i class="fa-solid fa-image"></i> 120+ Photos</span>
-                        <span><i class="fa-regular fa-calendar"></i> 8 Albums</span>
-                    </div> -->
                     <span class="explore-btn">
                         Explore Photos <i class="fa-solid fa-arrow-right"></i>
                     </span>
@@ -1060,8 +1105,6 @@
 
             </div>
         </section>
-
-      
 
     </main>
 
@@ -1098,6 +1141,42 @@
         </div>
     </footer>
 
+    <!-- ============================================================
+    JOIN MODAL
+    ============================================================ -->
+    <div class="modal" id="joinModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeJoinModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-icon"><i class="fa-solid fa-dna"></i></div>
+            <h2>Join BioGenius</h2>
+            <p>Become part of our biotechnology community.</p>
+            <form id="joinForm">
+                <input type="text" id="joinName" placeholder="Full Name" required />
+                <input type="email" id="joinEmail" placeholder="University Email" required />
+                <select id="department" required>
+                    <option value="">Select Department</option>
+                    <option>Biotechnology</option>
+                    <option>Bioinformatics</option>
+                    <option>Computer Science</option>
+                    <option>Life Sciences</option>
+                    <option>Other</option>
+                </select>
+                <button class="primary-btn" type="submit">
+                    Submit Application <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Application submitted successfully!</span>
+    </div>
 
     <!-- ============================================================
     JAVASCRIPT
@@ -1157,6 +1236,59 @@
                 }
             });
 
+            // ---- Mobile join ----
+            document.getElementById('mobileJoinBtn').addEventListener('click', function() {
+                openJoinModal();
+                mobileDropdown.classList.remove('show');
+                mobileOpen = false;
+                menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            });
+
+            // ---- Modal ----
+            const modal = document.getElementById('joinModal');
+            const openBtn = document.getElementById('openModalBtn');
+
+            window.openJoinModal = function() {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            };
+
+            window.closeJoinModal = function() {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            };
+
+            openBtn.addEventListener('click', openJoinModal);
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeJoinModal();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeJoinModal();
+            });
+
+            // ---- Join form ----
+            document.getElementById('joinForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                closeJoinModal();
+                showToast('Application submitted successfully!');
+                this.reset();
+            });
+
+            // ---- Toast ----
+            const toast = document.getElementById('toast');
+
+            function showToast(message) {
+                const span = toast.querySelector('span');
+                if (span) span.textContent = message;
+                toast.classList.add('show');
+                clearTimeout(toast._timer);
+                toast._timer = setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3500);
+            }
+
             // ---- Mouse tracking for card glow ----
             document.querySelectorAll('.showcase-card').forEach(function(card) {
                 card.addEventListener('mousemove', function(e) {
@@ -1168,25 +1300,9 @@
                 });
             });
 
-            console.log('✅ BioGenius — Showcase page loaded!');
+            console.log('✅ BioGenius — Showcase page loaded with responsive navbar!');
         })();
     </script>
-
-    <!-- ============================================================
-    VIDEOS.HTML (embedded as a separate page)
-    ============================================================ -->
-    <!-- 
-        This is a placeholder for videos.html
-        The actual videos.html page is provided separately below.
-    -->
-
-    <!-- ============================================================
-    PHOTOS.HTML (embedded as a separate page)
-    ============================================================ -->
-    <!-- 
-        This is a placeholder for photos.html
-        The actual photos.html page is provided separately below.
-    -->
 
 </body>
 </html>
