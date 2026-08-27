@@ -1032,6 +1032,120 @@
     border-color: rgba(126, 221, 176, 0.35);
     box-shadow: 0 6px 20px rgba(126, 221, 176, 0.18);
 }
+
+/* ============================================================
+   JOIN MODAL — FIX ONLY
+   ============================================================ */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 15, 13, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    width: min(450px, 100%);
+    padding: 40px 32px;
+    border-radius: 24px;
+    background: rgba(15, 45, 42, 0.96);
+    border: 1px solid rgba(126, 221, 176, 0.18);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    color: #ecfbf5;
+    text-align: center;
+    animation: modalIn 0.3s ease;
+}
+
+.close-modal {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #b5f0d4;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.modal-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 18px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(8, 127, 112, 0.2);
+    color: #7eddb0;
+    font-size: 28px;
+}
+
+.modal-content h2 {
+    margin-bottom: 8px;
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.modal-content p {
+    margin-bottom: 24px;
+    color: rgba(200, 230, 220, 0.7);
+}
+
+#joinForm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+#joinForm input,
+#joinForm select {
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    outline: none;
+    background: rgba(255, 255, 255, 0.07);
+    color: #ecfbf5;
+    font-family: "Inter", sans-serif;
+}
+
+#joinForm select option {
+    background: #123b3b;
+    color: #fff;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1a9b85, #08766c);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@keyframes modalIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
     </style>
 </head>
 
@@ -1207,14 +1321,7 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    TOAST
-    ============================================================ -->
-    <div class="toast" id="toast">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>Application submitted successfully!</span>
-    </div>
-
+  
     <!-- ============================================================
     JAVASCRIPT
     ============================================================ -->
