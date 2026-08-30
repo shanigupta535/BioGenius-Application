@@ -2,467 +2,211 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>BioGenius · AI Chat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         /* ---------- RESET & BASE ---------- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #0d1f1e;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh; min-height: 100dvh;
+            display: flex; justify-content: center; align-items: center;
+            background: #0d1f1e; padding: 12px;
+            position: relative; overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* ---------- 3D AMBIENT BACKGROUND ---------- */
         body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            background: radial-gradient(ellipse at 30% 20%, rgba(8, 127, 112, 0.25) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 80%, rgba(76, 175, 104, 0.18) 0%, transparent 50%),
-                #0a1a18;
+            content: ''; position: fixed; inset: 0; z-index: -2;
+            background: radial-gradient(ellipse at 30% 20%, rgba(8,127,112,0.25) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(76,175,104,0.18) 0%, transparent 50%),
+                        #0a1a18;
         }
-
         body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -1;
+            content: ''; position: fixed; inset: 0; z-index: -1;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
-            background-size: 300px 300px;
-            opacity: 0.4;
-            pointer-events: none;
+            background-size: 300px 300px; opacity: 0.4; pointer-events: none;
         }
 
-        /* ---------- 3D CHAT CONTAINER ---------- */
+        /* ---------- 3D FLOATING ORBS ---------- */
+        .orb-glow { position: fixed; border-radius: 50%; filter: blur(70px); pointer-events: none; z-index: -1; }
+        .orb-glow:nth-child(1) { width: 300px; height: 300px; background: rgba(8,127,112,0.10); top: -5%; right: -5%; }
+        .orb-glow:nth-child(2) { width: 400px; height: 400px; background: rgba(76,175,104,0.06); bottom: -10%; left: -10%; }
+
+        /* ---------- CHAT CONTAINER ---------- */
         #chatbot {
-            width: 420px;
-            max-width: 98vw;
-            height: 620px;
-            max-height: 90vh;
-            background: rgba(255, 255, 255, 0.06);
+            width: 100%; max-width: 480px; height: 700px; max-height: 96vh; max-height: 96dvh;
+            background: rgba(255,255,255,0.06);
             backdrop-filter: blur(24px) saturate(1.6);
             -webkit-backdrop-filter: blur(24px) saturate(1.6);
-            border-radius: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                box-shadow 0.4s ease;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.10);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+            display: flex; flex-direction: column; overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease, border-color 0.4s ease;
             transform: perspective(1200px) rotateX(2deg) rotateY(-1deg) translateZ(0);
+            position: relative;
         }
-
-        #chatbot:hover {
-            transform: perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(10px);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            border-color: rgba(126, 221, 176, 0.20);
+        @media (hover: hover) {
+            #chatbot:hover {
+                transform: perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(10px);
+                box-shadow: 0 40px 100px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
+                border-color: rgba(126,221,176,0.20);
+            }
         }
 
         /* ---------- HEADER ---------- */
         #chat-header {
-            background: linear-gradient(145deg, rgba(8, 127, 112, 0.40), rgba(6, 90, 79, 0.30));
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 18px 20px;
-            font-weight: 700;
-            font-size: 18px;
-            letter-spacing: 0.3px;
+            background: linear-gradient(145deg, rgba(8,127,112,0.40), rgba(6,90,79,0.30));
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 14px 16px;
+            font-weight: 700; font-size: clamp(15px, 4vw, 19px); letter-spacing: 0.3px;
             color: #ecfbf5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
             position: relative;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+            text-shadow: 0 2px 12px rgba(0,0,0,0.25);
             font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            flex-shrink: 0; min-height: 60px;
         }
-
-        #chat-header i {
-            color: #7eddb0;
-            filter: drop-shadow(0 0 8px rgba(126, 221, 176, 0.3));
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        #chat-header:hover i {
-            transform: scale(1.1) rotate(-4deg);
-        }
+        #chat-header i { color: #7eddb0; filter: drop-shadow(0 0 8px rgba(126,221,176,0.3)); font-size: clamp(16px, 4vw, 20px); transition: transform 0.3s ease; }
+        #chat-header:active i { transform: scale(0.9) rotate(-4deg); }
 
         .status-indicator {
-            width: 10px;
-            height: 10px;
-            background: #4ecb72;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 14px;
-            right: 24px;
-            box-shadow: 0 0 0 4px rgba(78, 203, 114, 0.15);
+            width: 10px; height: 10px; background: #4ecb72; border-radius: 50%;
+            position: absolute; bottom: 12px; right: 18px;
+            box-shadow: 0 0 0 4px rgba(78,203,114,0.15);
             animation: pulse-dot 2s ease-in-out infinite;
         }
-
-        @keyframes pulse-dot {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(78, 203, 114, 0.2);
-            }
-            50% {
-                box-shadow: 0 0 0 8px rgba(78, 203, 114, 0.02);
-            }
-        }
+        @keyframes pulse-dot { 0%,100% { box-shadow: 0 0 0 0 rgba(78,203,114,0.2); } 50% { box-shadow: 0 0 0 8px rgba(78,203,114,0.02); } }
 
         /* ---------- MESSAGES AREA ---------- */
         #chat-messages {
-            flex: 1;
-            padding: 20px 18px;
-            overflow-y: auto;
-            font-size: 14px;
-            background: rgba(0, 0, 0, 0.15);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            scroll-behavior: smooth;
+            flex: 1; padding: 16px 14px; overflow-y: auto; overflow-x: hidden;
+            font-size: clamp(13px, 3.2vw, 15px);
+            background: rgba(0,0,0,0.15);
+            display: flex; flex-direction: column; gap: 10px;
+            scroll-behavior: smooth; -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
         }
-
-        #chat-messages::-webkit-scrollbar {
-            width: 5px;
-        }
-        #chat-messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 10px;
-        }
-        #chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(126, 221, 176, 0.25);
-            border-radius: 10px;
-        }
+        #chat-messages::-webkit-scrollbar { width: 4px; }
+        #chat-messages::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 10px; }
+        #chat-messages::-webkit-scrollbar-thumb { background: rgba(126,221,176,0.25); border-radius: 10px; }
 
         /* ---------- MESSAGES ---------- */
         .user {
-            align-self: flex-end;
-            margin: 0;
-            padding: 12px 16px;
+            align-self: flex-end; padding: 10px 14px;
             background: linear-gradient(135deg, #1a9b85, #08766c);
-            color: white;
-            border-radius: 18px 18px 4px 18px;
-            max-width: 80%;
-            box-shadow: 0 6px 18px rgba(8, 127, 112, 0.25);
-            animation: fadeSlide 0.35s ease;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            white-space: pre-wrap;
-            word-break: break-word;
+            color: white; border-radius: 16px 16px 4px 16px; max-width: 82%;
+            box-shadow: 0 6px 18px rgba(8,127,112,0.25);
+            animation: fadeSlide 0.35s ease; font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.06);
+            white-space: pre-wrap; word-break: break-word;
+            font-size: clamp(13px, 3.2vw, 15px); line-height: 1.5;
         }
-
         .bot {
-            align-self: flex-start;
-            margin: 0;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: #e8f5f0;
-            border-radius: 18px 18px 18px 4px;
-            max-width: 85%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            align-self: flex-start; padding: 10px 14px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #e8f5f0; border-radius: 16px 16px 16px 4px; max-width: 88%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             animation: fadeSlide 0.35s ease;
-            line-height: 1.7;
-            white-space: pre-wrap;
-            word-break: break-word;
+            line-height: 1.7; white-space: pre-wrap; word-break: break-word;
+            font-size: clamp(13px, 3.2vw, 15px);
         }
-
-        .bot b {
-            color: #7eddb0;
-            font-weight: 700;
-        }
-        .bot i {
-            color: #b5e6d0;
-        }
-        .bot code {
-            background: rgba(0, 0, 0, 0.25);
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.85em;
-            color: #b5f0d4;
-        }
-        /* numbered list styling inside bot messages */
-        .bot .list-item {
-            display: block;
-            padding-left: 8px;
-            margin: 4px 0;
-        }
-        .bot .list-num {
-            display: inline-block;
-            min-width: 24px;
-            color: #7eddb0;
-            font-weight: 600;
-        }
-        .bot .bullet {
-            display: inline-block;
-            min-width: 20px;
-            color: #7eddb0;
-        }
+        .bot b { color: #7eddb0; font-weight: 700; }
+        .bot i { color: #b5e6d0; }
+        .bot code { background: rgba(0,0,0,0.25); padding: 2px 8px; border-radius: 6px; font-size: 0.85em; color: #b5f0d4; }
+        .bot .list-item { display: block; padding-left: 6px; margin: 3px 0; }
+        .bot .list-num { display: inline-block; min-width: 22px; color: #7eddb0; font-weight: 600; }
+        .bot .bullet { display: inline-block; min-width: 18px; color: #7eddb0; }
 
         .welcome-message {
-            text-align: center;
-            padding: 16px 18px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            backdrop-filter: blur(4px);
-            color: #cce8e0;
-            font-size: 14px;
-            margin-bottom: 8px;
-            line-height: 1.6;
+            text-align: center; padding: 14px 16px;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 18px; backdrop-filter: blur(4px);
+            color: #cce8e0; font-size: clamp(12px, 3vw, 14px); margin-bottom: 6px; line-height: 1.6;
         }
-
-        .welcome-message b {
-            color: #7eddb0;
-            font-weight: 700;
-        }
+        .welcome-message b { color: #7eddb0; font-weight: 700; }
 
         /* ---------- TYPING INDICATOR ---------- */
         .typing-indicator {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 30px;
-            width: fit-content;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            display: none; align-items: center; gap: 6px; padding: 8px 14px;
+            background: rgba(255,255,255,0.04); border-radius: 30px; width: fit-content;
+            backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.03);
+            align-self: flex-start;
         }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: #7eddb0;
-            border-radius: 50%;
-            animation: typingBounce 1.4s infinite ease-in-out;
-            box-shadow: 0 0 10px rgba(126, 221, 176, 0.2);
-        }
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingBounce {
-            0%,
-            80%,
-            100% {
-                transform: scale(0.6);
-                opacity: 0.4;
-            }
-            40% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: translateY(12px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
+        .typing-dot { width: 7px; height: 7px; background: #7eddb0; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out; box-shadow: 0 0 10px rgba(126,221,176,0.2); }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%,80%,100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1.1); opacity: 1; } }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(12px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
         /* ---------- SUGGESTION CHIPS ---------- */
         .suggestion-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 14px 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            background: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(4px);
+            display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 14px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            background: rgba(0,0,0,0.15); backdrop-filter: blur(4px);
+            flex-shrink: 0; justify-content: center;
         }
-
         .chip {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: #b5f0d4;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            letter-spacing: 0.2px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #b5f0d4; padding: 7px 14px; border-radius: 30px;
+            font-size: clamp(11px, 2.6vw, 13px); font-weight: 500;
+            cursor: pointer; transition: all 0.25s cubic-bezier(0.25,0.46,0.45,0.94);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); letter-spacing: 0.2px;
+            display: flex; align-items: center; gap: 5px;
+            touch-action: manipulation; user-select: none; -webkit-user-select: none;
+            min-height: 36px;
         }
-
-        .chip:hover {
-            background: rgba(126, 221, 176, 0.12);
-            border-color: rgba(126, 221, 176, 0.25);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 24px rgba(8, 127, 112, 0.2);
-            color: #ecfbf5;
-        }
-        .chip:active {
-            transform: scale(0.94);
+        .chip:active { transform: scale(0.94); background: rgba(126,221,176,0.15); border-color: rgba(126,221,176,0.3); }
+        @media (hover: hover) {
+            .chip:hover { background: rgba(126,221,176,0.12); border-color: rgba(126,221,176,0.25); transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(8,127,112,0.2); color: #ecfbf5; }
         }
 
         /* ---------- INPUT AREA ---------- */
         .input-area {
-            display: flex;
-            padding: 14px 18px 18px;
-            gap: 12px;
-            background: rgba(0, 0, 0, 0.10);
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(4px);
+            display: flex; padding: 10px 14px 14px; gap: 10px;
+            background: rgba(0,0,0,0.10); border-top: 1px solid rgba(255,255,255,0.04);
+            backdrop-filter: blur(4px); flex-shrink: 0; align-items: center;
         }
-
         #chat-input {
-            flex: 1;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 14px 18px;
-            outline: none;
-            font-size: 14px;
-            border-radius: 40px;
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #ecfbf5;
-            transition: all 0.3s ease;
-            font-weight: 400;
-            letter-spacing: 0.2px;
+            flex: 1; border: 1px solid rgba(255,255,255,0.08); padding: 12px 16px; outline: none;
+            font-size: clamp(14px, 3.4vw, 16px); border-radius: 40px;
+            background: rgba(255,255,255,0.04); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            color: #ecfbf5; transition: all 0.3s ease; font-weight: 400; letter-spacing: 0.2px;
+            min-height: 48px; -webkit-appearance: none; appearance: none; font-family: inherit;
         }
-
-        #chat-input::placeholder {
-            color: rgba(200, 230, 220, 0.40);
-            font-weight: 300;
-        }
-
-        #chat-input:focus {
-            border-color: rgba(126, 221, 176, 0.30);
-            box-shadow: 0 0 0 4px rgba(126, 221, 176, 0.05), inset 0 0 20px rgba(126, 221, 176, 0.02);
-            background: rgba(255, 255, 255, 0.06);
-        }
+        #chat-input::placeholder { color: rgba(200,230,220,0.40); font-weight: 300; }
+        #chat-input:focus { border-color: rgba(126,221,176,0.30); box-shadow: 0 0 0 4px rgba(126,221,176,0.05), inset 0 0 20px rgba(126,221,176,0.02); background: rgba(255,255,255,0.06); }
 
         #send-button {
-            background: linear-gradient(135deg, #1a9b85, #08766c);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 8px 24px rgba(8, 127, 112, 0.25);
-            flex-shrink: 0;
+            background: linear-gradient(135deg, #1a9b85, #08766c); color: white; border: none;
+            width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+            box-shadow: 0 8px 24px rgba(8,127,112,0.25); flex-shrink: 0; touch-action: manipulation;
         }
-
-        #send-button:hover {
-            transform: scale(1.06) translateY(-2px);
-            box-shadow: 0 12px 32px rgba(8, 127, 112, 0.4);
-            background: linear-gradient(135deg, #26b396, #0e8a7a);
+        #send-button:active { transform: scale(0.90); box-shadow: 0 4px 12px rgba(8,127,112,0.2); }
+        @media (hover: hover) {
+            #send-button:hover { transform: scale(1.06) translateY(-2px); box-shadow: 0 12px 32px rgba(8,127,112,0.4); background: linear-gradient(135deg, #26b396, #0e8a7a); }
         }
-        #send-button:active {
-            transform: scale(0.92);
-        }
-        #send-button i {
-            font-size: 18px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
-        }
+        #send-button i { font-size: clamp(16px, 4vw, 18px); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
 
         /* ---------- RESPONSIVE ---------- */
-        @media (max-width: 480px) {
-            #chatbot {
-                height: 94vh;
-                border-radius: 24px;
-                transform: perspective(800px) rotateX(1deg) rotateY(0deg);
-            }
-            #chatbot:hover {
-                transform: perspective(800px) rotateX(0deg) rotateY(0deg);
-            }
-            .chip {
-                font-size: 11px;
-                padding: 6px 12px;
-            }
-            .suggestion-chips {
-                padding: 10px 12px;
-                gap: 6px;
-            }
-            .input-area {
-                padding: 10px 12px 14px;
-            }
-            #send-button {
-                width: 44px;
-                height: 44px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            #chat-header {
-                font-size: 15px;
-                padding: 14px 16px;
-            }
-            .user,
-            .bot {
-                font-size: 13px;
-                padding: 10px 12px;
-            }
-        }
-
-        /* ---------- 3D FLOATING ORBS ---------- */
-        .orb-glow {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(70px);
-            pointer-events: none;
-            z-index: -1;
-        }
-        .orb-glow:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            background: rgba(8, 127, 112, 0.10);
-            top: -5%;
-            right: -5%;
-        }
-        .orb-glow:nth-child(2) {
-            width: 400px;
-            height: 400px;
-            background: rgba(76, 175, 104, 0.06);
-            bottom: -10%;
-            left: -10%;
-        }
+        @media (max-width: 380px) { /* ... small phone styles ... */ }
+        @media (min-width: 600px) and (max-width: 1024px) { /* ... tablet ... */ }
+        @media (min-width: 1025px) { /* ... desktop ... */ }
+        @media (max-height: 500px) and (orientation: landscape) { /* ... landscape ... */ }
+        @supports (-webkit-touch-callout: none) { #chat-input { font-size: 16px !important; } }
     </style>
 </head>
 <body>
 
-    <!-- ambient 3D orbs -->
     <div class="orb-glow"></div>
     <div class="orb-glow"></div>
 
@@ -470,7 +214,7 @@
         <!-- HEADER -->
         <div id="chat-header">
             <i class="fas fa-dna"></i>
-            BioGenius · AI Chat
+            <span>BioGenius · AI Chat</span>
             <i class="fas fa-microscope"></i>
             <div class="status-indicator"></div>
         </div>
@@ -480,8 +224,7 @@
             <div class="welcome-message">
                 <b>🧬 BioGenius AI</b><br />
                 Ask me about biotech, coding, or general knowledge —<br />
-                in <b>English</b> or <b>हिंदी</b>.<br />
-                <span style="color:#7eddb0;font-size:13px;">✓ I reply with numbered lists, bullet points, and <b>bold</b> key terms.</span>
+                in <b>English</b> or <b>हिंदी</b>.
             </div>
         </div>
 
@@ -497,230 +240,146 @@
 
         <!-- INPUT -->
         <div class="input-area">
-            <input id="chat-input" type="text" placeholder="Ask in English or Hindi..." onkeypress="handleKeyPress(event)" />
-            <button id="send-button" onclick="sendMessage()">
+            <input id="chat-input" type="text" placeholder="Ask in English or Hindi..." onkeypress="handleKeyPress(event)" inputmode="text" autocomplete="off" />
+            <button id="send-button" onclick="sendMessage()" aria-label="Send message">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
     </div>
 
-    <!-- ========== JAVASCRIPT (API‑powered + structured formatting + bold) ========== -->
     <script>
         (function() {
             'use strict';
 
-            // --- DOM refs ---
+            // DOM refs
             const messagesContainer = document.getElementById('chat-messages');
             const chatInput = document.getElementById('chat-input');
 
-            // --- typing indicator ---
+            // Typing indicator
             const typingDiv = document.createElement('div');
             typingDiv.className = 'typing-indicator';
             typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
-            `;
+            typingDiv.innerHTML = `<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>`;
             messagesContainer.appendChild(typingDiv);
 
-            function scrollToBottom() {
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            }
-
+            function scrollToBottom() { messagesContainer.scrollTop = messagesContainer.scrollHeight; }
             function showTyping(show) {
                 const indicator = document.getElementById('typingIndicator');
-                if (indicator) {
-                    indicator.style.display = show ? 'flex' : 'none';
-                    if (show) scrollToBottom();
-                }
+                if (indicator) { indicator.style.display = show ? 'flex' : 'none'; if (show) scrollToBottom(); }
             }
 
-            // --- add message ---
+            // Add message
             function addMessage(text, sender) {
                 const div = document.createElement('div');
                 div.className = sender;
-
-                if (sender === 'bot') {
-                    // Format with lists and inline bold/italic
-                    div.innerHTML = formatBotMessage(text);
-                } else {
-                    div.textContent = text;
-                }
-
+                if (sender === 'bot') div.innerHTML = formatBotMessage(text);
+                else div.textContent = text;
                 messagesContainer.insertBefore(div, document.getElementById('typingIndicator'));
                 scrollToBottom();
                 return div;
             }
 
-            // --- apply inline formatting (bold, italic) ---
+            // Formatting helpers
             function applyInlineFormatting(str) {
-                // Bold: **text** -> <b>text</b>
-                // Italic: *text* -> <i>text</i> (but avoid bullet detection conflict)
-                // We will apply on content after list markers are removed.
-                // Use non-greedy match
                 let result = str.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
                 result = result.replace(/\*(.*?)\*/g, '<i>$1</i>');
                 return result;
             }
-
-            // --- format bot message with lists and inline styles ---
-            function formatBotMessage(text) {
-                // First, escape HTML to prevent injection
-                let safe = escapeHtml(text);
-
-                // Split into lines
-                const lines = safe.split('\n');
-                let result = [];
-                let inList = false;
-
-                for (let line of lines) {
-                    // Detect numbered list: "1. ", "2. " etc.
-                    const numMatch = line.match(/^(\d+)\.\s+(.*)/);
-                    // Detect bullet list: "- ", "* ", "• "
-                    const bulletMatch = line.match(/^([\-*•])\s+(.*)/);
-
-                    if (numMatch) {
-                        // Numbered list item
-                        const num = numMatch[1];
-                        let content = numMatch[2];
-                        // Apply inline formatting to content only
-                        content = applyInlineFormatting(content);
-                        result.push(
-                            `<span class="list-item"><span class="list-num">${num}.</span> ${content}</span>`
-                        );
-                        inList = true;
-                    } else if (bulletMatch) {
-                        // Bullet point
-                        let content = bulletMatch[2];
-                        content = applyInlineFormatting(content);
-                        result.push(
-                            `<span class="list-item"><span class="bullet">•</span> ${content}</span>`
-                        );
-                        inList = true;
-                    } else {
-                        // Regular line — apply formatting to entire line
-                        let formattedLine = applyInlineFormatting(line);
-                        if (formattedLine.trim() === '') {
-                            // empty line, maybe spacer
-                            if (inList) {
-                                result.push('<br/>');
-                                inList = false;
-                            } else {
-                                result.push(' ');
-                            }
-                        } else {
-                            result.push(formattedLine);
-                            inList = false;
-                        }
-                    }
-                }
-
-                // Join with <br> for line breaks
-                return result.join('<br>');
-            }
-
-            // --- simple escape ---
             function escapeHtml(text) {
                 const div = document.createElement('div');
                 div.textContent = text;
                 return div.innerHTML;
             }
-
-            // --- API call with formatting instruction ---
-            function callAI(userMessage, callback) {
-                const formattedUserMsg =
-                    `Please respond with numbered points (1., 2., 3., etc.) or bullet points for structured answers. Use **bold** for important keywords or key points. Always use structured formatting and bold where needed.\n\n${userMessage}`;
-
-                const data = JSON.stringify({
-                    messages: [
-                        { role: 'system',
-                            content: 'You are BioGenius, a helpful biotech and coding assistant. Always respond with numbered lists (1., 2., 3.) or bullet points for clarity. Use **bold** for key terms and important points. If the answer has multiple parts, list them. Respond in the same language as the user (English or Hindi).' },
-                        { role: 'user', content: formattedUserMsg }
-                    ],
-                    web_access: false
-                });
-
-                const xhr = new XMLHttpRequest();
-                xhr.withCredentials = true;
-
-                xhr.addEventListener('readystatechange', function() {
-                    if (this.readyState === this.DONE) {
-                        try {
-                            const res = JSON.parse(this.responseText);
-                            const reply = res.result ?? res.output ?? JSON.stringify(res);
-                            callback(null, reply);
-                        } catch (err) {
-                            callback(err, null);
-                        }
+            function formatBotMessage(text) {
+                const safe = escapeHtml(text);
+                const lines = safe.split('\n');
+                const result = [];
+                let inList = false;
+                for (let line of lines) {
+                    const numMatch = line.match(/^(\d+)\.\s+(.*)/);
+                    const bulletMatch = line.match(/^([\-*•])\s+(.*)/);
+                    if (numMatch) {
+                        const num = numMatch[1];
+                        let content = applyInlineFormatting(numMatch[2]);
+                        result.push(`<span class="list-item"><span class="list-num">${num}.</span> ${content}</span>`);
+                        inList = true;
+                    } else if (bulletMatch) {
+                        let content = applyInlineFormatting(bulletMatch[2]);
+                        result.push(`<span class="list-item"><span class="bullet">•</span> ${content}</span>`);
+                        inList = true;
+                    } else {
+                        let formatted = applyInlineFormatting(line);
+                        if (formatted.trim() === '') {
+                            if (inList) { result.push('<br/>'); inList = false; } else { result.push(' '); }
+                        } else { result.push(formatted); inList = false; }
                     }
-                });
-
-                xhr.open('POST', 'https://open-ai21.p.rapidapi.com/conversationllama');
-                xhr.setRequestHeader('x-rapidapi-key', 'b830c008f6msh3026f08e030a0f4p1e56c6jsncfa82b4cff13');
-                xhr.setRequestHeader('x-rapidapi-host', 'open-ai21.p.rapidapi.com');
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(data);
+                }
+                return result.join('<br>');
             }
 
-            // --- send message ---
+            // ---------- CALL YOUR VERCELL BACKEND (/api/chat) ----------
+            function callAI(userMessage, callback) {
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage })
+                })
+                .then(async response => {
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Server error');
+                    }
+                    callback(null, data.reply);
+                })
+                .catch(err => {
+                    callback(err, null);
+                });
+            }
+
+            // ---------- SEND MESSAGE ----------
             window.sendMessage = function() {
                 const msg = chatInput.value.trim();
                 if (!msg) return;
-
                 addMessage(msg, 'user');
                 chatInput.value = '';
                 chatInput.focus();
-
                 showTyping(true);
-
                 callAI(msg, function(err, reply) {
                     showTyping(false);
                     if (err) {
-                        addMessage('⚠️ Error: ' + (err.message || 'Something went wrong. Please try again.'),
-                        'bot');
+                        addMessage('❌ ' + err.message, 'bot');
                         return;
                     }
                     let clean = reply;
-                    if (typeof clean === 'string') {
-                        clean = clean.replace(/```/g, '').trim();
-                    }
+                    if (typeof clean === 'string') clean = clean.replace(/```/g, '').trim();
                     addMessage(clean, 'bot');
                 });
             };
 
-            // --- suggestion chip ---
+            // Suggestion chip
             window.suggestionChip = function(topic) {
                 chatInput.value = topic;
                 sendMessage();
             };
 
-            // --- enter key ---
+            // Enter key
             window.handleKeyPress = function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    sendMessage();
-                }
+                if (e.key === 'Enter') { e.preventDefault(); sendMessage(); }
             };
 
-            // --- initial greeting with bold ---
+            // Initial greeting (hardcoded, can also be fetched from API)
             setTimeout(() => {
-                const greetingMsg =
-                    `Please introduce yourself as BioGenius AI. Mention that you are a biotech and coding assistant. List 4 things you can help with using numbered points (1., 2., 3., 4.). Use **bold** for key terms like "DNA", "Python", "Bioinformatics", etc. Be warm and professional.`;
-                callAI(greetingMsg, function(err, reply) {
-                    if (err) {
-                        addMessage(
-                            '🧬 Hello! I\'m your BioGenius AI. Here\'s what I can help with:\n1. **Biotech** & DNA analysis\n2. **Python** programming\n3. **Bioinformatics** tools\n4. **Machine learning** in biology',
-                            'bot');
-                        return;
-                    }
-                    addMessage(reply, 'bot');
-                });
-            }, 600);
-
-            console.log('✅ BioGenius · AI Chat with lists, bullets, and bold formatting');
+                const greeting =
+                    "🧬 **Hello! I'm BioGenius AI.**\n\n" +
+                    "I'm your biotech and coding assistant. Here's what I can help with:\n\n" +
+                    "1. **DNA** analysis and sequencing\n" +
+                    "2. **Python** programming for bioinformatics\n" +
+                    "3. **Biotech** tools and lab techniques\n" +
+                    "4. **Machine learning** in biology\n\n" +
+                    "Ask me anything — in English or हिंदी!";
+                addMessage(greeting, 'bot');
+            }, 500);
         })();
     </script>
-
 </body>
 </html>
