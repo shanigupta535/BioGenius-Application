@@ -6,9 +6,9 @@
     'use strict';
 
     // ----------------------------------------------------------------
-    //  OPENROUTER API CONFIGURATION (Environment Variable Support)
+    //  OPENROUTER API CONFIGURATION
     // ----------------------------------------------------------------
-    const API_KEY = process.env.OPENROUTER_API_KEY || "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";
+    const API_KEY = "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";
     const MODEL = "openrouter/free";
     const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
@@ -43,18 +43,21 @@
         }
     }
 
+    // --- escape HTML to prevent XSS ---
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
+    // --- inline formatting: **bold** and *italic* ---
     function applyInlineFormatting(str) {
         let result = str.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
         result = result.replace(/\*(.*?)\*/g, '<i>$1</i>');
         return result;
     }
 
+    // --- format bot message with lists + inline styles ---
     function formatBotMessage(text) {
         const safe = escapeHtml(text);
         const lines = safe.split('\n');
@@ -185,12 +188,15 @@
         const msg = chatInput.value.trim();
         if (!msg) return;
 
+        // Add user message
         addMessage(msg, 'user');
         chatInput.value = '';
         chatInput.focus();
 
+        // Show typing indicator
         showTyping(true);
 
+        // Call AI
         callAI(msg, function(err, reply) {
             showTyping(false);
             if (err) {
